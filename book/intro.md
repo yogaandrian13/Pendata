@@ -1,7 +1,5 @@
-# Welcome to Pendata
+# 240411100167 Yoga Andrian Febriyanto
 
-This is your Jupyter Book website.
+Selamat datang di Jupyter Book saya.
 
-## Content
-
-Add your content here.
+![Foto Profil](logo.jpg)

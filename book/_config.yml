@@ -1,18 +1,14 @@
-# Book settings
 title: Pendata
 author: yogaandrian13
-logo: ""
+logo: logo.jpg
 
-# Repository settings
 repository:
   url: https://github.com/yogaandrian13/Pendata
   branch: main
 
-# Execution settings
 execute:
   execute_notebooks: off
 
-# HTML settings
 html:
   use_edit_page_button: true
   use_repository_button: true
