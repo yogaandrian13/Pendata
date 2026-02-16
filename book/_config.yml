@@ -3,6 +3,11 @@ title: Pendata
 author: yogaandrian13
 logo: ""
 
+# Repository settings
+repository:
+  url: https://github.com/yogaandrian13/Pendata
+  branch: main
+
 # Execution settings
 execute:
   execute_notebooks: off
