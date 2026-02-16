@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Deploymen &#8212; Pendata</title>
+    <title>Deployment &#8212; Pendata</title>
   
   
   
@@ -35,6 +35,9 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -63,8 +66,10 @@ const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'deploymen';</script>
+    <link rel="canonical" href="https://yogaandrian13.github.io/Pendata/deploymen.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Modelling" href="modelling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,8 +132,6 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -169,11 +172,18 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    240411100167 Yoga Andrian Febriyanto
+                    Perkenalan
                 </a>
             </li>
         </ul>
-        
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="business-understanding.html">Business Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Deployment</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -213,53 +223,6 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/yogaandrian13/Pendata" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/yogaandrian13/Pendata/edit/main/deploymen.md" target="_blank"
-   class="btn btn-sm btn-source-edit-button dropdown-item"
-   title="Suggest edit"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="btn__text-container">Suggest edit</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -344,7 +307,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -355,11 +320,22 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Deploymen</h1>
+    <h1>Deployment</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasi-model">5.1 Integrasi Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-dan-evaluasi-berkelanjutan">5.2 Monitoring dan Evaluasi Berkelanjutan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dampak-bisnis">5.3 Dampak Bisnis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penutup">Penutup</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -369,9 +345,25 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="deploymen">
-<h1>Deploymen<a class="headerlink" href="#deploymen" title="Permalink to this heading">#</a></h1>
-<p>Konten tentang Deploymen.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="deployment">
+<h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this heading">#</a></h1>
+<p>Deployment adalah proses implementasi model ke dalam sistem operasional agar dapat memberikan nilai nyata.</p>
+<section id="integrasi-model">
+<h2>5.1 Integrasi Model<a class="headerlink" href="#integrasi-model" title="Permalink to this heading">#</a></h2>
+<p>Model dapat diimplementasikan dalam bentuk: REST API Dashboard analitik Sistem rekomendasi Otomatisasi proses bisnis Integrasi harus mempertimbangkan: Kecepatan respon Skalabilitas sistem Keamanan data.</p>
+</section>
+<section id="monitoring-dan-evaluasi-berkelanjutan">
+<h2>5.2 Monitoring dan Evaluasi Berkelanjutan<a class="headerlink" href="#monitoring-dan-evaluasi-berkelanjutan" title="Permalink to this heading">#</a></h2>
+<p>Setelah diimplementasikan, performa model harus dipantau. Seiring waktu, pola data dapat berubah (concept drift). Monitoring dilakukan dengan: Evaluasi ulang metrik performa Analisis kesalahan prediksi Audit bias Jika performa menurun, model perlu diperbarui atau dilatih ulang.</p>
+</section>
+<section id="dampak-bisnis">
+<h2>5.3 Dampak Bisnis<a class="headerlink" href="#dampak-bisnis" title="Permalink to this heading">#</a></h2>
+<p>Keberhasilan deployment diukur dari: Peningkatan efisiensi Pengurangan biaya Peningkatan pendapatan Perbaikan kualitas keputusan Tahap ini memastikan bahwa seluruh proses data mining menghasilkan dampak strategis yang nyata bagi organisasi.</p>
+</section>
+<section id="penutup">
+<h2>Penutup<a class="headerlink" href="#penutup" title="Permalink to this heading">#</a></h2>
+<p>Kelima tahap dalam CRISP-DM membentuk siklus terstruktur yang menghubungkan kebutuhan bisnis dengan solusi berbasis data. Proses ini tidak berhenti pada pembangunan model, tetapi berlanjut hingga implementasi dan evaluasi berkelanjutan. Keberhasilan penambangan data ditentukan oleh integrasi antara: Pemahaman bisnis yang kuat Kualitas data yang baik Persiapan data yang sistematis Pemodelan yang tepat Implementasi yang efektif Dengan mengikuti kelima tahapan ini secara disiplin, organisasi dapat mengubah data menjadi aset strategis yang mendukung pengambilan keputusan berbasis bukti.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -404,12 +396,39 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="modelling.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modelling</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasi-model">5.1 Integrasi Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-dan-evaluasi-berkelanjutan">5.2 Monitoring dan Evaluasi Berkelanjutan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dampak-bisnis">5.3 Dampak Bisnis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penutup">Penutup</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
