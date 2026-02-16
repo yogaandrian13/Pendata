@@ -1,0 +1,17 @@
+/* Dark theme */
+body {
+  background-color: #1a1a2e;
+  color: #eaeaea;
+}
+
+.bd-sidebar {
+  background-color: #16213e;
+}
+
+.bd-sidebar a {
+  color: #eaeaea;
+}
+
+.bd-sidebar a:hover {
+  color: #00d4ff;
+}

@@ -1,10 +1,8 @@
 format: jb-book
 root: intro
-parts:
-  - caption: Main Content
-    chapters:
-      - file: business-understanding
-      - file: data-understanding
-      - file: data-preparation
-      - file: modelling
-      - file: deploymen
+chapters:
+  - file: business-understanding
+  - file: data-understanding
+  - file: data-preparation
+  - file: modelling
+  - file: deploymen
