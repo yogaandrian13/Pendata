@@ -1,17 +1,49 @@
-/* Dark theme */
+/* Dark theme - GitHub style */
 body {
-  background-color: #1a1a2e;
-  color: #eaeaea;
+  background-color: #0d1117 !important;
+  color: #ffffff !important;
 }
 
 .bd-sidebar {
-  background-color: #16213e;
+  background-color: #161b22 !important;
 }
 
-.bd-sidebar a {
-  color: #eaeaea;
+.bd-sidebar .nav-link {
+  color: #c9d1d9 !important;
 }
 
-.bd-sidebar a:hover {
-  color: #00d4ff;
+.bd-sidebar .nav-link.active {
+  color: #58a6ff !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff !important;
+}
+
+p {
+  color: #c9d1d9 !important;
+}
+
+a {
+  color: #58a6ff !important;
+}
+
+.bd-content {
+  color: #c9d1d9 !important;
+}
+
+.bd-toc .nav-link {
+  color: #8b949e !important;
+}
+
+.prev-next-bottom {
+  margin-top: 4rem !important;
+  border-top: 1px solid #30363d !important;
+  padding-top: 2rem !important;
+}
+
+.footer {
+  color: #8b949e !important;
+  border-top: 1px solid #30363d !important;
+  margin-top: 3rem !important;
 }
