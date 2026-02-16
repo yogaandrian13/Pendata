@@ -10,5 +10,22 @@ execute:
   execute_notebooks: off
 
 html:
-  use_edit_page_button: true
-  use_repository_button: true
+  use_edit_page_button: false
+  use_repository_button: false
+  use_issues_button: false
+  
+sphinx:
+  config:
+    html_theme: sphinx_book_theme
+    html_theme_options:
+      navigation_with_keys: true
+      show_navbar_depth: 1
+      collapse_navigation: false
+    html_sidebars:
+      "**": [
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/scroll-start.html",
+        "sidebar/navigation.html",
+        "sidebar/scroll-end.html",
+      ]
