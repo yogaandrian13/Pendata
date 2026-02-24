@@ -1,10 +1,10 @@
-# Data Understanding
+<!-- # Data Understanding
 
-Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan.
+Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan. -->
 
-## Identifikasi dan Integrasi Sumber Data
+## korelasi antara sepal_width dan sepal_length
 
-Data dapat berasal dari berbagai sistem: Sistem transaksi Data pelanggan Log aktivitas pengguna Sistem keuangan Data eksternal seperti demografi atau pasar Pada tahap ini dilakukan identifikasi: Format data Periode waktu Volume data Konsistensi antar sumber Integrasi data sering menjadi tantangan karena perbedaan struktur dan format.
+Dari gambar di atas menunjukkan korelasi antara sepal_widh dan sepal_length sangat lemah atau tidak ada korelasi, dikarenakan Titik-titik data tersebar tanpa membentuk pola yang jelas, menunjukkan bahwa tidak ada hubungan yang kuat antara sepal length dan sepal width. artinya Kedua variabel ini dapat dianggap sebagai fitur yang berdiri sendiri dan tidak saling mempengaruhi secara linear.
 
 ## Eksplorasi Statistik dan Visualisasi
 
