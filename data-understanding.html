@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>korelasi antara sepal_width dan sepal_length &#8212; Pendata</title>
+    <title>Data Understanding &#8212; Pendata</title>
   
   
   
@@ -179,9 +179,7 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="business-understanding.html">Business Understanding</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">korelasi antara sepal_width dan sepal_length</a></li>
-
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -323,7 +321,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>korelasi antara sepal_width dan sepal_length</h1>
+    <h1>Data Understanding</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -333,11 +331,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">korelasi antara sepal_width dan sepal_length</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-statistik-dan-visualisasi">Eksplorasi Statistik dan Visualisasi</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kualitas-data">Analisis Kualitas Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#korelasi-antara-sepal-width-dan-sepal-length">korelasi antara sepal_width dan sepal_length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-statistik-dan-visualisasi">Eksplorasi Statistik dan Visualisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kualitas-data">Analisis Kualitas Data</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -348,20 +345,21 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <!-- # Data Understanding
-
-Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan. -->
+  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
+<h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Permalink to this heading">#</a></h1>
+<p>Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan.</p>
 <section id="korelasi-antara-sepal-width-dan-sepal-length">
-<h1>korelasi antara sepal_width dan sepal_length<a class="headerlink" href="#korelasi-antara-sepal-width-dan-sepal-length" title="Permalink to this heading">#</a></h1>
+<h2>korelasi antara sepal_width dan sepal_length<a class="headerlink" href="#korelasi-antara-sepal-width-dan-sepal-length" title="Permalink to this heading">#</a></h2>
 <p>Dari gambar di atas menunjukkan korelasi antara sepal_widh dan sepal_length sangat lemah atau tidak ada korelasi, dikarenakan Titik-titik data tersebar tanpa membentuk pola yang jelas, menunjukkan bahwa tidak ada hubungan yang kuat antara sepal length dan sepal width. artinya Kedua variabel ini dapat dianggap sebagai fitur yang berdiri sendiri dan tidak saling mempengaruhi secara linear.</p>
 </section>
 <section id="eksplorasi-statistik-dan-visualisasi">
-<h1>Eksplorasi Statistik dan Visualisasi<a class="headerlink" href="#eksplorasi-statistik-dan-visualisasi" title="Permalink to this heading">#</a></h1>
+<h2>Eksplorasi Statistik dan Visualisasi<a class="headerlink" href="#eksplorasi-statistik-dan-visualisasi" title="Permalink to this heading">#</a></h2>
 <p>Eksplorasi data dilakukan untuk memahami karakteristik statistik dataset, seperti: Rata-rata dan median Distribusi nilai Variansi Korelasi antar variabel Visualisasi membantu mengidentifikasi pola yang tidak terlihat secara numerik, seperti: Distribusi tidak normal Hubungan non-linear Pola musiman Misalnya, dalam analisis penjualan, dapat ditemukan bahwa transaksi meningkat tajam pada akhir bulan atau saat promosi tertentu.</p>
 </section>
 <section id="analisis-kualitas-data">
-<h1>Analisis Kualitas Data<a class="headerlink" href="#analisis-kualitas-data" title="Permalink to this heading">#</a></h1>
+<h2>Analisis Kualitas Data<a class="headerlink" href="#analisis-kualitas-data" title="Permalink to this heading">#</a></h2>
 <p>Kualitas data sangat mempengaruhi performa model. Beberapa aspek yang dianalisis: Missing values dan pola kemunculannya Duplikasi data Nilai ekstrem Ketidakseimbangan kelas Jika data churn hanya 5% dari total dataset, maka model mungkin cenderung memprediksi semua pelanggan sebagai “tidak churn” untuk mencapai akurasi tinggi. Ini adalah contoh pentingnya memahami distribusi kelas. Tahap Data Understanding memberikan gambaran realistis mengenai kekuatan dan keterbatasan dataset sebelum masuk ke tahap teknis berikutnya.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -428,11 +426,10 @@ Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan pot
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">korelasi antara sepal_width dan sepal_length</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-statistik-dan-visualisasi">Eksplorasi Statistik dan Visualisasi</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kualitas-data">Analisis Kualitas Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#korelasi-antara-sepal-width-dan-sepal-length">korelasi antara sepal_width dan sepal_length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-statistik-dan-visualisasi">Eksplorasi Statistik dan Visualisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kualitas-data">Analisis Kualitas Data</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
