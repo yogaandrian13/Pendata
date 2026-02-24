@@ -1,4 +1,4 @@
-<!-- # Data Understanding
+# Data Understanding
 
 Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan.
 
@@ -12,4 +12,4 @@ Eksplorasi data dilakukan untuk memahami karakteristik statistik dataset, sepert
 
 ## 2.3 Analisis Kualitas Data
 
-Kualitas data sangat mempengaruhi performa model. Beberapa aspek yang dianalisis: Missing values dan pola kemunculannya Duplikasi data Nilai ekstrem Ketidakseimbangan kelas Jika data churn hanya 5% dari total dataset, maka model mungkin cenderung memprediksi semua pelanggan sebagai "tidak churn" untuk mencapai akurasi tinggi. Ini adalah contoh pentingnya memahami distribusi kelas. Tahap Data Understanding memberikan gambaran realistis mengenai kekuatan dan keterbatasan dataset sebelum masuk ke tahap teknis berikutnya. -->
+Kualitas data sangat mempengaruhi performa model. Beberapa aspek yang dianalisis: Missing values dan pola kemunculannya Duplikasi data Nilai ekstrem Ketidakseimbangan kelas Jika data churn hanya 5% dari total dataset, maka model mungkin cenderung memprediksi semua pelanggan sebagai "tidak churn" untuk mencapai akurasi tinggi. Ini adalah contoh pentingnya memahami distribusi kelas. Tahap Data Understanding memberikan gambaran realistis mengenai kekuatan dan keterbatasan dataset sebelum masuk ke tahap teknis berikutnya.
