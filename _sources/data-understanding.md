@@ -40,6 +40,7 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 ## bukti screenshot
 
 <img src="_static/ch1.png"/>
+<br>
 <img src="_static/ch2.png"/>
 
 ## link program
