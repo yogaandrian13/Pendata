@@ -412,42 +412,50 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 </section>
 <section id="kode-lengkap">
 <h2>kode lengkap<a class="headerlink" href="#kode-lengkap" title="Permalink to this heading">#</a></h2>
-<p>import pandas as pd
-from scipy import stats
-<p>df = pd.read_csv(“IRIS.csv”)</p>
-<p>print(“Daftar Kolom:”, df.columns.tolist())
-print(“-” * 60)</p>
-<p>kolom_numerik = [‘sepal_length’, ‘sepal_width’, ‘petal_length’, ‘petal_width’]</p>
-<p>for kolom in kolom_numerik:
-print(f”\n Statistik untuk kolom: {kolom.upper()}“)
-print(”-” * 40)
-print(“Jumlah data     :”, df[kolom].count())
-print(“Rata-rata       :”, “{0:.2f}”.format(df[kolom].mean()))
-print(“Nilai minimal   :”, df[kolom].min())
-print(“Q1              :”, “{0:.2f}”.format(df[kolom].quantile(0.25)))
-print(“Q2 (Median)     :”, “{0:.2f}”.format(df[kolom].quantile(0.5)))
-print(“Q3              :”, “{0:.2f}”.format(df[kolom].quantile(0.75)))
-print(“Nilai Max       :”, df[kolom].max())
-print(“Kemencengan 1   :”, “{0:.2f}”.format(round(df[kolom].skew(), 2)))
-print(“Kemencengan 2   :”, “{0:.6f}”.format(round(df[kolom].skew(), 6)))
-print(“Standar Deviasi :”, “{0:.2f}”.format(round(df[kolom].std(), 2)))
-print(“Variansi        :”, “{0:.2f}”.format(round(df[kolom].var(), 2)))</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mode_result = stats.mode(df[kolom].dropna(), keepdims=True)
-if len(mode_result.mode) &gt; 0 and not pd.isna(mode_result.mode[0]):
-    print(&quot;Nilai modus     : {} dengan frekuensi {}&quot;.format(
-        mode_result.mode[0], mode_result.count[0]))
-else:
-    print(&quot;Nilai modus     : Tidak ada modus tunggal&quot;)
+<p>## kode lengkap
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;IRIS.csv&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Daftar Kolom:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="n">kolom_numerik</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal_width&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span> <span class="s1">&#39;petal_width&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">kolom</span> <span class="ow">in</span> <span class="n">kolom_numerik</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Statistik untuk kolom: </span><span class="si">{</span><span class="n">kolom</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data     :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rata-rata       :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai minimal   :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q1              :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q2 (Median)     :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q3              :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai Max       :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kemencengan 1   :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kemencengan 2   :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">(),</span> <span class="mi">6</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standar Deviasi :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variansi        :&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="mi">2</span><span class="p">)))</span>
+    
+    <span class="n">mode_result</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">kolom</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mode_result</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">mode_result</span><span class="o">.</span><span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai modus     : </span><span class="si">{}</span><span class="s2"> dengan frekuensi </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">mode_result</span><span class="o">.</span><span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mode_result</span><span class="o">.</span><span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai modus     : Tidak ada modus tunggal&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌸 Statistik untuk kolom: SPECIES&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data     :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah unik     :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai unik      :&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi frekuensi:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Modus (kategori paling sering):&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>print(f”\n🌸 Statistik untuk kolom: SPECIES”)
-print(“-” * 40)
-print(“Jumlah data     :”, df[‘species’].count())
-print(“Jumlah unik     :”, df[‘species’].nunique())
-print(“Nilai unik      :”, df[‘species’].unique().tolist())
-print(“\nDistribusi frekuensi:”)
-print(df[‘species’].value_counts())
-print(“\nModus (kategori paling sering):”, df[‘species’].mode().values[0])</p></p>
+</p>
 </section>
 <section id="output">
 <h2>output<a class="headerlink" href="#output" title="Permalink to this heading">#</a></h2>

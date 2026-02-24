@@ -48,7 +48,10 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 https://colab.research.google.com/drive/1GSy-86MX61px6TsFmbnX_iAG0U7MrHCT?usp=sharing
 
 ## kode lengkap
-<p>import pandas as pd
+<p>## kode lengkap
+
+```python
+import pandas as pd
 from scipy import stats
 
 df = pd.read_csv("IRIS.csv")
@@ -87,7 +90,9 @@ print("Jumlah unik     :", df['species'].nunique())
 print("Nilai unik      :", df['species'].unique().tolist())
 print("\nDistribusi frekuensi:")
 print(df['species'].value_counts())
-print("\nModus (kategori paling sering):", df['species'].mode().values[0])</p>
+print("\nModus (kategori paling sering):", df['species'].mode().values[0])
+```
+</p>
 
 ## output 
 
