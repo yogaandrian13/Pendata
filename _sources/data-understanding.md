@@ -48,7 +48,7 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 https://colab.research.google.com/drive/1GSy-86MX61px6TsFmbnX_iAG0U7MrHCT?usp=sharing
 
 ## kode lengkap
-<p>## kode lengkap
+<p>
 
 ```python
 import pandas as pd
@@ -96,7 +96,10 @@ print("\nModus (kategori paling sering):", df['species'].mode().values[0])
 
 ## output 
 
-<p>Daftar Kolom: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
+<p>
+
+```text
+Daftar Kolom: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
 ------------------------------------------------------------
 
  Statistik untuk kolom: SEPAL_LENGTH
@@ -172,6 +175,8 @@ Iris-versicolor    50
 Iris-virginica     50
 Name: count, dtype: int64
 
-Modus (kategori paling sering): Iris-setosa</p>
+Modus (kategori paling sering): Iris-setosa
+```
+</p>
 
 

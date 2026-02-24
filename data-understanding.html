@@ -343,11 +343,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-program">link program</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kode-lengkap">kode lengkap</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output">output</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-sepal-length">Statistik untuk kolom: SEPAL_LENGTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-sepal-width">Statistik untuk kolom: SEPAL_WIDTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-petal-length">Statistik untuk kolom: PETAL_LENGTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-petal-width">Statistik untuk kolom: PETAL_WIDTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-species">🌸 Statistik untuk kolom: SPECIES</a></li>
 </ul>
             </nav>
         </div>
@@ -412,7 +407,7 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 </section>
 <section id="kode-lengkap">
 <h2>kode lengkap<a class="headerlink" href="#kode-lengkap" title="Permalink to this heading">#</a></h2>
-<p>## kode lengkap
+<p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
 
@@ -459,12 +454,13 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 </section>
 <section id="output">
 <h2>output<a class="headerlink" href="#output" title="Permalink to this heading">#</a></h2>
-<p>Daftar Kolom: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
+<p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Daftar Kolom: [&#39;sepal_length&#39;, &#39;sepal_width&#39;, &#39;petal_length&#39;, &#39;petal_width&#39;, &#39;species&#39;]
 ------------------------------------------------------------
-</section>
-<section id="statistik-untuk-kolom-sepal-length">
-<h2>Statistik untuk kolom: SEPAL_LENGTH<a class="headerlink" href="#statistik-untuk-kolom-sepal-length" title="Permalink to this heading">#</a></h2>
-<p>Jumlah data     : 150
+
+ Statistik untuk kolom: SEPAL_LENGTH
+----------------------------------------
+Jumlah data     : 150
 Rata-rata       : 5.84
 Nilai minimal   : 4.3
 Q1              : 5.10
@@ -475,11 +471,11 @@ Kemencengan 1   : 0.31
 Kemencengan 2   : 0.314911
 Standar Deviasi : 0.83
 Variansi        : 0.69
-Nilai modus     : 5.0 dengan frekuensi 10</p>
-</section>
-<section id="statistik-untuk-kolom-sepal-width">
-<h2>Statistik untuk kolom: SEPAL_WIDTH<a class="headerlink" href="#statistik-untuk-kolom-sepal-width" title="Permalink to this heading">#</a></h2>
-<p>Jumlah data     : 150
+Nilai modus     : 5.0 dengan frekuensi 10
+
+ Statistik untuk kolom: SEPAL_WIDTH
+----------------------------------------
+Jumlah data     : 150
 Rata-rata       : 3.05
 Nilai minimal   : 2.0
 Q1              : 2.80
@@ -490,11 +486,11 @@ Kemencengan 1   : 0.33
 Kemencengan 2   : 0.334053
 Standar Deviasi : 0.43
 Variansi        : 0.19
-Nilai modus     : 3.0 dengan frekuensi 26</p>
-</section>
-<section id="statistik-untuk-kolom-petal-length">
-<h2>Statistik untuk kolom: PETAL_LENGTH<a class="headerlink" href="#statistik-untuk-kolom-petal-length" title="Permalink to this heading">#</a></h2>
-<p>Jumlah data     : 150
+Nilai modus     : 3.0 dengan frekuensi 26
+
+ Statistik untuk kolom: PETAL_LENGTH
+----------------------------------------
+Jumlah data     : 150
 Rata-rata       : 3.76
 Nilai minimal   : 1.0
 Q1              : 1.60
@@ -505,11 +501,11 @@ Kemencengan 1   : -0.27
 Kemencengan 2   : -0.274464
 Standar Deviasi : 1.76
 Variansi        : 3.11
-Nilai modus     : 1.5 dengan frekuensi 14</p>
-</section>
-<section id="statistik-untuk-kolom-petal-width">
-<h2>Statistik untuk kolom: PETAL_WIDTH<a class="headerlink" href="#statistik-untuk-kolom-petal-width" title="Permalink to this heading">#</a></h2>
-<p>Jumlah data     : 150
+Nilai modus     : 1.5 dengan frekuensi 14
+
+ Statistik untuk kolom: PETAL_WIDTH
+----------------------------------------
+Jumlah data     : 150
 Rata-rata       : 1.20
 Nilai minimal   : 0.1
 Q1              : 0.30
@@ -520,20 +516,25 @@ Kemencengan 1   : -0.10
 Kemencengan 2   : -0.104997
 Standar Deviasi : 0.76
 Variansi        : 0.58
-Nilai modus     : 0.2 dengan frekuensi 28</p>
-</section>
-<section id="statistik-untuk-kolom-species">
-<h2>🌸 Statistik untuk kolom: SPECIES<a class="headerlink" href="#statistik-untuk-kolom-species" title="Permalink to this heading">#</a></h2>
-<p>Jumlah data     : 150
+Nilai modus     : 0.2 dengan frekuensi 28
+
+🌸 Statistik untuk kolom: SPECIES
+----------------------------------------
+Jumlah data     : 150
 Jumlah unik     : 3
-Nilai unik      : [‘Iris-setosa’, ‘Iris-versicolor’, ‘Iris-virginica’]</p>
-<p>Distribusi frekuensi:
+Nilai unik      : [&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;]
+
+Distribusi frekuensi:
 species
 Iris-setosa        50
 Iris-versicolor    50
 Iris-virginica     50
-Name: count, dtype: int64</p>
-<p>Modus (kategori paling sering): Iris-setosa</p></p>
+Name: count, dtype: int64
+
+Modus (kategori paling sering): Iris-setosa
+</pre></div>
+</div>
+</p>
 </section>
 </section>
 
@@ -613,11 +614,6 @@ Name: count, dtype: int64</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-program">link program</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kode-lengkap">kode lengkap</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output">output</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-sepal-length">Statistik untuk kolom: SEPAL_LENGTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-sepal-width">Statistik untuk kolom: SEPAL_WIDTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-petal-length">Statistik untuk kolom: PETAL_LENGTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-petal-width">Statistik untuk kolom: PETAL_WIDTH</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-untuk-kolom-species">🌸 Statistik untuk kolom: SPECIES</a></li>
 </ul>
   </nav></div>
 
