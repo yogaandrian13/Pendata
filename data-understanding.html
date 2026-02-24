@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Data Understanding &#8212; Pendata</title>
+    <title>&lt;no title&gt; &#8212; Pendata</title>
   
   
   
@@ -177,9 +177,8 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="business-understanding.html">Business Understanding</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -321,7 +320,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Data Understanding</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -330,11 +329,9 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identifikasi-dan-integrasi-sumber-data">2.1 Identifikasi dan Integrasi Sumber Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-statistik-dan-visualisasi">2.2 Eksplorasi Statistik dan Visualisasi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kualitas-data">2.3 Analisis Kualitas Data</a></li>
+                <ul class="simple visible nav section-nav flex-column">
 </ul>
+
             </nav>
         </div>
     </div>
@@ -345,22 +342,21 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
-<h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Permalink to this heading">#</a></h1>
-<p>Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan.</p>
-<section id="identifikasi-dan-integrasi-sumber-data">
-<h2>2.1 Identifikasi dan Integrasi Sumber Data<a class="headerlink" href="#identifikasi-dan-integrasi-sumber-data" title="Permalink to this heading">#</a></h2>
-<p>Data dapat berasal dari berbagai sistem: Sistem transaksi Data pelanggan Log aktivitas pengguna Sistem keuangan Data eksternal seperti demografi atau pasar Pada tahap ini dilakukan identifikasi: Format data Periode waktu Volume data Konsistensi antar sumber Integrasi data sering menjadi tantangan karena perbedaan struktur dan format.</p>
-</section>
-<section id="eksplorasi-statistik-dan-visualisasi">
-<h2>2.2 Eksplorasi Statistik dan Visualisasi<a class="headerlink" href="#eksplorasi-statistik-dan-visualisasi" title="Permalink to this heading">#</a></h2>
-<p>Eksplorasi data dilakukan untuk memahami karakteristik statistik dataset, seperti: Rata-rata dan median Distribusi nilai Variansi Korelasi antar variabel Visualisasi membantu mengidentifikasi pola yang tidak terlihat secara numerik, seperti: Distribusi tidak normal Hubungan non-linear Pola musiman Misalnya, dalam analisis penjualan, dapat ditemukan bahwa transaksi meningkat tajam pada akhir bulan atau saat promosi tertentu.</p>
-</section>
-<section id="analisis-kualitas-data">
-<h2>2.3 Analisis Kualitas Data<a class="headerlink" href="#analisis-kualitas-data" title="Permalink to this heading">#</a></h2>
-<p>Kualitas data sangat mempengaruhi performa model. Beberapa aspek yang dianalisis: Missing values dan pola kemunculannya Duplikasi data Nilai ekstrem Ketidakseimbangan kelas Jika data churn hanya 5% dari total dataset, maka model mungkin cenderung memprediksi semua pelanggan sebagai “tidak churn” untuk mencapai akurasi tinggi. Ini adalah contoh pentingnya memahami distribusi kelas. Tahap Data Understanding memberikan gambaran realistis mengenai kekuatan dan keterbatasan dataset sebelum masuk ke tahap teknis berikutnya.</p>
-</section>
-</section>
+  <!-- # Data Understanding
+
+Data Understanding bertujuan untuk memahami kondisi, struktur, kualitas, dan potensi dataset sebelum dilakukan pemodelan. Data merupakan representasi dari realitas bisnis. Oleh karena itu, pemahaman terhadap data berarti memahami perilaku sistem atau pelanggan yang direpresentasikan.
+
+## 2.1 Identifikasi dan Integrasi Sumber Data
+
+Data dapat berasal dari berbagai sistem: Sistem transaksi Data pelanggan Log aktivitas pengguna Sistem keuangan Data eksternal seperti demografi atau pasar Pada tahap ini dilakukan identifikasi: Format data Periode waktu Volume data Konsistensi antar sumber Integrasi data sering menjadi tantangan karena perbedaan struktur dan format.
+
+## 2.2 Eksplorasi Statistik dan Visualisasi
+
+Eksplorasi data dilakukan untuk memahami karakteristik statistik dataset, seperti: Rata-rata dan median Distribusi nilai Variansi Korelasi antar variabel Visualisasi membantu mengidentifikasi pola yang tidak terlihat secara numerik, seperti: Distribusi tidak normal Hubungan non-linear Pola musiman Misalnya, dalam analisis penjualan, dapat ditemukan bahwa transaksi meningkat tajam pada akhir bulan atau saat promosi tertentu.
+
+## 2.3 Analisis Kualitas Data
+
+Kualitas data sangat mempengaruhi performa model. Beberapa aspek yang dianalisis: Missing values dan pola kemunculannya Duplikasi data Nilai ekstrem Ketidakseimbangan kelas Jika data churn hanya 5% dari total dataset, maka model mungkin cenderung memprediksi semua pelanggan sebagai "tidak churn" untuk mencapai akurasi tinggi. Ini adalah contoh pentingnya memahami distribusi kelas. Tahap Data Understanding memberikan gambaran realistis mengenai kekuatan dan keterbatasan dataset sebelum masuk ke tahap teknis berikutnya. -->
 
     <script type="text/x-thebe-config">
     {
@@ -425,11 +421,9 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identifikasi-dan-integrasi-sumber-data">2.1 Identifikasi dan Integrasi Sumber Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-statistik-dan-visualisasi">2.2 Eksplorasi Statistik dan Visualisasi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kualitas-data">2.3 Analisis Kualitas Data</a></li>
+    <ul class="simple visible nav section-nav flex-column">
 </ul>
+
   </nav></div>
 
 </div></div>
