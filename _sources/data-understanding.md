@@ -39,8 +39,8 @@ Berbeda dengan pengukuran sepal, variabel petal_length dan petal_width menunjukk
 ## python (google colab)
 ## bukti screenshot
 
-<img src="_static/ch1.jpg"/>
-<img src="_static/ch2.jpg"/>
+<img src="_static/ch1.png"/>
+<img src="_static/ch2.png"/>
 
 ## link program
 
