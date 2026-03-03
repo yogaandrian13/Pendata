@@ -77,7 +77,7 @@ for kolom in kolom_numerik:
     print("Kemencengan 2   :", "{0:.6f}".format(round(df[kolom].skew(), 6)))
     print("Standar Deviasi :", "{0:.2f}".format(round(df[kolom].std(), 2)))
     print("Variansi        :", "{0:.2f}".format(round(df[kolom].var(), 2)))
-    
+
     mode_result = stats.mode(df[kolom].dropna(), keepdims=True)
     if len(mode_result.mode) > 0 and not pd.isna(mode_result.mode[0]):
         print("Nilai modus     : {} dengan frekuensi {}".format(
@@ -88,9 +88,9 @@ for kolom in kolom_numerik:
 print(f"\n🌸 Statistik untuk kolom: SPECIES")
 print("-" * 40)
 print("Jumlah data     :", df['species'].count())
-print("Jumlah unik     :", df['species'].nunique())
-print("Nilai unik      :", df['species'].unique().tolist())
-print("\nDistribusi frekuensi:")
+print("Jumlah class     :", df['species'].nunique())
+print("nama class     :", df['species'].unique().tolist())
+print("\nJumlah data per class:")
 print(df['species'].value_counts())
 print("\nModus (kategori paling sering):", df['species'].mode().values[0])
 ```
@@ -167,10 +167,10 @@ Nilai modus     : 0.2 dengan frekuensi 28
 🌸 Statistik untuk kolom: SPECIES
 ----------------------------------------
 Jumlah data     : 150
-Jumlah unik     : 3
-Nilai unik      : ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+Jumlah class     : 3
+nama class     : ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
 
-Distribusi frekuensi:
+Jumlah data per class:
 species
 Iris-setosa        50
 Iris-versicolor    50
