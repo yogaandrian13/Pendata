@@ -232,8 +232,8 @@ Jarak untuk atribut ke-f saja</td>
 <p>Mean Absolute Deviation: lebih robust terhadap outlier</p><br>
 <p>Setelah dinormalisasi, hitung jarak dengan metode numerik (Euclidean, Manhattan, dll).</p><br>
 <h3>Atribut Ordinal</h3><br>
-<p>Langkah-langkah:
-Ganti nilai dengan ranking 
+<p>Langkah-langkah:</p><br>
+<p>Ganti nilai dengan ranking 
 r
 i
 f
@@ -244,5 +244,40 @@ z
 i
 f
 ​</p><br>
+
+## analisi mengunakan orange data mining untuk data yang campuran
+<img src="_static/a_page-0001.png"/>
+<p>contoh data saya untuk menganalisis penghitungan jarak di orange</p><br>
+<img src="_static/image-3.png"/>
+<p>Widget Distances digunakan untuk menghitung matriks dissimilarity (jarak) antar objek dalam dataset. arameter Compare diset ke Rows yang berarti perhitungan jarak dilakukan antar objek/data point (baris dalam dataset), bukan antar atribut. Hal ini sesuai dengan konsep matriks dissimilarity, dimana matriks segitiga dihasilkan dari perhitungan jarak antar n titik data. Metric jarak yang dipilih adalah Manhattan (normalized) karena data yang saya pakai memiliki data campuran</p>
+<img src="_static/image-4.png"/>
+<p>Gambar tersebut menampilkan Matriks Dissimilarity (Distance Matrix) yang dihasilkan melalui widget Distance Matrix pada Orange Data Mining. matriks ini berbentuk segitiga (single mode) yang memuat data jarak antar n titik data. Struktur matriks ini bersifat simetris, dimana jarak antara objek i ke objek j sama dengan jarak objek j ke objek i atau d(i,j) = d(j,i), dan memiliki nilai diagonal nol yang menunjukkan jarak objek terhadap dirinya sendiri. nilai dissimilarity dalam matriks ini merupakan ukuran numerik dari perbedaan dua objek data. Interpretasi nilai jarak mengikuti prinsip dimana nilai yang sangat rendah menunjukkan benda yang lebih mirip, sedangkan nilai yang tinggi menunjukkan perbedaan yang besar. Hal ini terlihat jelas pada data pelanggan dalam matriks. Sebagai contoh, jarak antara customer 7590-VHVEG dan 5575-GNVDE adalah 2,074, yang menunjukkan tingkat perbedaan sedang. Namun, customer 7590-VHVEG memiliki nilai jarak yang lebih kecil yaitu 0,554 terhadap customer 3668-QPYBK, yang mengindikasikan bahwa kedua customer tersebut memiliki karakteristik yang sangat mirip.
+Sebaliknya, perbedaan yang signifikan terlihat pada pasangan customer 8091-TTVAX dan 3668-QPYBK yang memiliki nilai jarak sebesar 4,519. Nilai yang besar ini menandakan bahwa kedua objek tersebut sangat berbeda secara karakteristik. Secara keseluruhan, matriks ini memenuhi sifat-sifat jarak yaitu positive definiteness (nilai > 0 untuk objek berbeda), symmetry, dan triangle inequality. Hasil matriks dissimilarity ini menjadi dasar utama untuk tahapan selanjutnya yaitu Hierarchical Clustering dalam mengelompokkan pelanggan berdasarkan kemiripan karakteristiknya.</p>
+<br>
+<img src="_static/image-5.png"/>
+<img src="_static/image-6.png"/>
+<p>Berdasarkan dendrogram, hierarchical 
+clustering dilakukan dengan metode linkage Ward dan 
+menghasilkan 4 cluster optimal. Pemotongan dendrogram 
+dilakukan pada ketinggian tertentu sehingga diperoleh:
+
+Cluster 1: sejumlah X customer,
+Cluster 2: sejumlah X customer,
+Cluster 3: sejumlah X customer,
+Cluster 4: sejumlah X customer,
+
+Metode Ward linkage dipilih karena mampu menghasilkan 
+cluster yang lebih kompak dengan meminimalkan varians 
+dalam setiap cluster.</p>
+
+## implementasikan data iris untuk mengukur jara di orange
+<img src="_static/image-7.png"/>
+
+<p>gambar diatas merupakan sebagian data mentah dari iris untuk diimplementasikan dalam menghitung jarak</p><br>
+<img src="_static/image-8.png"/>
+<p>gambar di atas merupakan hasil dari menghitung jarak pada data iris dimana prosesnya sama dengan yang tadi </p>
+![alt text](image-9.png)
+<img src="_static/image-9.png"/>
+<p>gambar di atas merupakan visualiasi pengukuran jarak pada orange, tetapi sementara saya menggunakan widget csv file impor untuk mengimpor data iris bukan menggunakan sql table karena widget tersebut masih ada erornya atau tidak bisa di pakai dan belum menemukan solusinya</p>
 
 
