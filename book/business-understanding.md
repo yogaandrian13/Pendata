@@ -1,5 +1,6 @@
 # Business Understanding
 
+
 Business Understanding merupakan tahap strategis yang menentukan arah keseluruhan proyek penambangan data. Pada fase ini, organisasi tidak berbicara tentang algoritma, model, atau coding, melainkan tentang tujuan, kebutuhan, serta dampak bisnis yang ingin dicapai.
 
 Dalam praktik nyata, banyak proyek data mining gagal bukan karena kesalahan teknis, tetapi karena ketidaksesuaian antara solusi yang dibangun dengan kebutuhan bisnis. Oleh karena itu, tahap ini berfungsi sebagai fondasi konseptual.
