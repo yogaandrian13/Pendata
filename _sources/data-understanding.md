@@ -221,3 +221,28 @@ Jarak untuk atribut ke-f saja</td>
 </tr>
 </table>
 
+<h2> Cara Menghitung d(f)ij per Tipe Atribut</h2><bf>
+<h3>1. Atribut Nominal atau Binary</h3><br>
+<p>ij(f) = 0, jika xif = xjf  (nilai sama)</p><br>
+<p>dij(f) = 1, jika xif ≠ xjf  (nilai berbeda)</p><br>
+<p>cara penghitungannya Menggunakan metode simple matching.</p><br>
+<h3>2. Atribut Numerik</h3><br>
+<p>Lakukan normalisasi terlebih dahulu agar skala seragam, misalnya dengan:</p><br>
+<img src="_static/image-1.png"/>
+<p>Mean Absolute Deviation: lebih robust terhadap outlier</p><br>
+<p>Setelah dinormalisasi, hitung jarak dengan metode numerik (Euclidean, Manhattan, dll).</p><br>
+<h3>Atribut Ordinal</h3><br>
+<p>Langkah-langkah:
+Ganti nilai dengan ranking 
+r
+i
+f
+​ (misal: rendah=1, sedang=2, tinggi=3)</p><br>
+<img src="_static/image-2.png"/>
+<p>Hitung jarak menggunakan metode numerik pada nilai 
+z
+i
+f
+​</p><br>
+
+
