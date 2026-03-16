@@ -288,155 +288,163 @@ dalam setiap cluster.</p>
 
 ## menyelesaikan Missing values dengan WKNN (manual)  dan code menghitung WKNN
 <h3>Tabel Data Asli untuk mencari missing values</h3>
-<table border="1">
+### Tabel Data Asli untuk mencari missing values
+
+<table border="1" style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 14px;">
   <thead>
-    <tr>
-      <th>No</th>
-      <th>Nama</th>
-      <th>IPK</th>
-      <th>Penghasilan_OT</th>
-      <th>Nilai_Tugas</th>
-      <th></th>
-      <th>No</th>
-      <th>Nama</th>
-      <th>IPK'</th>
-      <th>Penghasilan'</th>
-      <th>Nilai_Tugas</th>
+    <tr style="background-color: #2c3e50; color: white;">
+      <th style="padding: 10px; border: 1px solid #444;">No</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nama</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan_OT</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nilai_Tugas</th>
+      <th style="width: 20px; background-color: #1e1e1e;"></th>
+      <th style="padding: 10px; border: 1px solid #444;">No</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nama</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nilai_Tugas</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>Andi</td>
-      <td>3.50</td>
-      <td>5000</td>
-      <td>80</td>
-      <td></td>
-      <td>1</td>
-      <td>Andi</td>
-      <td>0.7586</td>
-      <td>0.5385</td>
-      <td>80</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">1</td>
+      <td style="padding: 8px; border: 1px solid #444;">Andi</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3.50</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">5000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">80</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">1</td>
+      <td style="padding: 8px; border: 1px solid #444;">Andi</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.7586</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.5385</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">80</td>
     </tr>
     <tr>
-      <td>2</td>
-      <td>Budi</td>
-      <td>2.75</td>
-      <td>2000</td>
-      <td>65</td>
-      <td></td>
-      <td>2</td>
-      <td>Budi</td>
-      <td>0.2414</td>
-      <td>0.0769</td>
-      <td>65</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2</td>
+      <td style="padding: 8px; border: 1px solid #444;">Budi</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2.75</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">65</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2</td>
+      <td style="padding: 8px; border: 1px solid #444;">Budi</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.2414</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.0769</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">65</td>
     </tr>
     <tr>
-      <td>3</td>
-      <td>Citra</td>
-      <td>3.85</td>
-      <td>8000</td>
-      <td>92</td>
-      <td></td>
-      <td>3</td>
-      <td>Citra</td>
-      <td>1.0000</td>
-      <td>1.0000</td>
-      <td>92</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3</td>
+      <td style="padding: 8px; border: 1px solid #444;"><strong>Citra</strong></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3.85</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">8000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">92</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3</td>
+      <td style="padding: 8px; border: 1px solid #444;"><strong>Citra</strong></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">1.0000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">1.0000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">92</td>
     </tr>
     <tr>
-      <td>4</td>
-      <td>Deni</td>
-      <td>2.40</td>
-      <td>1500</td>
-      <td>55</td>
-      <td></td>
-      <td>4</td>
-      <td>Deni</td>
-      <td>0.0000</td>
-      <td>0.0000</td>
-      <td>55</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">4</td>
+      <td style="padding: 8px; border: 1px solid #444;">Deni</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2.40</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">1500</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">55</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">4</td>
+      <td style="padding: 8px; border: 1px solid #444;">Deni</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.0000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.0000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">55</td>
     </tr>
     <tr>
-      <td>5</td>
-      <td>Eva</td>
-      <td>3.10</td>
-      <td>3500</td>
-      <td>75</td>
-      <td></td>
-      <td>5</td>
-      <td>Eva</td>
-      <td>0.4828</td>
-      <td>0.3077</td>
-      <td>75</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">5</td>
+      <td style="padding: 8px; border: 1px solid #444;">Eva</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3.10</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3500</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">75</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">5</td>
+      <td style="padding: 8px; border: 1px solid #444;">Eva</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.4828</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.3077</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">75</td>
     </tr>
     <tr>
-      <td>6</td>
-      <td>Fajar</td>
-      <td>3.60</td>
-      <td>6000</td>
-      <td>85</td>
-      <td></td>
-      <td>6</td>
-      <td>Fajar</td>
-      <td>0.8276</td>
-      <td>0.6923</td>
-      <td>85</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">6</td>
+      <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3.60</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">6000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">85</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">6</td>
+      <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.8276</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.6923</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">85</td>
     </tr>
     <tr>
-      <td>7</td>
-      <td>Gina</td>
-      <td>2.90</td>
-      <td>2500</td>
-      <td>?</td>
-      <td></td>
-      <td>7</td>
-      <td>Gina</td>
-      <td>0.3448</td>
-      <td>0.1538</td>
-      <td>?</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">7</td>
+      <td style="padding: 8px; border: 1px solid #444;">Gina</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2.90</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2500</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">?</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">7</td>
+      <td style="padding: 8px; border: 1px solid #444;">Gina</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.3448</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.1538</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">?</td>
     </tr>
     <tr>
-      <td>8</td>
-      <td>Hadi</td>
-      <td>3.20</td>
-      <td>4000</td>
-      <td>78</td>
-      <td></td>
-      <td>8</td>
-      <td>Hadi</td>
-      <td>0.5517</td>
-      <td>0.3846</td>
-      <td>78</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">8</td>
+      <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3.20</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">4000</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">78</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">8</td>
+      <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.5517</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.3846</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">78</td>
     </tr>
     <tr>
-      <td>9</td>
-      <td>Indah</td>
-      <td>3.75</td>
-      <td>7500</td>
-      <td>88</td>
-      <td></td>
-      <td>9</td>
-      <td>Indah</td>
-      <td>0.9310</td>
-      <td>0.9231</td>
-      <td>88</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">9</td>
+      <td style="padding: 8px; border: 1px solid #444;">Indah</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">3.75</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">7500</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">88</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">9</td>
+      <td style="padding: 8px; border: 1px solid #444;">Indah</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.9310</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.9231</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">88</td>
     </tr>
     <tr>
-      <td>10</td>
-      <td>Joko</td>
-      <td>2.55</td>
-      <td>1800</td>
-      <td>60</td>
-      <td></td>
-      <td>10</td>
-      <td>Joko</td>
-      <td>0.1034</td>
-      <td>0.0462</td>
-      <td>60</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">10</td>
+      <td style="padding: 8px; border: 1px solid #444;">Joko</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">2.55</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">1800</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">60</td>
+      <td style="background-color: #1e1e1e;"></td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">10</td>
+      <td style="padding: 8px; border: 1px solid #444;">Joko</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.1034</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">0.0462</td>
+      <td style="padding: 8px; border: 1px solid #444; text-align: center;">60</td>
     </tr>
   </tbody>
 </table>
+
+<br>
+
+**Keterangan:**
+- **Data Asli (Kiri)**: Data sebelum normalisasi
+- **Data Normalisasi (Kanan)**: Data setelah dinormalisasi menggunakan Min-Max Normalization (skala 0-1)
 
 ### penyelesaian menggunakan WKNN manual
 <h3>Langkah 1: Hitung Jarak dan Kemiripan (s<sub>i</sub>)</h3>
@@ -444,6 +452,61 @@ dalam setiap cluster.</p>
 <p>Gunakan rumus jarak Euclidean untuk data multi-dimensi:</p>
 <p>d² = Σ(x<sub>i</sub> - x<sub>j</sub>)²<br>
 s<sub>i</sub> = 1/d²</p>
+<h3>Perhitungan Jarak ke Semua Baris:</h3>
+
+<p><strong>1. Ke Andi (0.7586, 0.5385):</strong><br>
+d = √(0.3448 - 0.7586)² + (0.1538 - 0.5385)²<br>
+d = √(-0.4138)² + (-0.3847)² = √0.1712 + 0.1480<br>
+d = √0.3192 ≈ <strong>0.5650</strong><br>
+Nilai_Tugas = 80</p>
+
+<p><strong>2. Ke Budi (0.2414, 0.0769):</strong><br>
+d = √(0.3448 - 0.2414)² + (0.1538 - 0.0769)²<br>
+d = √(0.1034)² + (0.0769)² = √0.0107 + 0.0059<br>
+d = √0.0166 ≈ <strong>0.1288</strong><br>
+Nilai_Tugas = 65</p>
+
+<p><strong>3. Ke Citra (1.0000, 1.0000):</strong><br>
+d = √(0.3448 - 1.0)² + (0.1538 - 1.0)²<br>
+d = √(-0.6552)² + (-0.8462)² = √0.4293 + 0.7161<br>
+d = √1.1454 ≈ <strong>1.0703</strong><br>
+Nilai_Tugas = 92</p>
+
+<p><strong>4. Ke Deni (0.0000, 0.0000):</strong><br>
+d = √(0.3448 - 0.0)² + (0.1538 - 0.0)²<br>
+d = √(0.3448)² + (0.1538)² = √0.1189 + 0.0237<br>
+d = √0.1426 ≈ <strong>0.3777</strong><br>
+Nilai_Tugas = 55</p>
+
+<p><strong>5. Ke Eva (0.4828, 0.3077):</strong><br>
+d = √(0.3448 - 0.4828)² + (0.1538 - 0.3077)²<br>
+d = √(-0.1380)² + (-0.1539)² = √0.0190 + 0.0237<br>
+d = √0.0427 ≈ <strong>0.2067</strong><br>
+Nilai_Tugas = 75</p>
+
+<p><strong>6. Ke Fajar (0.8276, 0.6923):</strong><br>
+d = √(0.3448 - 0.8276)² + (0.1538 - 0.6923)²<br>
+d = √(-0.4828)² + (-0.5385)² = √0.2331 + 0.2900<br>
+d = √0.5231 ≈ <strong>0.7233</strong><br>
+Nilai_Tugas = 85</p>
+
+<p><strong>7. Ke Hadi (0.5517, 0.3846):</strong><br>
+d = √(0.3448 - 0.5517)² + (0.1538 - 0.3846)²<br>
+d = √(-0.2069)² + (-0.2308)² = √0.0428 + 0.0533<br>
+d = √0.0961 ≈ <strong>0.2802</strong><br>
+Nilai_Tugas = 78</p>
+
+<p><strong>8. Ke Indah (0.9310, 0.9231):</strong><br>
+d = √(0.3448 - 0.9310)² + (0.1538 - 0.9231)²<br>
+d = √(-0.5862)² + (-0.7693)² = √0.3436 + 0.5918<br>
+d = √0.9354 ≈ <strong>0.9672</strong><br>
+Nilai_Tugas = 88</p>
+
+<p><strong>9. Ke Joko (0.1034, 0.0462):</strong><br>
+d = √(0.3448 - 0.1034)² + (0.1538 - 0.0462)²<br>
+d = √(0.2414)² + (0.1076)² = √0.0583 + 0.0116<br>
+d = √0.0699 ≈ <strong>0.2644</strong><br>
+Nilai_Tugas = 60</p>
 
 <p>Kita hitung untuk 5 tetangga terdekat Gina:</p>
 
@@ -465,7 +528,7 @@ s<sub>i</sub> = 1/d²</p>
       <td style="padding: 8px; border: 1px solid #ddd;">0.0107 + 0.0059 = <strong>0.0166</strong></td>
       <td style="padding: 8px; border: 1px solid #ddd;"><strong>60.2410</strong></td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr >
       <td style="padding: 8px; border: 1px solid #ddd;"><strong>Eva</strong></td>
       <td style="padding: 8px; border: 1px solid #ddd;">0.3448 - 0.4828 = -0.1380</td>
       <td style="padding: 8px; border: 1px solid #ddd;">0.1538 - 0.3077 = -0.1539</td>
@@ -479,7 +542,7 @@ s<sub>i</sub> = 1/d²</p>
       <td style="padding: 8px; border: 1px solid #ddd;">0.0583 + 0.0116 = <strong>0.0699</strong></td>
       <td style="padding: 8px; border: 1px solid #ddd;"><strong>14.3062</strong></td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #ddd;"><strong>Hadi</strong></td>
       <td style="padding: 8px; border: 1px solid #ddd;">0.3448 - 0.5517 = -0.2069</td>
       <td style="padding: 8px; border: 1px solid #ddd;">0.1538 - 0.3846 = -0.2308</td>
