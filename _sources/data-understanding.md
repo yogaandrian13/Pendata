@@ -282,7 +282,7 @@ dalam setiap cluster.</p>
 
 <p>gambar diatas merupakan sebagian data mentah dari iris untuk diimplementasikan dalam menghitung jarak</p><br>
 <img src="_static/image-8.png"/>
-<p>gambar di atas merupakan hasil dari menghitung jarak pada data iris dimana prosesnya sama dengan yang tadi </p>
+<p>gambar di atas merupakan hasil dari menghitung jarak pada data iris dimana prosesnya sama dengan yang tadi </p><br>
 <img src="_static/image-9.png"/>
 <p>gambar di atas merupakan visualiasi pengukuran jarak pada orange, tetapi sementara saya menggunakan widget csv file impor untuk mengimpor data iris bukan menggunakan sql table karena widget tersebut masih ada erornya atau tidak bisa di pakai dan belum menemukan solusinya</p>
 
@@ -630,4 +630,773 @@ for t in top5:
 
 print(f"\n=== HASIL AKHIR ===")
 print(f"Nilai_Tugas Gina = {sum_wv:.2f} / {sum_w:.4f} = {sum_wv/sum_w:.2f}")
+```
+```text
+=== PERHITUNGAN JARAK (EUCLIDEAN DISTANCE) ===
+Ke Budi   -> Jarak = 0.1289 | Nilai_Tugas = 65
+Ke Eva    -> Jarak = 0.2067 | Nilai_Tugas = 75
+Ke Joko   -> Jarak = 0.2643 | Nilai_Tugas = 60
+Ke Hadi   -> Jarak = 0.3100 | Nilai_Tugas = 78
+Ke Deni   -> Jarak = 0.3775 | Nilai_Tugas = 55
+Ke Andi   -> Jarak = 0.5650 | Nilai_Tugas = 80
+Ke Fajar  -> Jarak = 0.7232 | Nilai_Tugas = 85
+Ke Indah  -> Jarak = 0.9672 | Nilai_Tugas = 88
+Ke Citra  -> Jarak = 1.0702 | Nilai_Tugas = 92
+
+=== PERHITUNGAN BOBOT WKNN (K=5) ===
+Budi   (nilai=65) | d=0.1289 | w=7.7603 | w×v=504.42
+Eva    (nilai=75) | d=0.2067 | w=4.8377 | w×v=362.83
+Joko   (nilai=60) | d=0.2643 | w=3.7837 | w×v=227.02
+Hadi   (nilai=78) | d=0.3100 | w=3.2262 | w×v=251.64
+Deni   (nilai=55) | d=0.3775 | w=2.6487 | w×v=145.68
+
+=== HASIL AKHIR ===
+Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
+```
+
+
+
+## Normalisasi data
+
+<p>Normalisasi data adalah teknik pra-pemrosesan yang sangat penting dalam <em>data mining</em> dan <em>machine learning</em>. Tujuannya adalah menyamakan skala seluruh variabel/fitur agar tidak ada satu atribut pun yang mendominasi atribut lain hanya karena memiliki rentang angka yang lebih besar (misalnya, membandingkan atribut <strong>Penghasilan Orang Tua</strong> dalam ribuan dengan <strong>IPK</strong> dalam satuan kecil 2–4).</p>
+
+<p><strong>Misal kita punya data mahasiswa: X = [IPK, Penghasilan_OT, Nilai_UAS, Jarak_Kampus]</strong></p>
+<p>Berikut adalah tiga teknik normalisasi data yang paling sering digunakan:</p>
+<h2>Dataset Sebelum Normalisasi</h2>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="background-color: #2c3e50; color: white;">
+      <th style="padding: 10px; border: 1px solid #444;">No</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nama</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan_OT (rb)</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nilai_UAS</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak_Kampus (km)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">1</td>
+      <td style="padding: 8px; border: 1px solid #444;">Andi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.50</td>
+      <td style="padding: 8px; border: 1px solid #444;">5000</td>
+      <td style="padding: 8px; border: 1px solid #444;">85</td>
+      <td style="padding: 8px; border: 1px solid #444;">10</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">2</td>
+      <td style="padding: 8px; border: 1px solid #444;">Budi</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">2000</td>
+      <td style="padding: 8px; border: 1px solid #444;">65</td>
+      <td style="padding: 8px; border: 1px solid #444;">25</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">3</td>
+      <td style="padding: 8px; border: 1px solid #444;">Citra</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.85</td>
+      <td style="padding: 8px; border: 1px solid #444;">8000</td>
+      <td style="padding: 8px; border: 1px solid #444;">92</td>
+      <td style="padding: 8px; border: 1px solid #444;">5</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">4</td>
+      <td style="padding: 8px; border: 1px solid #444;">Deni</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.40</td>
+      <td style="padding: 8px; border: 1px solid #444;">1500</td>
+      <td style="padding: 8px; border: 1px solid #444;">55</td>
+      <td style="padding: 8px; border: 1px solid #444;">40</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">5</td>
+      <td style="padding: 8px; border: 1px solid #444;">Eva</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.10</td>
+      <td style="padding: 8px; border: 1px solid #444;">3500</td>
+      <td style="padding: 8px; border: 1px solid #444;">78</td>
+      <td style="padding: 8px; border: 1px solid #444;">15</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">6</td>
+      <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.60</td>
+      <td style="padding: 8px; border: 1px solid #444;">6000</td>
+      <td style="padding: 8px; border: 1px solid #444;">88</td>
+      <td style="padding: 8px; border: 1px solid #444;">8</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">7</td>
+      <td style="padding: 8px; border: 1px solid #444;">Gina</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.90</td>
+      <td style="padding: 8px; border: 1px solid #444;">2500</td>
+      <td style="padding: 8px; border: 1px solid #444;">70</td>
+      <td style="padding: 8px; border: 1px solid #444;">30</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">8</td>
+      <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.20</td>
+      <td style="padding: 8px; border: 1px solid #444;">4000</td>
+      <td style="padding: 8px; border: 1px solid #444;">80</td>
+      <td style="padding: 8px; border: 1px solid #444;">12</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">9</td>
+      <td style="padding: 8px; border: 1px solid #444;">Indah</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">7500</td>
+      <td style="padding: 8px; border: 1px solid #444;">90</td>
+      <td style="padding: 8px; border: 1px solid #444;">6</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">10</td>
+      <td style="padding: 8px; border: 1px solid #444;">Joko</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.55</td>
+      <td style="padding: 8px; border: 1px solid #444;">1800</td>
+      <td style="padding: 8px; border: 1px solid #444;">60</td>
+      <td style="padding: 8px; border: 1px solid #444;">35</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>1. Min-Max Normalization</h2>
+
+<p>Metode ini digunakan untuk menyesuaikan nilai data agar berada dalam rentang tertentu, biasanya <strong>0 sampai 1</strong>. Teknik ini sering dipakai pada algoritma yang menghitung jarak antar data, misalnya pada <em>K-Means Clustering</em> dan <em>K-Nearest Neighbor</em>.</p>
+
+<ul>
+  <li><strong>Kelebihan:</strong> Hubungan antar nilai data tetap terjaga. Output selalu dalam rentang [0, 1].</li>
+  <li><strong>Kelemahan:</strong> Mudah terpengaruh oleh <em>outlier</em> — jika ada satu data yang nilainya jauh melebihi lainnya, semua data lain akan terkompresi mendekati 0.</li>
+  <li><strong>Rumus:</strong></li>
+</ul>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  x' = (x - x<sub>min</sub>) / (x<sub>max</sub> - x<sub>min</sub>)
+</div>
+
+<h3>Contoh</h3>
+
+<p>Mengubah nilai data agar berada pada rentang <strong>0 sampai 1</strong>. Kolom <strong>IPK</strong>, mahasiswa <strong>Andi (IPK = 3.50)</strong>:</p>
+
+<ul>
+  <li>Nilai minimum IPK: <strong>x<sub>min</sub> = 2.40</strong> (Deni)</li>
+  <li>Nilai maksimum IPK: <strong>x<sub>max</sub> = 3.85</strong> (Citra)</li>
+  <li>Contoh hitung (IPK Andi = 3.50):</li>
+</ul>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  IPK'<sub>Andi</sub> = (3.50 - 2.40) / (3.85 - 2.40) = 1.10 / 1.45 ≈ <strong>0.7586</strong>
+</div>
+
+<p>Artinya, IPK Andi berada di posisi <strong>75.86%</strong> dari rentang nilai terendah ke tertinggi. Nilai <strong>0</strong> dimiliki Deni (terendah) dan nilai <strong>1</strong> dimiliki Citra (tertinggi).</p>
+
+<h3>Tabel Sebelum (kiri) dan Sesudah Min-Max Normalization (kanan):</h3>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="background-color: #2c3e50; color: white;">
+      <th style="padding: 10px; border: 1px solid #444;">Nama</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan_OT</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nilai_UAS</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak_Km</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan'</th>
+      <th style="padding: 10px; border: 1px solid #444;">UAS'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="font-weight: bold;">
+      <td style="padding: 8px; border: 1px solid #444;">Andi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.50</td>
+      <td style="padding: 8px; border: 1px solid #444;">5000</td>
+      <td style="padding: 8px; border: 1px solid #444;">85</td>
+      <td style="padding: 8px; border: 1px solid #444;">10</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.7586</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.5385</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8108</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1429</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Budi</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">2000</td>
+      <td style="padding: 8px; border: 1px solid #444;">65</td>
+      <td style="padding: 8px; border: 1px solid #444;">25</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2414</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0769</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2703</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.5714</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Citra</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.85</td>
+      <td style="padding: 8px; border: 1px solid #444;">8000</td>
+      <td style="padding: 8px; border: 1px solid #444;">92</td>
+      <td style="padding: 8px; border: 1px solid #444;">5</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.0000</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.0000</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.0000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0000</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Deni</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.40</td>
+      <td style="padding: 8px; border: 1px solid #444;">1500</td>
+      <td style="padding: 8px; border: 1px solid #444;">55</td>
+      <td style="padding: 8px; border: 1px solid #444;">40</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0000</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.0000</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Eva</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.10</td>
+      <td style="padding: 8px; border: 1px solid #444;">3500</td>
+      <td style="padding: 8px; border: 1px solid #444;">78</td>
+      <td style="padding: 8px; border: 1px solid #444;">15</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.4828</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3077</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.6216</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2857</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.60</td>
+      <td style="padding: 8px; border: 1px solid #444;">6000</td>
+      <td style="padding: 8px; border: 1px solid #444;">88</td>
+      <td style="padding: 8px; border: 1px solid #444;">8</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8276</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.6923</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8919</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0857</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Gina</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.90</td>
+      <td style="padding: 8px; border: 1px solid #444;">2500</td>
+      <td style="padding: 8px; border: 1px solid #444;">70</td>
+      <td style="padding: 8px; border: 1px solid #444;">30</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3448</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1538</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.4054</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.7143</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.20</td>
+      <td style="padding: 8px; border: 1px solid #444;">4000</td>
+      <td style="padding: 8px; border: 1px solid #444;">80</td>
+      <td style="padding: 8px; border: 1px solid #444;">12</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.5517</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3846</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.6757</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2000</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Indah</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">7500</td>
+      <td style="padding: 8px; border: 1px solid #444;">90</td>
+      <td style="padding: 8px; border: 1px solid #444;">6</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.9310</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.9231</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.9459</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0286</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Joko</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.55</td>
+      <td style="padding: 8px; border: 1px solid #444;">1800</td>
+      <td style="padding: 8px; border: 1px solid #444;">60</td>
+      <td style="padding: 8px; border: 1px solid #444;">35</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1034</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0462</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1351</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8571</td>
+    </tr>
+  </tbody>
+</table>
+<div style="background-color: #34495e; color: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+  <p style="margin: 0;"><strong>Baris Andi (tebal)</strong> = contoh yang dihitung manual di atas. Citra mendapat <strong>1.0000</strong> karena nilai tertinggi, Deni mendapat <strong>0.0000</strong> karena nilai terendah.</p>
+</div>
+
+<h3>Min-Max New (Custom Range)</h3>
+
+<p>Min-Max juga bisa digunakan untuk mengubah data ke <strong>rentang baru yang kita tentukan sendiri</strong>, misalnya 0–10, −1 sampai 1, atau rentang lainnya.</p>
+
+<ul>
+  <li><strong>Rumus:</strong></li>
+</ul>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  x' = (x - x<sub>min</sub>) / (x<sub>max</sub> - x<sub>min</sub>) × (New<sub>max</sub> - New<sub>min</sub>) + New<sub>min</sub>
+</div>
+
+<h4>Contoh</h4>
+
+<p>Misalnya IPK Andi ingin diubah ke rentang <strong>0 sampai 10</strong>:</p>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  IPK'<sub>Andi</sub> = (3.50 - 2.40) / (3.85 - 2.40) × (10 - 0) + 0 = 1.10 / 1.45 × 10 ≈ <strong>7.586</strong>
+</div>
+
+<hr>
+
+<h2>2. Z-Score Normalization</h2>
+
+<p>Teknik ini mengubah data sehingga nilai rata-rata (<em>mean</em>) menjadi <strong>0</strong> dan standar deviasi menjadi <strong>1</strong>. Metode ini sering digunakan ketika data memiliki skala yang berbeda atau terdapat <em>outlier</em>.</p>
+
+<ul>
+  <li><strong>Kelebihan:</strong> Lebih tahan terhadap <em>outlier</em> dibanding Min-Max karena mempertimbangkan penyebaran data.</li>
+  <li><strong>Kelemahan:</strong> Hasil normalisasi tidak memiliki batas rentang tetap seperti 0 sampai 1.</li>
+  <li><strong>Rumus:</strong></li>
+</ul>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  x' = (x - μ) / σ
+</div>
+
+<p><em>(Keterangan: μ adalah rata-rata dan σ adalah standar deviasi)</em></p>
+
+<h3>Contoh</h3>
+
+<p>Tujuan: mengubah data sehingga <strong>mean = 0</strong> dan <strong>standar deviasi = 1</strong>. Kolom <strong>IPK</strong>, mahasiswa <strong>Andi (IPK = 3.50)</strong>:</p>
+
+<h4>Langkah 1 — Hitung rata-rata (μ):</h4>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  μ = (3.50 + 2.75 + 3.85 + 2.40 + 3.10 + 3.60 + 2.90 + 3.20 + 3.75 + 2.55) / 10 = <strong>3.16</strong>
+</div>
+
+<h4>Langkah 2 — Hitung standar deviasi (σ):</h4>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  σ = √[Σ(x - μ)² / (n - 1)] = <strong>0.5082</strong>
+</div>
+
+<h4>Langkah 3 — Masukkan ke rumus Z-Score:</h4>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  IPK'<sub>Andi</sub> = (3.50 - 3.16) / 0.5082 = 0.34 / 0.5082 ≈ <strong>0.6691</strong>
+</div>
+
+<p>Nilai positif berarti IPK Andi berada <strong>0.6691 standar deviasi di atas rata-rata</strong>. Jika hasilnya negatif seperti Budi (−0.8068), berarti IPK Budi berada di bawah rata-rata kelompok.</p>
+
+<h3>Tabel Sebelum (kiri) dan Sesudah Z-Score Normalization (kanan):</h3>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="background-color: #2c3e50; color: white;">
+      <th style="padding: 10px; border: 1px solid #444;">Nama</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan_OT</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nilai_UAS</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak_Km</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan'</th>
+      <th style="padding: 10px; border: 1px solid #444;">UAS'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="font-weight: bold;">
+      <td style="padding: 8px; border: 1px solid #444;">Andi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.50</td>
+      <td style="padding: 8px; border: 1px solid #444;">5000</td>
+      <td style="padding: 8px; border: 1px solid #444;">85</td>
+      <td style="padding: 8px; border: 1px solid #444;">10</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.6691</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3461</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.6629</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.6696</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Budi</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">2000</td>
+      <td style="padding: 8px; border: 1px solid #444;">65</td>
+      <td style="padding: 8px; border: 1px solid #444;">25</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.8068</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.9202</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.8610</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.4983</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Citra</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.85</td>
+      <td style="padding: 8px; border: 1px solid #444;">8000</td>
+      <td style="padding: 8px; border: 1px solid #444;">92</td>
+      <td style="padding: 8px; border: 1px solid #444;">5</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.3579</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.6124</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.1963</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.0590</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Deni</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.40</td>
+      <td style="padding: 8px; border: 1px solid #444;">1500</td>
+      <td style="padding: 8px; border: 1px solid #444;">55</td>
+      <td style="padding: 8px; border: 1px solid #444;">40</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.4956</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.1312</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.6230</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.6663</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Eva</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.10</td>
+      <td style="padding: 8px; border: 1px solid #444;">3500</td>
+      <td style="padding: 8px; border: 1px solid #444;">78</td>
+      <td style="padding: 8px; border: 1px solid #444;">15</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.1181</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.2870</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1295</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.2803</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.60</td>
+      <td style="padding: 8px; border: 1px solid #444;">6000</td>
+      <td style="padding: 8px; border: 1px solid #444;">88</td>
+      <td style="padding: 8px; border: 1px solid #444;">8</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8659</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.7682</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8915</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.8254</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Gina</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.90</td>
+      <td style="padding: 8px; border: 1px solid #444;">2500</td>
+      <td style="padding: 8px; border: 1px solid #444;">70</td>
+      <td style="padding: 8px; border: 1px solid #444;">30</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.5117</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.7091</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.4800</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8877</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.20</td>
+      <td style="padding: 8px; border: 1px solid #444;">4000</td>
+      <td style="padding: 8px; border: 1px solid #444;">80</td>
+      <td style="padding: 8px; border: 1px solid #444;">12</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.0787</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.0760</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2819</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.5139</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Indah</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">7500</td>
+      <td style="padding: 8px; border: 1px solid #444;">90</td>
+      <td style="padding: 8px; border: 1px solid #444;">6</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.1611</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.4013</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.0439</td>
+      <td style="padding: 8px; border: 1px solid #444;">−0.9811</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Joko</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.55</td>
+      <td style="padding: 8px; border: 1px solid #444;">1800</td>
+      <td style="padding: 8px; border: 1px solid #444;">60</td>
+      <td style="padding: 8px; border: 1px solid #444;">35</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.2004</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.0046</td>
+      <td style="padding: 8px; border: 1px solid #444;">−1.2420</td>
+      <td style="padding: 8px; border: 1px solid #444;">1.2770</td>
+    </tr>
+  </tbody>
+</table>
+<div style="background-color: #34495e; color: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+  <p style="margin: 0;">Nilai <strong>positif</strong> = di atas rata-rata. Nilai <strong>negatif</strong> = di bawah rata-rata. Baris <strong>Andi</strong> (tebal) = contoh perhitungan manual di atas.</p>
+</div>
+
+<h2>3. Decimal Scaling</h2>
+
+<p>Teknik ini bekerja dengan menggeser titik desimal dari nilai data. Jumlah pergeseran desimal bergantung pada nilai absolut maksimum di dalam atribut tersebut. Ini adalah metode normalisasi yang <strong>paling mudah dihitung secara manual</strong>.</p>
+
+<ul>
+  <li><strong>Kelebihan:</strong> Sederhana dan mudah dihitung, tidak perlu menghitung mean atau std.</li>
+  <li><strong>Kelemahan:</strong> Tidak mempertimbangkan distribusi data secara keseluruhan.</li>
+  <li><strong>Rumus:</strong></li>
+</ul>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  x' = x / 10<sup>j</sup>
+</div>
+
+<p><em>(Keterangan: j adalah bilangan bulat terkecil sehingga nilai mutlak maksimum dari x' kurang dari 1)</em></p>
+
+<h3>Contoh</h3>
+
+<p>Menggeser koma desimal. Pembaginya ditentukan oleh jumlah digit nilai terbesar di setiap kolom supaya nilai akhirnya kurang dari 1:</p>
+
+<p><strong>Kolom IPK</strong> — nilai terbesar = 3.85, bagian bulat = 3 → <strong>1 digit</strong> → j = 1 → dibagi 10<sup>1</sup> = 10:</p>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  IPK'<sub>Andi</sub> = 3.50 / 10 = <strong>0.350</strong>
+</div>
+
+<p><strong>Kolom Penghasilan_OT</strong> — nilai terbesar = 8000 → <strong>4 digit</strong> → j = 4 → dibagi 10<sup>4</sup> = 10.000:</p>
+
+<div style="text-align: center; margin: 20px 0; font-size: 18px;">
+  Penghasilan'<sub>Andi</sub> = 5000 / 10000 = <strong>0.5000</strong>
+</div>
+
+<p>Nilai <em>j</em> yang digunakan per kolom:</p>
+<ul>
+  <li><strong>IPK:</strong> maks = 3.85 → j = 1 → dibagi <strong>10</strong></li>
+  <li><strong>Penghasilan_OT:</strong> maks = 8000 → j = 4 → dibagi <strong>10.000</strong></li>
+  <li><strong>Nilai_UAS:</strong> maks = 92 → j = 2 → dibagi <strong>100</strong></li>
+  <li><strong>Jarak_Kampus:</strong> maks = 40 → j = 2 → dibagi <strong>100</strong></li>
+</ul>
+
+<h3>Tabel Sebelum (kiri) dan Sesudah Decimal Scaling (kanan):</h3>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="background-color: #2c3e50; color: white;">
+      <th style="padding: 10px; border: 1px solid #444;">Nama</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan_OT</th>
+      <th style="padding: 10px; border: 1px solid #444;">Nilai_UAS</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak_Km</th>
+      <th style="padding: 10px; border: 1px solid #444;">IPK'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Penghasilan'</th>
+      <th style="padding: 10px; border: 1px solid #444;">UAS'</th>
+      <th style="padding: 10px; border: 1px solid #444;">Jarak'</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="font-weight: bold;">
+      <td style="padding: 8px; border: 1px solid #444;">Andi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.50</td>
+      <td style="padding: 8px; border: 1px solid #444;">5000</td>
+      <td style="padding: 8px; border: 1px solid #444;">85</td>
+      <td style="padding: 8px; border: 1px solid #444;">10</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3500</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.5000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.85</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.10</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Budi</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">2000</td>
+      <td style="padding: 8px; border: 1px solid #444;">65</td>
+      <td style="padding: 8px; border: 1px solid #444;">25</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2750</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.65</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.25</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Citra</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.85</td>
+      <td style="padding: 8px; border: 1px solid #444;">8000</td>
+      <td style="padding: 8px; border: 1px solid #444;">92</td>
+      <td style="padding: 8px; border: 1px solid #444;">5</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3850</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.8000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.92</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.05</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Deni</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.40</td>
+      <td style="padding: 8px; border: 1px solid #444;">1500</td>
+      <td style="padding: 8px; border: 1px solid #444;">55</td>
+      <td style="padding: 8px; border: 1px solid #444;">40</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2400</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1500</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.55</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.40</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Eva</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.10</td>
+      <td style="padding: 8px; border: 1px solid #444;">3500</td>
+      <td style="padding: 8px; border: 1px solid #444;">78</td>
+      <td style="padding: 8px; border: 1px solid #444;">15</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3100</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3500</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.78</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.15</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.60</td>
+      <td style="padding: 8px; border: 1px solid #444;">6000</td>
+      <td style="padding: 8px; border: 1px solid #444;">88</td>
+      <td style="padding: 8px; border: 1px solid #444;">8</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3600</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.6000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.88</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.08</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Gina</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.90</td>
+      <td style="padding: 8px; border: 1px solid #444;">2500</td>
+      <td style="padding: 8px; border: 1px solid #444;">70</td>
+      <td style="padding: 8px; border: 1px solid #444;">30</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2900</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2500</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.70</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.30</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.20</td>
+      <td style="padding: 8px; border: 1px solid #444;">4000</td>
+      <td style="padding: 8px; border: 1px solid #444;">80</td>
+      <td style="padding: 8px; border: 1px solid #444;">12</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3200</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.4000</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.80</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.12</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #444;">Indah</td>
+      <td style="padding: 8px; border: 1px solid #444;">3.75</td>
+      <td style="padding: 8px; border: 1px solid #444;">7500</td>
+      <td style="padding: 8px; border: 1px solid #444;">90</td>
+      <td style="padding: 8px; border: 1px solid #444;">6</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.3750</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.7500</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.90</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.06</td>
+    </tr>
+    <tr style="background-color: #f2f2f2;">
+      <td style="padding: 8px; border: 1px solid #444;">Joko</td>
+      <td style="padding: 8px; border: 1px solid #444;">2.55</td>
+      <td style="padding: 8px; border: 1px solid #444;">1800</td>
+      <td style="padding: 8px; border: 1px solid #444;">60</td>
+      <td style="padding: 8px; border: 1px solid #444;">35</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.2550</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.1800</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.60</td>
+      <td style="padding: 8px; border: 1px solid #444;">0.35</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="background-color: #34495e; color: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+  <p style="margin: 0;"><strong>Baris Andi (tebal)</strong> = contoh yang dihitung manual di atas.</p>
+</div>
+
+<h2>Implementasi dengan Sklearn dan Fungsi Kustom</h2>
+
+<p>Berikut adalah script Python menggunakan <code>scikit-learn</code> untuk Min-Max dan Z-Score, serta fungsi manual untuk Decimal Scaling.</p>
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+
+# Data asli mahasiswa
+data = {
+    'Nama':           ['Andi','Budi','Citra','Deni','Eva','Fajar','Gina','Hadi','Indah','Joko'],
+    'IPK':            [3.50, 2.75, 3.85, 2.40, 3.10, 3.60, 2.90, 3.20, 3.75, 2.55],
+    'Penghasilan_OT': [5000, 2000, 8000, 1500, 3500, 6000, 2500, 4000, 7500, 1800],
+    'Nilai_UAS':      [85, 65, 92, 55, 78, 88, 70, 80, 90, 60],
+    'Jarak_Kampus':   [10, 25, 5, 40, 15, 8, 30, 12, 6, 35]
+}
+df    = pd.DataFrame(data)
+fitur = ['IPK', 'Penghasilan_OT', 'Nilai_UAS', 'Jarak_Kampus']
+
+print("Data Asli:")
+print(df.to_string(index=False))
+
+# 1. Min-Max Scaling (Sklearn)
+minmax_scaler = MinMaxScaler()
+X_minmax = minmax_scaler.fit_transform(df[fitur])
+print("\n1. Hasil Min-Max Scaling:")
+print(X_minmax.round(4))
+
+# 2. Z-Score / Standardization (Sklearn)
+standard_scaler = StandardScaler()
+X_standard = standard_scaler.fit_transform(df[fitur])
+print("\n2. Hasil Z-Score (Standardization):")
+print(X_standard.round(4))
+
+# 3. Decimal Scaling (Custom Function)
+def decimal_scaling(df_input, cols):
+    """
+    Melakukan decimal scaling pada setiap kolom numerik.
+    Nilai dibagi dengan 10^j, di mana j adalah jumlah digit
+    dari nilai absolut terbesar pada kolom tersebut.
+    """
+    result = df_input.copy()
+    for col in cols:
+        max_abs = result[col].abs().max()
+        j = len(str(int(max_abs)))          # Jumlah digit nilai maks
+        result[col] = (result[col] / (10 ** j)).round(4)
+        print(f"  Kolom '{col}': nilai maks = {max_abs}, j = {j}, dibagi {10**j}")
+    return result
+
+print("\n3. Decimal Scaling (Fungsi Manual):")
+df_decimal = decimal_scaling(df, fitur)
+print(df_decimal.to_string(index=False))
+```
+```text
+Data Asli:
+ Nama  IPK  Penghasilan_OT  Nilai_UAS  Jarak_Kampus
+ Andi 3.50            5000         85            10
+ Budi 2.75            2000         65            25
+Citra 3.85            8000         92             5
+ Deni 2.40            1500         55            40
+  Eva 3.10            3500         78            15
+Fajar 3.60            6000         88             8
+ Gina 2.90            2500         70            30
+ Hadi 3.20            4000         80            12
+Indah 3.75            7500         90             6
+ Joko 2.55            1800         60            35
+
+1. Hasil Min-Max Scaling:
+[[0.7586 0.5385 0.8108 0.1429]
+ [0.2414 0.0769 0.2703 0.5714]
+ [1.     1.     1.     0.    ]
+ [0.     0.     0.     1.    ]
+ [0.4828 0.3077 0.6216 0.2857]
+ [0.8276 0.6923 0.8919 0.0857]
+ [0.3448 0.1538 0.4054 0.7143]
+ [0.5517 0.3846 0.6757 0.2   ]
+ [0.931  0.9231 0.9459 0.0286]
+ [0.1034 0.0462 0.1351 0.8571]]
+
+2. Hasil Z-Score (Standardization):
+[[ 0.7053  0.3648  0.6988 -0.7059]
+ [-0.8505 -0.9699 -0.9076  0.5253]
+ [ 1.4313  1.6996  1.261  -1.1163]
+ [-1.5765 -1.1924 -1.7108  1.7565]
+ [-0.1245 -0.3025  0.1365 -0.2955]
+ [ 0.9127  0.8098  0.9397 -0.87  ]
+ [-0.5393 -0.7475 -0.506   0.9357]
+ [ 0.083  -0.0801  0.2972 -0.5417]
+ [ 1.2239  1.4771  1.1004 -1.0342]
+ [-1.2654 -1.0589 -1.3092  1.3461]]
+
+3. Decimal Scaling (Fungsi Manual):
+  Kolom 'IPK': nilai maks = 3.85, j = 1, dibagi 10
+  Kolom 'Penghasilan_OT': nilai maks = 8000, j = 4, dibagi 10000
+  Kolom 'Nilai_UAS': nilai maks = 92, j = 2, dibagi 100
+  Kolom 'Jarak_Kampus': nilai maks = 40, j = 2, dibagi 100
+ Nama   IPK  Penghasilan_OT  Nilai_UAS  Jarak_Kampus
+ Andi 0.350            0.50       0.85          0.10
+ Budi 0.275            0.20       0.65          0.25
+Citra 0.385            0.80       0.92          0.05
+ Deni 0.240            0.15       0.55          0.40
+  Eva 0.310            0.35       0.78          0.15
+Fajar 0.360            0.60       0.88          0.08
+ Gina 0.290            0.25       0.70          0.30
+ Hadi 0.320            0.40       0.80          0.12
+Indah 0.375            0.75       0.90          0.06
+ Joko 0.255            0.18       0.60          0.35
 ```
