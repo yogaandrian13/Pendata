@@ -288,7 +288,6 @@ dalam setiap cluster.</p>
 
 ## menyelesaikan Missing values dengan WKNN (manual)  dan code menghitung WKNN
 <h3>Tabel Data Asli untuk mencari missing values</h3>
-### Tabel Data Asli untuk mencari missing values
 
 <table border="1" style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; font-size: 14px;">
   <thead>
