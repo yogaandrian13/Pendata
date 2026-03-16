@@ -684,7 +684,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">85</td>
       <td style="padding: 8px; border: 1px solid #444;">10</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">2</td>
       <td style="padding: 8px; border: 1px solid #444;">Budi</td>
       <td style="padding: 8px; border: 1px solid #444;">2.75</td>
@@ -700,7 +700,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">92</td>
       <td style="padding: 8px; border: 1px solid #444;">5</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">4</td>
       <td style="padding: 8px; border: 1px solid #444;">Deni</td>
       <td style="padding: 8px; border: 1px solid #444;">2.40</td>
@@ -716,7 +716,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">78</td>
       <td style="padding: 8px; border: 1px solid #444;">15</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">6</td>
       <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
       <td style="padding: 8px; border: 1px solid #444;">3.60</td>
@@ -732,7 +732,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">70</td>
       <td style="padding: 8px; border: 1px solid #444;">30</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">8</td>
       <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
       <td style="padding: 8px; border: 1px solid #444;">3.20</td>
@@ -748,7 +748,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">90</td>
       <td style="padding: 8px; border: 1px solid #444;">6</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">10</td>
       <td style="padding: 8px; border: 1px solid #444;">Joko</td>
       <td style="padding: 8px; border: 1px solid #444;">2.55</td>
@@ -817,7 +817,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.8108</td>
       <td style="padding: 8px; border: 1px solid #444;">0.1429</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Budi</td>
       <td style="padding: 8px; border: 1px solid #444;">2.75</td>
       <td style="padding: 8px; border: 1px solid #444;">2000</td>
@@ -839,7 +839,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">1.0000</td>
       <td style="padding: 8px; border: 1px solid #444;">0.0000</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr >
       <td style="padding: 8px; border: 1px solid #444;">Deni</td>
       <td style="padding: 8px; border: 1px solid #444;">2.40</td>
       <td style="padding: 8px; border: 1px solid #444;">1500</td>
@@ -861,7 +861,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.6216</td>
       <td style="padding: 8px; border: 1px solid #444;">0.2857</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
       <td style="padding: 8px; border: 1px solid #444;">3.60</td>
       <td style="padding: 8px; border: 1px solid #444;">6000</td>
@@ -883,7 +883,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.4054</td>
       <td style="padding: 8px; border: 1px solid #444;">0.7143</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
       <td style="padding: 8px; border: 1px solid #444;">3.20</td>
       <td style="padding: 8px; border: 1px solid #444;">4000</td>
@@ -905,7 +905,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.9459</td>
       <td style="padding: 8px; border: 1px solid #444;">0.0286</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr >
       <td style="padding: 8px; border: 1px solid #444;">Joko</td>
       <td style="padding: 8px; border: 1px solid #444;">2.55</td>
       <td style="padding: 8px; border: 1px solid #444;">1800</td>
@@ -1012,7 +1012,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.6629</td>
       <td style="padding: 8px; border: 1px solid #444;">−0.6696</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Budi</td>
       <td style="padding: 8px; border: 1px solid #444;">2.75</td>
       <td style="padding: 8px; border: 1px solid #444;">2000</td>
@@ -1034,7 +1034,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">1.1963</td>
       <td style="padding: 8px; border: 1px solid #444;">−1.0590</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Deni</td>
       <td style="padding: 8px; border: 1px solid #444;">2.40</td>
       <td style="padding: 8px; border: 1px solid #444;">1500</td>
@@ -1056,7 +1056,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.1295</td>
       <td style="padding: 8px; border: 1px solid #444;">−0.2803</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
       <td style="padding: 8px; border: 1px solid #444;">3.60</td>
       <td style="padding: 8px; border: 1px solid #444;">6000</td>
@@ -1078,7 +1078,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">−0.4800</td>
       <td style="padding: 8px; border: 1px solid #444;">0.8877</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
       <td style="padding: 8px; border: 1px solid #444;">3.20</td>
       <td style="padding: 8px; border: 1px solid #444;">4000</td>
@@ -1100,7 +1100,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">1.0439</td>
       <td style="padding: 8px; border: 1px solid #444;">−0.9811</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Joko</td>
       <td style="padding: 8px; border: 1px solid #444;">2.55</td>
       <td style="padding: 8px; border: 1px solid #444;">1800</td>
@@ -1185,7 +1185,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.85</td>
       <td style="padding: 8px; border: 1px solid #444;">0.10</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Budi</td>
       <td style="padding: 8px; border: 1px solid #444;">2.75</td>
       <td style="padding: 8px; border: 1px solid #444;">2000</td>
@@ -1207,7 +1207,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.92</td>
       <td style="padding: 8px; border: 1px solid #444;">0.05</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Deni</td>
       <td style="padding: 8px; border: 1px solid #444;">2.40</td>
       <td style="padding: 8px; border: 1px solid #444;">1500</td>
@@ -1229,7 +1229,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.78</td>
       <td style="padding: 8px; border: 1px solid #444;">0.15</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Fajar</td>
       <td style="padding: 8px; border: 1px solid #444;">3.60</td>
       <td style="padding: 8px; border: 1px solid #444;">6000</td>
@@ -1251,7 +1251,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.70</td>
       <td style="padding: 8px; border: 1px solid #444;">0.30</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Hadi</td>
       <td style="padding: 8px; border: 1px solid #444;">3.20</td>
       <td style="padding: 8px; border: 1px solid #444;">4000</td>
@@ -1273,7 +1273,7 @@ Nilai_Tugas Gina = 1491.59 / 22.2565 = 67.02
       <td style="padding: 8px; border: 1px solid #444;">0.90</td>
       <td style="padding: 8px; border: 1px solid #444;">0.06</td>
     </tr>
-    <tr style="background-color: #f2f2f2;">
+    <tr>
       <td style="padding: 8px; border: 1px solid #444;">Joko</td>
       <td style="padding: 8px; border: 1px solid #444;">2.55</td>
       <td style="padding: 8px; border: 1px solid #444;">1800</td>
