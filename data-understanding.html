@@ -336,7 +336,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisi-mengunakan-orange-data-mining-untuk-data-yang-campuran">analisi mengunakan orange data mining untuk data yang campuran</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasikan-data-iris-untuk-mengukur-jara-di-orange">implementasikan data iris untuk mengukur jara di orange</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyelesaikan-missing-values-dengan-wknn-manual-dan-code-menghitung-wknn">menyelesaikan Missing values dengan WKNN (manual)  dan code menghitung WKNN</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyelesaian-menggunakan-wknn-manual">penyelesaian menggunakan WKNN manual</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyelesaian-missing-values-menggunakan-wknn-manual">penyelesaian missing values menggunakan WKNN (manual)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyelesaian-missing-values-menggunakan-wknn-code">penyelesaian missing values menggunakan WKNN (code)</a></li>
 </ul>
 </li>
 </ul>
@@ -784,8 +785,8 @@ dalam setiap cluster.</p></p>
 <li><p><strong>Data Asli (Kiri)</strong>: Data sebelum normalisasi</p></li>
 <li><p><strong>Data Normalisasi (Kanan)</strong>: Data setelah dinormalisasi menggunakan Min-Max Normalization (skala 0-1)</p></li>
 </ul>
-<section id="penyelesaian-menggunakan-wknn-manual">
-<h3>penyelesaian menggunakan WKNN manual<a class="headerlink" href="#penyelesaian-menggunakan-wknn-manual" title="Permalink to this heading">#</a></h3>
+<section id="penyelesaian-missing-values-menggunakan-wknn-manual">
+<h3>penyelesaian missing values menggunakan WKNN (manual)<a class="headerlink" href="#penyelesaian-missing-values-menggunakan-wknn-manual" title="Permalink to this heading">#</a></h3>
 <h3>Langkah 1: Hitung Jarak dan Kemiripan (s<sub>i</sub>)</h3>
 <p>Gunakan rumus jarak Euclidean untuk data multi-dimensi:</p>
 <p>d² = Σ(x<sub>i</sub> - x<sub>j</sub>)²<br>
@@ -902,7 +903,55 @@ Nilai_Tugas = 60</p>
 <h3>Hasil Akhir</h3>
 <p>ŷ = 7727.822 / 115.3848 ≈ <strong>66.97</strong></p>
 <p><strong>Kesimpulan:</strong> Nilai Tugas Gina yang hilang diisi dengan <strong>66.97</strong> (dibulatkan menjadi <strong>67</strong>).</p>
-<p><strong>Logikanya:</strong> Budi yang paling dekat mendapat bobot terbesar (60.24) dan paling mempengaruhi hasil, sedangkan Deni yang paling jauh mendapat bobot terkecil (7.01).</p></section>
+<p><strong>Logikanya:</strong> Budi yang paling dekat mendapat bobot terbesar (60.24) dan paling mempengaruhi hasil, sedangkan Deni yang paling jauh mendapat bobot terkecil (7.01).</p>
+</section>
+<section id="penyelesaian-missing-values-menggunakan-wknn-code">
+<h3>penyelesaian missing values menggunakan WKNN (code)<a class="headerlink" href="#penyelesaian-missing-values-menggunakan-wknn-code" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="c1"># 1. Data latih (ternormalisasi Min-Max) — Baris 1-6 dan 8-10</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Andi&quot;</span><span class="p">,</span>  <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.7586</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.5385</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Budi&quot;</span><span class="p">,</span>  <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.2414</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.0769</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">65</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Citra&quot;</span><span class="p">,</span> <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">1.0000</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">1.0000</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">92</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Deni&quot;</span><span class="p">,</span>  <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.0000</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">55</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Eva&quot;</span><span class="p">,</span>   <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.4828</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.3077</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">75</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Fajar&quot;</span><span class="p">,</span> <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.8276</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.6923</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">85</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Hadi&quot;</span><span class="p">,</span>  <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.5517</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.3846</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">78</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Indah&quot;</span><span class="p">,</span> <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.9310</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.9231</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">88</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="s2">&quot;Joko&quot;</span><span class="p">,</span>  <span class="s2">&quot;ipk&quot;</span><span class="p">:</span> <span class="mf">0.1034</span><span class="p">,</span> <span class="s2">&quot;po&quot;</span><span class="p">:</span> <span class="mf">0.0462</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span>
+<span class="p">]</span>
+
+<span class="c1"># 2. Data target: Gina (yang dicari)</span>
+<span class="n">target_ipk</span> <span class="o">=</span> <span class="mf">0.3448</span>
+<span class="n">target_po</span>  <span class="o">=</span> <span class="mf">0.1538</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== PERHITUNGAN JARAK (EUCLIDEAN DISTANCE) ===&quot;</span><span class="p">)</span>
+<span class="n">hasil_jarak</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">train_data</span><span class="p">:</span>
+    <span class="n">jarak</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;ipk&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">target_ipk</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;po&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">target_po</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">hasil_jarak</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;nama&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;nama&quot;</span><span class="p">],</span> <span class="s2">&quot;jarak&quot;</span><span class="p">:</span> <span class="n">jarak</span><span class="p">,</span> <span class="s2">&quot;nilai&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;nilai&quot;</span><span class="p">]})</span>
+
+<span class="n">hasil_jarak</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;jarak&quot;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hasil_jarak</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ke </span><span class="si">{</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;nama&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">6</span><span class="si">}</span><span class="s2"> -&gt; Jarak = </span><span class="si">{</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | Nilai_Tugas = </span><span class="si">{</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;nilai&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== PERHITUNGAN BOBOT WKNN (K=5) ===&quot;</span><span class="p">)</span>
+<span class="n">K</span>      <span class="o">=</span> <span class="mi">5</span>
+<span class="n">top5</span>   <span class="o">=</span> <span class="n">hasil_jarak</span><span class="p">[:</span><span class="n">K</span><span class="p">]</span>
+<span class="n">sum_w</span>  <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">sum_wv</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">top5</span><span class="p">:</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;jarak&quot;</span><span class="p">]</span>
+    <span class="n">sum_w</span>  <span class="o">+=</span> <span class="n">w</span>
+    <span class="n">sum_wv</span> <span class="o">+=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;nilai&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;nama&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">6</span><span class="si">}</span><span class="s2"> (nilai=</span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;nilai&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">) | d=</span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | w=</span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | w×v=</span><span class="si">{</span><span class="n">w</span><span class="o">*</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;nilai&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== HASIL AKHIR ===&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nilai_Tugas Gina = </span><span class="si">{</span><span class="n">sum_wv</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">sum_w</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">sum_wv</span><span class="o">/</span><span class="n">sum_w</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -975,7 +1024,8 @@ Nilai_Tugas = 60</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisi-mengunakan-orange-data-mining-untuk-data-yang-campuran">analisi mengunakan orange data mining untuk data yang campuran</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasikan-data-iris-untuk-mengukur-jara-di-orange">implementasikan data iris untuk mengukur jara di orange</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyelesaikan-missing-values-dengan-wknn-manual-dan-code-menghitung-wknn">menyelesaikan Missing values dengan WKNN (manual)  dan code menghitung WKNN</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyelesaian-menggunakan-wknn-manual">penyelesaian menggunakan WKNN manual</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyelesaian-missing-values-menggunakan-wknn-manual">penyelesaian missing values menggunakan WKNN (manual)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penyelesaian-missing-values-menggunakan-wknn-code">penyelesaian missing values menggunakan WKNN (code)</a></li>
 </ul>
 </li>
 </ul>

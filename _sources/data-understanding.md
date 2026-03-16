@@ -446,7 +446,7 @@ dalam setiap cluster.</p>
 - **Data Asli (Kiri)**: Data sebelum normalisasi
 - **Data Normalisasi (Kanan)**: Data setelah dinormalisasi menggunakan Min-Max Normalization (skala 0-1)
 
-### penyelesaian menggunakan WKNN manual
+### penyelesaian missing values menggunakan WKNN (manual)
 <h3>Langkah 1: Hitung Jarak dan Kemiripan (s<sub>i</sub>)</h3>
 
 <p>Gunakan rumus jarak Euclidean untuk data multi-dimensi:</p>
@@ -585,3 +585,49 @@ Nilai_Tugas = 60</p>
 <p><strong>Kesimpulan:</strong> Nilai Tugas Gina yang hilang diisi dengan <strong>66.97</strong> (dibulatkan menjadi <strong>67</strong>).</p>
 
 <p><strong>Logikanya:</strong> Budi yang paling dekat mendapat bobot terbesar (60.24) dan paling mempengaruhi hasil, sedangkan Deni yang paling jauh mendapat bobot terkecil (7.01).</p>
+
+### penyelesaian missing values menggunakan WKNN (code)
+```python
+import math
+
+# 1. Data latih (ternormalisasi Min-Max) — Baris 1-6 dan 8-10
+train_data = [
+    {"nama": "Andi",  "ipk": 0.7586, "po": 0.5385, "nilai": 80},
+    {"nama": "Budi",  "ipk": 0.2414, "po": 0.0769, "nilai": 65},
+    {"nama": "Citra", "ipk": 1.0000, "po": 1.0000, "nilai": 92},
+    {"nama": "Deni",  "ipk": 0.0000, "po": 0.0000, "nilai": 55},
+    {"nama": "Eva",   "ipk": 0.4828, "po": 0.3077, "nilai": 75},
+    {"nama": "Fajar", "ipk": 0.8276, "po": 0.6923, "nilai": 85},
+    {"nama": "Hadi",  "ipk": 0.5517, "po": 0.3846, "nilai": 78},
+    {"nama": "Indah", "ipk": 0.9310, "po": 0.9231, "nilai": 88},
+    {"nama": "Joko",  "ipk": 0.1034, "po": 0.0462, "nilai": 60},
+]
+
+# 2. Data target: Gina (yang dicari)
+target_ipk = 0.3448
+target_po  = 0.1538
+
+print("=== PERHITUNGAN JARAK (EUCLIDEAN DISTANCE) ===")
+hasil_jarak = []
+for d in train_data:
+    jarak = math.sqrt((d["ipk"] - target_ipk)**2 + (d["po"] - target_po)**2)
+    hasil_jarak.append({"nama": d["nama"], "jarak": jarak, "nilai": d["nilai"]})
+
+hasil_jarak.sort(key=lambda x: x["jarak"])
+for h in hasil_jarak:
+    print(f"Ke {h['nama']:6} -> Jarak = {h['jarak']:.4f} | Nilai_Tugas = {h['nilai']}")
+
+print("\n=== PERHITUNGAN BOBOT WKNN (K=5) ===")
+K      = 5
+top5   = hasil_jarak[:K]
+sum_w  = 0.0
+sum_wv = 0.0
+for t in top5:
+    w = 1 / t["jarak"]
+    sum_w  += w
+    sum_wv += w * t["nilai"]
+    print(f"{t['nama']:6} (nilai={t['nilai']}) | d={t['jarak']:.4f} | w={w:.4f} | w×v={w*t['nilai']:.2f}")
+
+print(f"\n=== HASIL AKHIR ===")
+print(f"Nilai_Tugas Gina = {sum_wv:.2f} / {sum_w:.4f} = {sum_wv/sum_w:.2f}")
+```
