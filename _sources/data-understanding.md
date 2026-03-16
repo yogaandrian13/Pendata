@@ -437,3 +437,88 @@ dalam setiap cluster.</p>
     </tr>
   </tbody>
 </table>
+
+### penyelesaian menggunakan WKNN manual
+<h3>Langkah 1: Hitung Jarak dan Kemiripan (s<sub>i</sub>)</h3>
+
+<p>Gunakan rumus jarak Euclidean untuk data multi-dimensi:</p>
+<p>d² = Σ(x<sub>i</sub> - x<sub>j</sub>)²<br>
+s<sub>i</sub> = 1/d²</p>
+
+<p>Kita hitung untuk 5 tetangga terdekat Gina:</p>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tetangga</th>
+      <th>Selisih IPK (x<sub>i</sub> - x<sub>j</sub>)</th>
+      <th>Selisih Penghasilan (x<sub>i</sub> - x<sub>j</sub>)</th>
+      <th>Kuadrat (d²)</th>
+      <th>Kemiripan (s<sub>i</sub>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Budi</strong></td>
+      <td>0.3448 - 0.2414 = 0.1034</td>
+      <td>0.1538 - 0.0769 = 0.0769</td>
+      <td>0.0107 + 0.0059 = <strong>0.0166</strong></td>
+      <td><strong>60.2410</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Eva</strong></td>
+      <td>0.3448 - 0.4828 = -0.1380</td>
+      <td>0.1538 - 0.3077 = -0.1539</td>
+      <td>0.0190 + 0.0237 = <strong>0.0427</strong></td>
+      <td><strong>23.4192</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Joko</strong></td>
+      <td>0.3448 - 0.1034 = 0.2414</td>
+      <td>0.1538 - 0.0462 = 0.1076</td>
+      <td>0.0583 + 0.0116 = <strong>0.0699</strong></td>
+      <td><strong>14.3062</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Hadi</strong></td>
+      <td>0.3448 - 0.5517 = -0.2069</td>
+      <td>0.1538 - 0.3846 = -0.2308</td>
+      <td>0.0428 + 0.0533 = <strong>0.0961</strong></td>
+      <td><strong>10.4058</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Deni</strong></td>
+      <td>0.3448 - 0.0000 = 0.3448</td>
+      <td>0.1538 - 0.0000 = 0.1538</td>
+      <td>0.1189 + 0.0237 = <strong>0.1426</strong></td>
+      <td><strong>7.0126</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Langkah 2: Hitung Estimasi Menggunakan Weighted Average</h3>
+
+<p>Kita gunakan rumus (2): kali setiap <strong>Nilai Tugas (y<sub>j</sub>)</strong> dengan <strong>Kemiripan (s<sub>i</sub>)</strong>, lalu bagi dengan total Kemiripan.</p>
+
+<h4>A. Pembilang (Σ s<sub>i</sub> · y<sub>jh</sub>):</h4>
+<ul>
+  <li><strong>Budi</strong>: 60.2410 × 65 = 3915.665</li>
+  <li><strong>Eva</strong>: 23.4192 × 75 = 1756.440</li>
+  <li><strong>Joko</strong>: 14.3062 × 60 = 858.372</li>
+  <li><strong>Hadi</strong>: 10.4058 × 78 = 811.652</li>
+  <li><strong>Deni</strong>: 7.0126 × 55 = 385.693</li>
+</ul>
+
+<p><strong>Total Pembilang:</strong><br>
+3915.665 + 1756.440 + 858.372 + 811.652 + 385.693 = <strong>7727.822</strong></p>
+
+<h4>B. Penyebut (Σ s<sub>i</sub>):</h4>
+<p>60.2410 + 23.4192 + 14.3062 + 10.4058 + 7.0126 = <strong>115.3848</strong></p>
+
+<h3>Hasil Akhir</h3>
+
+<p>ŷ = 7727.822 / 115.3848 ≈ <strong>66.97</strong></p>
+
+<p><strong>Kesimpulan:</strong> Nilai Tugas Gina yang hilang diisi dengan <strong>66.97</strong> (dibulatkan menjadi <strong>67</strong>).</p>
+
+<p><strong>Logikanya:</strong> Budi yang paling dekat (d = 0.1288) mendapat bobot terbesar (60.24) dan paling mempengaruhi hasil, sedangkan Deni yang paling jauh (d = 0.3777) mendapat bobot terkecil (7.01).</p>
