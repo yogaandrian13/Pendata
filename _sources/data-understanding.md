@@ -1399,3 +1399,41 @@ Fajar 0.360            0.60       0.88          0.08
 Indah 0.375            0.75       0.90          0.06
  Joko 0.255            0.18       0.60          0.35
 ```
+
+# UTS
+## Analisa Data Kesuburan Tanah (KNN)
+![alt text](image-13.png)
+## 1 METODE
+metode yang saya gunakan  adalah  K-Nearest Neighbors (KNN) untuk klasifikasi tanah menjadi dua kelas: Subur dan Tidak Subur.
+![alt text](image-14.png)
+KNN bekerja dengan cara menghitung jarak antar data kemudian k tetangga terdekat (5) setelah itu menentukan kelas berdasarkan mayoritas tetangganya
+
+## missing value
+![alt text](image-15.png)
+Node Missing Value digunakan untuk mengisi data yang kosong. Nilai numerik diisi dengan rata-rata (mean), sedangkan data teks diisi dengan nilai yang paling sering muncul. Tujuannya agar data lengkap dan siap digunakan untuk analisis.
+## one to many
+Node One to Many digunakan untuk mengubah data kategorikal (teks) menjadi bentuk numerik biner (one-hot encoding). Misalnya, kolom Tekstur Tanah diubah menjadi beberapa kolom seperti Debu, Pasir, dll, dengan nilai 0 dan 1. Tujuannya agar data bisa diproses oleh algoritma seperti KNN yang hanya menerima data numerik.
+
+## colum filter
+![alt text](image-16.png)
+Node Column Filter di KNIME Analytics Platform digunakan untuk memilih kolom yang akan dipakai atau dihapus. kolom Tekstur Tanah (teks) dihapus setelah proses encoding, sementara kolom lain termasuk Label tetap digunakan. Tujuannya agar hanya fitur yang relevan dan numerik yang masuk ke model.
+
+## normalizer
+![alt text](image-17.png)
+Node Normalizer di KNIME Analytics Platform digunakan untuk menyamakan skala nilai data, biasanya ke rentang 0–1 (Min-Max scaling). Hal ini penting agar semua fitur memiliki bobot yang seimbang saat dihitung jaraknya oleh algoritma seperti KNN
+
+## table partition
+![alt text](image-18.png)
+Node Table Partitioning di KNIME Analytics Platform digunakan untuk membagi data menjadi data training dan testing. Biasanya menggunakan rasio 80% untuk training dan 20% untuk testing, agar model dapat dilatih terlebih dahulu lalu diuji performanya.
+
+## evaluasi matrik
+![alt text](image-19.png)
+Precision = 1 (100%) → semua prediksi positif benar <br>
+Recall / Sensitivity = 1 (100%) → semua data positif terdeteksi <br>
+Specificity = 1 (100%) → semua data negatif terdeteksi <br>
+F-measure = 1 → keseimbangan precision & recall sempurna <br>
+Accuracy = 1 (100%) → seluruh prediksi benar <br>
+ ## distribusi kelas
+![alt text](image-20.png)
+subur= 200 <br>
+tidak subur 200 <br>

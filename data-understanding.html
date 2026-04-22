@@ -180,6 +180,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="business-understanding.html">Business Understanding</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -331,6 +332,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Understanding</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekplorasi-data-iris">Ekplorasi data iris</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-mengukur-jarak-dengan-tipe-data-campuran">penjelasan mengukur Jarak dengan tipe data campuran</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisi-mengunakan-orange-data-mining-untuk-data-yang-campuran">analisi mengunakan orange data mining untuk data yang campuran</a></li>
@@ -342,6 +344,21 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-data">Normalisasi data</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#uts">UTS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisa-data-kesuburan-tanah-knn">Analisa Data Kesuburan Tanah (KNN)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metode">1 METODE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">missing value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-many">one to many</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colum-filter">colum filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizer">normalizer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partition">table partition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-matrik">evaluasi matrik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas">distribusi kelas</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -1666,6 +1683,58 @@ Indah 0.375            0.75       0.90          0.06
 </div>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="uts">
+<h1>UTS<a class="headerlink" href="#uts" title="Permalink to this heading">#</a></h1>
+<section id="analisa-data-kesuburan-tanah-knn">
+<h2>Analisa Data Kesuburan Tanah (KNN)<a class="headerlink" href="#analisa-data-kesuburan-tanah-knn" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-13.png" /></p>
+</section>
+<section id="metode">
+<h2>1 METODE<a class="headerlink" href="#metode" title="Permalink to this heading">#</a></h2>
+<p>metode yang saya gunakan  adalah  K-Nearest Neighbors (KNN) untuk klasifikasi tanah menjadi dua kelas: Subur dan Tidak Subur.
+<img alt="alt text" src="_images/image-14.png" />
+KNN bekerja dengan cara menghitung jarak antar data kemudian k tetangga terdekat (5) setelah itu menentukan kelas berdasarkan mayoritas tetangganya</p>
+</section>
+<section id="missing-value">
+<h2>missing value<a class="headerlink" href="#missing-value" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-15.png" />
+Node Missing Value digunakan untuk mengisi data yang kosong. Nilai numerik diisi dengan rata-rata (mean), sedangkan data teks diisi dengan nilai yang paling sering muncul. Tujuannya agar data lengkap dan siap digunakan untuk analisis.</p>
+</section>
+<section id="one-to-many">
+<h2>one to many<a class="headerlink" href="#one-to-many" title="Permalink to this heading">#</a></h2>
+<p>Node One to Many digunakan untuk mengubah data kategorikal (teks) menjadi bentuk numerik biner (one-hot encoding). Misalnya, kolom Tekstur Tanah diubah menjadi beberapa kolom seperti Debu, Pasir, dll, dengan nilai 0 dan 1. Tujuannya agar data bisa diproses oleh algoritma seperti KNN yang hanya menerima data numerik.</p>
+</section>
+<section id="colum-filter">
+<h2>colum filter<a class="headerlink" href="#colum-filter" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-16.png" />
+Node Column Filter di KNIME Analytics Platform digunakan untuk memilih kolom yang akan dipakai atau dihapus. kolom Tekstur Tanah (teks) dihapus setelah proses encoding, sementara kolom lain termasuk Label tetap digunakan. Tujuannya agar hanya fitur yang relevan dan numerik yang masuk ke model.</p>
+</section>
+<section id="normalizer">
+<h2>normalizer<a class="headerlink" href="#normalizer" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-17.png" />
+Node Normalizer di KNIME Analytics Platform digunakan untuk menyamakan skala nilai data, biasanya ke rentang 0–1 (Min-Max scaling). Hal ini penting agar semua fitur memiliki bobot yang seimbang saat dihitung jaraknya oleh algoritma seperti KNN</p>
+</section>
+<section id="table-partition">
+<h2>table partition<a class="headerlink" href="#table-partition" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-18.png" />
+Node Table Partitioning di KNIME Analytics Platform digunakan untuk membagi data menjadi data training dan testing. Biasanya menggunakan rasio 80% untuk training dan 20% untuk testing, agar model dapat dilatih terlebih dahulu lalu diuji performanya.</p>
+</section>
+<section id="evaluasi-matrik">
+<h2>evaluasi matrik<a class="headerlink" href="#evaluasi-matrik" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-19.png" />
+Precision = 1 (100%) → semua prediksi positif benar <br>
+Recall / Sensitivity = 1 (100%) → semua data positif terdeteksi <br>
+Specificity = 1 (100%) → semua data negatif terdeteksi <br>
+F-measure = 1 → keseimbangan precision &amp; recall sempurna <br>
+Accuracy = 1 (100%) → seluruh prediksi benar <br></p>
+</section>
+<section id="distribusi-kelas">
+<h2>distribusi kelas<a class="headerlink" href="#distribusi-kelas" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-20.png" />
+subur= 200 <br>
+tidak subur 200 <br></p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1731,6 +1800,7 @@ Indah 0.375            0.75       0.90          0.06
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Understanding</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekplorasi-data-iris">Ekplorasi data iris</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-mengukur-jarak-dengan-tipe-data-campuran">penjelasan mengukur Jarak dengan tipe data campuran</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisi-mengunakan-orange-data-mining-untuk-data-yang-campuran">analisi mengunakan orange data mining untuk data yang campuran</a></li>
@@ -1742,6 +1812,21 @@ Indah 0.375            0.75       0.90          0.06
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalisasi-data">Normalisasi data</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#uts">UTS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisa-data-kesuburan-tanah-knn">Analisa Data Kesuburan Tanah (KNN)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metode">1 METODE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">missing value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-to-many">one to many</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colum-filter">colum filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizer">normalizer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partition">table partition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-matrik">evaluasi matrik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas">distribusi kelas</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
