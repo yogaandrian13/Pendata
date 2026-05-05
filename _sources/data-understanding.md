@@ -1437,3 +1437,77 @@ Accuracy = 1 (100%) → seluruh prediksi benar <br>
 ![alt text](image-20.png)
 subur= 200 <br>
 tidak subur 200 <br>
+
+
+# NAIVE BAYES
+![alt text](image-21.png)
+## file raider
+Fungsi: Membaca dan mengimpor data dari berbagai format file (CSV, Excel, TXT, dll)<br>
+Tujuan: Memuat dataset ke dalam workflow untuk diproses lebih lanjut
+## Missing Value
+Fungsi: Menangani data yang hilang atau kosong (null/NaN) dalam dataset<br>
+Tujuan:Membersihkan data sebelum analisis. Mengisi nilai yang hilang dengan berbagai. metode (mean, median, modus, atau nilai konstan). Memastikan kualitas data lebih baik untuk pemrosesan selanjutnya
+## Python Script (legacy)
+Fungsi: Menjalankan skrip Python kustom dalam workflow<br>
+Tujuan: Melakukan pemrosesan data yang kompleks. Implementasi algoritma machine learning. Analisis data khusus yang tidak tersedia di node standar KNIME. Transformasi data sesuai kebutuhan
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score, classification_report
+
+df = input_table_1.copy()
+
+df = df[['Survived', 'Sex', 'Pclass']]
+
+df['Sex'] = df['Sex'].map({'male': 0, 'female': 1})
+
+df = df.dropna()
+
+X = df[['Sex', 'Pclass']]
+y = df['Survived'].astype(int)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("Akurasi:", accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+df['prediction'] = model.predict(X)
+
+output_table_1 = df
+```
+# Analisis Naive Bayes - Penjelasan Langkah demi Langkah
+
+| Baris Kode | Fungsi & Penjelasan |
+|------------|---------------------|
+| `import pandas as pd` | Mengimpor library yang dibutuhkan: **pandas** (manipulasi data), **scikit-learn** (pemodelan & evaluasi) |
+| `df = input_table_1.copy()` | Mengambil data dari port input KNIME. `.copy()` digunakan agar tidak mengubah data asli di memori KNIME |
+| `df = df[['Survived', 'Sex', 'Pclass']]` | **Seleksi kolom**: Hanya mempertahankan 3 kolom. Kolom lain (seperti Age, Fare, Embarked) diabaikan |
+| `df['Sex'] = df['Sex'].map({'male': 0, 'female': 1})` | **Encoding kategorikal**: Mengubah teks 'male'/'female' menjadi angka 0/1 karena algoritma machine learning hanya menerima input numerik |
+| `df = df.dropna()` | **Handling missing value**: Menghapus baris yang mengandung nilai kosong (NaN) pada kolom yang dipilih agar tidak menyebabkan error saat training |
+| `X = df[['Sex', 'Pclass']]` | **Pemisahan fitur & target**: X adalah data fitur (input), y adalah label/target |
+| `y = df['Survived']` | Memisahkan variabel target (Survived) untuk supervised learning |
+| `from sklearn.naive_bayes import GaussianNB` | Mengimpor algoritma **Gaussian Naive Bayes** dari scikit-learn |
+| `model = GaussianNB()` | Membuat instance/model Naive Bayes yang siap digunakan |
+| `model.fit(X, y)` | **Training model**: Melatih model dengan data X (fitur) dan y (target) |
+| `predictions = model.predict(X)` | **Prediksi**: Menggunakan model yang sudah dilatih untuk memprediksi data yang sama |
+| `from sklearn.metrics import accuracy_score` | Mengimpor fungsi untuk menghitung akurasi model |
+| `accuracy = accuracy_score(y, predictions)` | Menghitung akurasi dengan membandingkan prediksi dengan nilai sebenarnya |
+| `print(f"Akurasi: {accuracy:.2%}")` | Menampilkan hasil akurasi dalam bentuk persentase |
+```text
+Akurasi: 0.7821229050279329
+              precision    recall  f1-score   support
+           0       0.80      0.84      0.82       105
+           1       0.75      0.70      0.73        74
+    accuracy                           0.78       179
+   macro avg       0.78      0.77      0.77       179
+weighted avg       0.78      0.78      0.78       179
+
+```

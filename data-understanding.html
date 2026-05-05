@@ -181,6 +181,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="business-understanding.html">Business Understanding</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
 
+
+
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -357,6 +359,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas">distribusi kelas</a></li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">NAIVE BAYES</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-raider">file raider</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Missing Value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-legacy">Python Script (legacy)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-naive-bayes-penjelasan-langkah-demi-langkah">Analisis Naive Bayes - Penjelasan Langkah demi Langkah</a></li>
 </ul>
 
             </nav>
@@ -1735,6 +1744,122 @@ subur= 200 <br>
 tidak subur 200 <br></p>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="naive-bayes">
+<h1>NAIVE BAYES<a class="headerlink" href="#naive-bayes" title="Permalink to this heading">#</a></h1>
+<p><img alt="alt text" src="_images/image-21.png" /></p>
+<section id="file-raider">
+<h2>file raider<a class="headerlink" href="#file-raider" title="Permalink to this heading">#</a></h2>
+<p>Fungsi: Membaca dan mengimpor data dari berbagai format file (CSV, Excel, TXT, dll)<br>
+Tujuan: Memuat dataset ke dalam workflow untuk diproses lebih lanjut</p>
+</section>
+<section id="id1">
+<h2>Missing Value<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Fungsi: Menangani data yang hilang atau kosong (null/NaN) dalam dataset<br>
+Tujuan:Membersihkan data sebelum analisis. Mengisi nilai yang hilang dengan berbagai. metode (mean, median, modus, atau nilai konstan). Memastikan kualitas data lebih baik untuk pemrosesan selanjutnya</p>
+</section>
+<section id="python-script-legacy">
+<h2>Python Script (legacy)<a class="headerlink" href="#python-script-legacy" title="Permalink to this heading">#</a></h2>
+<p>Fungsi: Menjalankan skrip Python kustom dalam workflow<br>
+Tujuan: Melakukan pemrosesan data yang kompleks. Implementasi algoritma machine learning. Analisis data khusus yang tidak tersedia di node standar KNIME. Transformasi data sesuai kebutuhan</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">input_table_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Survived&#39;</span><span class="p">,</span> <span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">]]</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">output_table_1</span> <span class="o">=</span> <span class="n">df</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="analisis-naive-bayes-penjelasan-langkah-demi-langkah">
+<h1>Analisis Naive Bayes - Penjelasan Langkah demi Langkah<a class="headerlink" href="#analisis-naive-bayes-penjelasan-langkah-demi-langkah" title="Permalink to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Baris Kode</p></th>
+<th class="head"><p>Fungsi &amp; Penjelasan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pandas</span> <span class="pre">as</span> <span class="pre">pd</span></code></p></td>
+<td><p>Mengimpor library yang dibutuhkan: <strong>pandas</strong> (manipulasi data), <strong>scikit-learn</strong> (pemodelan &amp; evaluasi)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">input_table_1.copy()</span></code></p></td>
+<td><p>Mengambil data dari port input KNIME. <code class="docutils literal notranslate"><span class="pre">.copy()</span></code> digunakan agar tidak mengubah data asli di memori KNIME</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df[['Survived',</span> <span class="pre">'Sex',</span> <span class="pre">'Pclass']]</span></code></p></td>
+<td><p><strong>Seleksi kolom</strong>: Hanya mempertahankan 3 kolom. Kolom lain (seperti Age, Fare, Embarked) diabaikan</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">df['Sex']</span> <span class="pre">=</span> <span class="pre">df['Sex'].map({'male':</span> <span class="pre">0,</span> <span class="pre">'female':</span> <span class="pre">1})</span></code></p></td>
+<td><p><strong>Encoding kategorikal</strong>: Mengubah teks ‘male’/‘female’ menjadi angka 0/1 karena algoritma machine learning hanya menerima input numerik</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.dropna()</span></code></p></td>
+<td><p><strong>Handling missing value</strong>: Menghapus baris yang mengandung nilai kosong (NaN) pada kolom yang dipilih agar tidak menyebabkan error saat training</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">df[['Sex',</span> <span class="pre">'Pclass']]</span></code></p></td>
+<td><p><strong>Pemisahan fitur &amp; target</strong>: X adalah data fitur (input), y adalah label/target</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">df['Survived']</span></code></p></td>
+<td><p>Memisahkan variabel target (Survived) untuk supervised learning</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sklearn.naive_bayes</span> <span class="pre">import</span> <span class="pre">GaussianNB</span></code></p></td>
+<td><p>Mengimpor algoritma <strong>Gaussian Naive Bayes</strong> dari scikit-learn</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">GaussianNB()</span></code></p></td>
+<td><p>Membuat instance/model Naive Bayes yang siap digunakan</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">model.fit(X,</span> <span class="pre">y)</span></code></p></td>
+<td><p><strong>Training model</strong>: Melatih model dengan data X (fitur) dan y (target)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">predictions</span> <span class="pre">=</span> <span class="pre">model.predict(X)</span></code></p></td>
+<td><p><strong>Prediksi</strong>: Menggunakan model yang sudah dilatih untuk memprediksi data yang sama</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sklearn.metrics</span> <span class="pre">import</span> <span class="pre">accuracy_score</span></code></p></td>
+<td><p>Mengimpor fungsi untuk menghitung akurasi model</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">accuracy</span> <span class="pre">=</span> <span class="pre">accuracy_score(y,</span> <span class="pre">predictions)</span></code></p></td>
+<td><p>Menghitung akurasi dengan membandingkan prediksi dengan nilai sebenarnya</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">print(f&quot;Akurasi:</span> <span class="pre">{accuracy:.2%}&quot;)</span></code></p></td>
+<td><p>Menampilkan hasil akurasi dalam bentuk persentase</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.7821229050279329
+              precision    recall  f1-score   support
+           0       0.80      0.84      0.82       105
+           1       0.75      0.70      0.73        74
+    accuracy                           0.78       179
+   macro avg       0.78      0.77      0.77       179
+weighted avg       0.78      0.78      0.78       179
+</pre></div>
+</div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1825,6 +1950,13 @@ tidak subur 200 <br></p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-kelas">distribusi kelas</a></li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes">NAIVE BAYES</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-raider">file raider</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Missing Value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-legacy">Python Script (legacy)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-naive-bayes-penjelasan-langkah-demi-langkah">Analisis Naive Bayes - Penjelasan Langkah demi Langkah</a></li>
 </ul>
 
   </nav></div>
