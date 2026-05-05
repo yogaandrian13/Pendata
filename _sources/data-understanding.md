@@ -1483,7 +1483,7 @@ df['prediction'] = model.predict(X)
 
 output_table_1 = df
 ```
-# Analisis Naive Bayes - Penjelasan Langkah demi Langkah
+Analisis Naive Bayes - Penjelasan Langkah demi Langkah<br>
 
 | Baris Kode | Fungsi & Penjelasan |
 |------------|---------------------|
@@ -1511,3 +1511,10 @@ Akurasi: 0.7821229050279329
 weighted avg       0.78      0.78      0.78       179
 
 ```
+![alt text](image-22.png)
+![alt text](image-23.png)
+## Scorer
+Fungsi: Mengevaluasi kinerja model machine learning<br>
+Tujuan: Mengukur akurasi model. Menghitung metrik evaluasi (precision, recall, F1-score, accuracy). Membandingkan prediksi dengan nilai aktual. Memberikan insight tentang kualitas model
+![alt text](image-24.png)
+
