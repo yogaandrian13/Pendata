@@ -1518,3 +1518,46 @@ Fungsi: Mengevaluasi kinerja model machine learning<br>
 Tujuan: Mengukur akurasi model. Menghitung metrik evaluasi (precision, recall, F1-score, accuracy). Membandingkan prediksi dengan nilai aktual. Memberikan insight tentang kualitas model
 ![alt text](image-24.png)
 
+# DECISION TREE
+![alt text](image-25.png)
+## Excel Reader
+Node Excel Reader digunakan untuk membaca atau mengimpor dataset dari file Excel ke dalam KNIME. Dataset yang telah dibaca akan menjadi sumber data utama yang digunakan dalam proses analisis dan pembuatan model klasifikasi.
+## Table Partitioner
+Node Table Partitioner digunakan untuk membagi dataset menjadi dua bagian, yaitu:
+data training → data untuk melatih model,
+data testing → data untuk menguji performa model.
+pembagian data punya saya yaitu 70% training dan 30% testing,
+
+## Color Manager
+Node Color Manager digunakan untuk memberikan warna pada kelas target atau label data. Pewarnaan ini bertujuan untuk mempermudah visualisasi dan membedakan setiap kelas pada proses analisis.
+
+## Decision Tree Learner
+Node Decision Tree Learner merupakan inti proses klasifikasi yang digunakan untuk membangun model pohon keputusan berdasarkan data training.<br>
+Node ini bekerja dengan:<br>
+menganalisis seluruh atribut pada dataset,<br>
+menghitung atribut terbaik menggunakan metode Gain Ratio,<br>
+membentuk cabang-cabang keputusan,<br>
+hingga menghasilkan struktur pohon keputusan.<br>
+Hasil dari node ini adalah model klasifikasi Decision Tree yang siap digunakan untuk prediksi.
+
+## Decision Tree Predictor
+Node Decision Tree Predictor digunakan untuk melakukan prediksi terhadap data testing menggunakan model yang telah dibuat pada node Decision Tree Learner.<br>
+Cara kerjanya:<br>
+model pohon keputusan dari data training diterapkan pada data testing,<br>
+setiap data diuji mengikuti aturan pada pohon keputusan,<br>
+kemudian sistem menghasilkan kelas prediksi.<br>
+
+## Scorer
+Node Scorer digunakan untuk mengevaluasi performa model klasifikasi dengan membandingkan hasil prediksi dan data asli.
+Evaluasi dilakukan menggunakan:
+### Confusion Matrix
+Tabel yang menunjukkan jumlah:<br>
+
+prediksi benar,<br>
+prediksi salah,<br>
+data positif dan negatif.<br>
+### Accuracy
+Mengukur tingkat ketepatan model dalam melakukan prediksi.
+
+## Kesimpulan
+Workflow ini digunakan untuk melakukan proses klasifikasi menggunakan metode Decision Tree di KNIME, dimulai dari membaca data, membagi data training dan testing, membangun model menggunakan Gain Ratio, melakukan prediksi, hingga mengevaluasi performa model menggunakan confusion matrix dan accuracy.

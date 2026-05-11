@@ -182,6 +182,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -363,6 +364,20 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Missing Value</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-legacy">Python Script (legacy)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scorer">Scorer</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree">DECISION TREE</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">Excel Reader</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partitioner">Table Partitioner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-manager">Color Manager</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-learner">Decision Tree Learner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-predictor">Decision Tree Predictor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Scorer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">Confusion Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy">Accuracy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
 </ul>
 </li>
 </ul>
@@ -1865,6 +1880,63 @@ Tujuan: Mengukur akurasi model. Menghitung metrik evaluasi (precision, recall, F
 <img alt="alt text" src="_images/image-24.png" /></p>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="decision-tree">
+<h1>DECISION TREE<a class="headerlink" href="#decision-tree" title="Permalink to this heading">#</a></h1>
+<p><img alt="alt text" src="_images/image-25.png" /></p>
+<section id="excel-reader">
+<h2>Excel Reader<a class="headerlink" href="#excel-reader" title="Permalink to this heading">#</a></h2>
+<p>Node Excel Reader digunakan untuk membaca atau mengimpor dataset dari file Excel ke dalam KNIME. Dataset yang telah dibaca akan menjadi sumber data utama yang digunakan dalam proses analisis dan pembuatan model klasifikasi.</p>
+</section>
+<section id="table-partitioner">
+<h2>Table Partitioner<a class="headerlink" href="#table-partitioner" title="Permalink to this heading">#</a></h2>
+<p>Node Table Partitioner digunakan untuk membagi dataset menjadi dua bagian, yaitu:
+data training → data untuk melatih model,
+data testing → data untuk menguji performa model.
+pembagian data punya saya yaitu 70% training dan 30% testing,</p>
+</section>
+<section id="color-manager">
+<h2>Color Manager<a class="headerlink" href="#color-manager" title="Permalink to this heading">#</a></h2>
+<p>Node Color Manager digunakan untuk memberikan warna pada kelas target atau label data. Pewarnaan ini bertujuan untuk mempermudah visualisasi dan membedakan setiap kelas pada proses analisis.</p>
+</section>
+<section id="decision-tree-learner">
+<h2>Decision Tree Learner<a class="headerlink" href="#decision-tree-learner" title="Permalink to this heading">#</a></h2>
+<p>Node Decision Tree Learner merupakan inti proses klasifikasi yang digunakan untuk membangun model pohon keputusan berdasarkan data training.<br>
+Node ini bekerja dengan:<br>
+menganalisis seluruh atribut pada dataset,<br>
+menghitung atribut terbaik menggunakan metode Gain Ratio,<br>
+membentuk cabang-cabang keputusan,<br>
+hingga menghasilkan struktur pohon keputusan.<br>
+Hasil dari node ini adalah model klasifikasi Decision Tree yang siap digunakan untuk prediksi.</p>
+</section>
+<section id="decision-tree-predictor">
+<h2>Decision Tree Predictor<a class="headerlink" href="#decision-tree-predictor" title="Permalink to this heading">#</a></h2>
+<p>Node Decision Tree Predictor digunakan untuk melakukan prediksi terhadap data testing menggunakan model yang telah dibuat pada node Decision Tree Learner.<br>
+Cara kerjanya:<br>
+model pohon keputusan dari data training diterapkan pada data testing,<br>
+setiap data diuji mengikuti aturan pada pohon keputusan,<br>
+kemudian sistem menghasilkan kelas prediksi.<br></p>
+</section>
+<section id="id2">
+<h2>Scorer<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>Node Scorer digunakan untuk mengevaluasi performa model klasifikasi dengan membandingkan hasil prediksi dan data asli.
+Evaluasi dilakukan menggunakan:</p>
+<section id="confusion-matrix">
+<h3>Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this heading">#</a></h3>
+<p>Tabel yang menunjukkan jumlah:<br></p>
+<p>prediksi benar,<br>
+prediksi salah,<br>
+data positif dan negatif.<br></p>
+</section>
+<section id="accuracy">
+<h3>Accuracy<a class="headerlink" href="#accuracy" title="Permalink to this heading">#</a></h3>
+<p>Mengukur tingkat ketepatan model dalam melakukan prediksi.</p>
+</section>
+</section>
+<section id="kesimpulan">
+<h2>Kesimpulan<a class="headerlink" href="#kesimpulan" title="Permalink to this heading">#</a></h2>
+<p>Workflow ini digunakan untuk melakukan proses klasifikasi menggunakan metode Decision Tree di KNIME, dimulai dari membaca data, membagi data training dan testing, membangun model menggunakan Gain Ratio, melakukan prediksi, hingga mengevaluasi performa model menggunakan confusion matrix dan accuracy.</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1960,6 +2032,20 @@ Tujuan: Mengukur akurasi model. Menghitung metrik evaluasi (precision, recall, F
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Missing Value</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-legacy">Python Script (legacy)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scorer">Scorer</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree">DECISION TREE</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excel-reader">Excel Reader</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partitioner">Table Partitioner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-manager">Color Manager</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-learner">Decision Tree Learner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-predictor">Decision Tree Predictor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Scorer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">Confusion Matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy">Accuracy</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
 </ul>
 </li>
 </ul>
