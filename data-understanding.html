@@ -183,6 +183,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -378,6 +379,32 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random Forest</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">table partitioner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyhton-script-legacy">pyhton script (legacy)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import Library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-data-training-dan-testing">Membaca Data Training dan Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-fitur-training">Menentukan Fitur Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-target-training">Menentukan Target Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-fitur-testing">Menentukan Fitur Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-target-testing">Menentukan Target Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-model-random-forest">Membuat Model Random Forest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melatih-model">Melatih Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melakukan-prediksi">Melakukan Prediksi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-accuracy">Menghitung Accuracy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-classification-report">Menampilkan Classification Report</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menambahkan-hasil-prediksi">Menambahkan Hasil Prediksi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengirim-output-ke-knime">Mengirim Output ke KNIME</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#score">score</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#desicion-tree">desicion tree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Random forest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">kesimpulan</a></li>
 </ul>
 </li>
 </ul>
@@ -1937,6 +1964,261 @@ data positif dan negatif.<br></p>
 <p>Workflow ini digunakan untuk melakukan proses klasifikasi menggunakan metode Decision Tree di KNIME, dimulai dari membaca data, membagi data training dan testing, membangun model menggunakan Gain Ratio, melakukan prediksi, hingga mengevaluasi performa model menggunakan confusion matrix dan accuracy.</p>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="random-forest">
+<h1>Random Forest<a class="headerlink" href="#random-forest" title="Permalink to this heading">#</a></h1>
+<p><img alt="alt text" src="_images/image-26.png" />
+data yang digunankan menggunakan data iris</p>
+<section id="id3">
+<h2>table partitioner<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>data training sebesar 70% <br>
+data testing sebesar 30%</p>
+</section>
+<section id="pyhton-script-legacy">
+<h2>pyhton script (legacy)<a class="headerlink" href="#pyhton-script-legacy" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="n">train_df</span> <span class="o">=</span> <span class="n">input_table_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">input_table_2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sepal_width&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_width&#39;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sepal_width&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_width&#39;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+<span class="n">test_df</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
+<span class="n">output_table_1</span> <span class="o">=</span> <span class="n">test_df</span>
+</pre></div>
+</div>
+<p>Penjelasan Kode Python Random Forest (Legacy)</p>
+<section id="import-library">
+<h3>Import Library<a class="headerlink" href="#import-library" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> digunakan untuk mengolah data dalam bentuk tabel/dataframe.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> digunakan untuk membuat model Random Forest.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">accuracy_score</span></code> digunakan untuk menghitung nilai accuracy model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">classification_report</span></code> digunakan untuk menampilkan laporan hasil klasifikasi seperti precision, recall, dan f1-score.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="membaca-data-training-dan-testing">
+<h3>Membaca Data Training dan Testing<a class="headerlink" href="#membaca-data-training-dan-testing" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_df</span> <span class="o">=</span> <span class="n">input_table_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">input_table_2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_table_1</span></code> merupakan data training dari output atas Table Partitioner.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_table_2</span></code> merupakan data testing dari output bawah Table Partitioner.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.copy()</span></code> digunakan untuk menyalin data agar data asli tidak berubah.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="menentukan-fitur-training">
+<h3>Menentukan Fitur Training<a class="headerlink" href="#menentukan-fitur-training" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sepal_width&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_width&#39;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode tersebut digunakan untuk memilih atribut atau fitur yang digunakan dalam proses training model Random Forest.</p>
+<p>Fitur yang digunakan:</p>
+<ul class="simple">
+<li><p>sepal_length</p></li>
+<li><p>sepal_width</p></li>
+<li><p>petal_length</p></li>
+<li><p>petal_width</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="menentukan-target-training">
+<h3>Menentukan Target Training<a class="headerlink" href="#menentukan-target-training" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk menentukan kolom target atau kelas yang akan diprediksi, yaitu <code class="docutils literal notranslate"><span class="pre">species</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="menentukan-fitur-testing">
+<h3>Menentukan Fitur Testing<a class="headerlink" href="#menentukan-fitur-testing" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sepal_width&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_length&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;petal_width&#39;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk mengambil fitur pada data testing yang akan digunakan dalam proses prediksi.</p>
+</section>
+<hr class="docutils" />
+<section id="menentukan-target-testing">
+<h3>Menentukan Target Testing<a class="headerlink" href="#menentukan-target-testing" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk mengambil nilai target asli pada data testing sebagai pembanding hasil prediksi model.</p>
+</section>
+<hr class="docutils" />
+<section id="membuat-model-random-forest">
+<h3>Membuat Model Random Forest<a class="headerlink" href="#membuat-model-random-forest" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk membuat model Random Forest.</p>
+<p>Parameter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators=10</span></code>
+→ jumlah pohon keputusan (decision tree) yang digunakan sebanyak 10 pohon.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">random_state=42</span></code>
+→ digunakan agar hasil random tetap sama setiap dijalankan.</p></li>
+</ul>
+<p>Random Forest bekerja dengan menggabungkan banyak pohon keputusan untuk meningkatkan akurasi dan mengurangi overfitting.</p>
+</section>
+<hr class="docutils" />
+<section id="melatih-model">
+<h3>Melatih Model<a class="headerlink" href="#melatih-model" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk melatih model Random Forest menggunakan data training.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X_train</span></code> berisi fitur training</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_train</span></code> berisi target training</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="melakukan-prediksi">
+<h3>Melakukan Prediksi<a class="headerlink" href="#melakukan-prediksi" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk melakukan prediksi terhadap data testing menggunakan model yang telah dilatih sebelumnya.</p>
+<p>Hasil prediksi disimpan pada variabel <code class="docutils literal notranslate"><span class="pre">y_pred</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="menghitung-accuracy">
+<h3>Menghitung Accuracy<a class="headerlink" href="#menghitung-accuracy" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk menghitung tingkat accuracy model berdasarkan hasil prediksi dan data asli testing.</p>
+<p>Rumus accuracy:</p>
+<div class="highlight-math notranslate"><div class="highlight"><pre><span></span>Accuracy = \frac{Jumlah\ Prediksi\ Benar}{Total\ Data} \times 100\%
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="menampilkan-classification-report">
+<h3>Menampilkan Classification Report<a class="headerlink" href="#menampilkan-classification-report" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk menampilkan laporan hasil klasifikasi yang terdiri dari:</p>
+<ul class="simple">
+<li><p>precision</p></li>
+<li><p>recall</p></li>
+<li><p>f1-score</p></li>
+<li><p>support</p></li>
+</ul>
+<p>Laporan ini digunakan untuk mengetahui performa model secara lebih detail.</p>
+</section>
+<hr class="docutils" />
+<section id="menambahkan-hasil-prediksi">
+<h3>Menambahkan Hasil Prediksi<a class="headerlink" href="#menambahkan-hasil-prediksi" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_df</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk menambahkan kolom hasil prediksi ke dalam dataframe testing.</p>
+<p>Kolom baru bernama:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>prediction
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="mengirim-output-ke-knime">
+<h3>Mengirim Output ke KNIME<a class="headerlink" href="#mengirim-output-ke-knime" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output_table_1</span> <span class="o">=</span> <span class="n">test_df</span>
+</pre></div>
+</div>
+<p>Penjelasan:</p>
+<p>Kode ini digunakan untuk mengirim hasil dataframe testing beserta hasil prediksi ke output node KNIME agar dapat digunakan pada node berikutnya seperti Scorer.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="score">
+<h2>score<a class="headerlink" href="#score" title="Permalink to this heading">#</a></h2>
+<section id="desicion-tree">
+<h3>desicion tree<a class="headerlink" href="#desicion-tree" title="Permalink to this heading">#</a></h3>
+<p><img alt="alt text" src="_images/image-27.png" />
+Penjelasan:<br>
+Sebanyak 18 data Iris-setosa berhasil diprediksi dengan benar.<br>
+Sebanyak 10 data Iris-versicolor berhasil diprediksi dengan benar.<br>
+Sebanyak 15 data Iris-virginica berhasil diprediksi dengan benar.<br>
+2 data Iris-virginica diprediksi sebagai Iris-versicolor.</p>
+</section>
+<section id="id4">
+<h3>Random forest<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p><img alt="alt text" src="_images/image-28.png" />
+Penjelasan:<br>
+Sebanyak 18 data Iris-setosa berhasil diprediksi dengan benar.<br>
+Sebanyak 10 data Iris-versicolor berhasil diprediksi dengan benar. <br>
+Sebanyak 14 data Iris-virginica berhasil diprediksi dengan benar.<br>
+2 data Iris-virginica diprediksi sebagai Iris-versicolor.<br>
+1 data Iris-versicolor diprediksi sebagai Iris-virginica.<br></p>
+</section>
+</section>
+<section id="id5">
+<h2>kesimpulan<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>dari dua metode antara desicion tree dan random forest, pada dataset Iris metode Decision Tree justru memberikan hasil yang sedikit lebih tinggi dibandingkan dengan random forest</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2046,6 +2328,32 @@ data positif dan negatif.<br></p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random Forest</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">table partitioner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pyhton-script-legacy">pyhton script (legacy)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import Library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-data-training-dan-testing">Membaca Data Training dan Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-fitur-training">Menentukan Fitur Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-target-training">Menentukan Target Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-fitur-testing">Menentukan Fitur Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-target-testing">Menentukan Target Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-model-random-forest">Membuat Model Random Forest</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melatih-model">Melatih Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#melakukan-prediksi">Melakukan Prediksi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-accuracy">Menghitung Accuracy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menampilkan-classification-report">Menampilkan Classification Report</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menambahkan-hasil-prediksi">Menambahkan Hasil Prediksi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengirim-output-ke-knime">Mengirim Output ke KNIME</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#score">score</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#desicion-tree">desicion tree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Random forest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">kesimpulan</a></li>
 </ul>
 </li>
 </ul>

@@ -1561,3 +1561,283 @@ Mengukur tingkat ketepatan model dalam melakukan prediksi.
 
 ## Kesimpulan
 Workflow ini digunakan untuk melakukan proses klasifikasi menggunakan metode Decision Tree di KNIME, dimulai dari membaca data, membagi data training dan testing, membangun model menggunakan Gain Ratio, melakukan prediksi, hingga mengevaluasi performa model menggunakan confusion matrix dan accuracy.
+
+# Random Forest
+![alt text](image-26.png)
+data yang digunankan menggunakan data iris
+## table partitioner
+data training sebesar 70% <br>
+data testing sebesar 30%
+## pyhton script (legacy)
+``` python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+train_df = input_table_1.copy()
+test_df = input_table_2.copy()
+X_train = train_df[
+    [
+        'sepal_length',
+        'sepal_width',
+        'petal_length',
+        'petal_width'
+    ]
+]
+y_train = train_df['species']
+X_test = test_df[
+    [
+        'sepal_length',
+        'sepal_width',
+        'petal_length',
+        'petal_width'
+    ]
+]
+y_test = test_df['species']
+model = RandomForestClassifier(
+    n_estimators=10,
+    random_state=42
+)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print("Akurasi:", accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+test_df['prediction'] = y_pred
+output_table_1 = test_df
+```
+Penjelasan Kode Python Random Forest (Legacy)
+
+### Import Library
+
+```python
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+```
+
+* `pandas` digunakan untuk mengolah data dalam bentuk tabel/dataframe.
+* `RandomForestClassifier` digunakan untuk membuat model Random Forest.
+* `accuracy_score` digunakan untuk menghitung nilai accuracy model.
+* `classification_report` digunakan untuk menampilkan laporan hasil klasifikasi seperti precision, recall, dan f1-score.
+
+---
+
+### Membaca Data Training dan Testing
+
+```python
+train_df = input_table_1.copy()
+test_df = input_table_2.copy()
+```
+Penjelasan:
+
+* `input_table_1` merupakan data training dari output atas Table Partitioner.
+* `input_table_2` merupakan data testing dari output bawah Table Partitioner.
+* `.copy()` digunakan untuk menyalin data agar data asli tidak berubah.
+
+---
+
+### Menentukan Fitur Training
+
+```python
+X_train = train_df[
+    [
+        'sepal_length',
+        'sepal_width',
+        'petal_length',
+        'petal_width'
+    ]
+]
+```
+
+Penjelasan:
+
+Kode tersebut digunakan untuk memilih atribut atau fitur yang digunakan dalam proses training model Random Forest.
+
+Fitur yang digunakan:
+
+* sepal_length
+* sepal_width
+* petal_length
+* petal_width
+
+---
+
+### Menentukan Target Training
+
+```python
+y_train = train_df['species']
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk menentukan kolom target atau kelas yang akan diprediksi, yaitu `species`.
+
+---
+
+### Menentukan Fitur Testing
+
+```python
+X_test = test_df[
+    [
+        'sepal_length',
+        'sepal_width',
+        'petal_length',
+        'petal_width'
+    ]
+]
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk mengambil fitur pada data testing yang akan digunakan dalam proses prediksi.
+
+---
+
+### Menentukan Target Testing
+
+```python
+y_test = test_df['species']
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk mengambil nilai target asli pada data testing sebagai pembanding hasil prediksi model.
+
+---
+
+### Membuat Model Random Forest
+
+```python
+model = RandomForestClassifier(
+    n_estimators=10,
+    random_state=42
+)
+```
+Penjelasan:
+
+Kode ini digunakan untuk membuat model Random Forest.
+
+Parameter:
+
+* `n_estimators=10`
+  → jumlah pohon keputusan (decision tree) yang digunakan sebanyak 10 pohon.
+* `random_state=42`
+  → digunakan agar hasil random tetap sama setiap dijalankan.
+
+Random Forest bekerja dengan menggabungkan banyak pohon keputusan untuk meningkatkan akurasi dan mengurangi overfitting.
+
+---
+
+### Melatih Model
+
+```python
+model.fit(X_train, y_train)
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk melatih model Random Forest menggunakan data training.
+
+* `X_train` berisi fitur training
+* `y_train` berisi target training
+
+---
+
+### Melakukan Prediksi
+
+```python
+y_pred = model.predict(X_test)
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk melakukan prediksi terhadap data testing menggunakan model yang telah dilatih sebelumnya.
+
+Hasil prediksi disimpan pada variabel `y_pred`.
+
+---
+
+### Menghitung Accuracy
+
+```python
+print("Akurasi:", accuracy_score(y_test, y_pred))
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk menghitung tingkat accuracy model berdasarkan hasil prediksi dan data asli testing.
+
+Rumus accuracy:
+
+```math
+Accuracy = \frac{Jumlah\ Prediksi\ Benar}{Total\ Data} \times 100\%
+```
+
+---
+
+### Menampilkan Classification Report
+
+```python
+print(classification_report(y_test, y_pred))
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk menampilkan laporan hasil klasifikasi yang terdiri dari:
+
+* precision
+* recall
+* f1-score
+* support
+
+Laporan ini digunakan untuk mengetahui performa model secara lebih detail.
+
+---
+
+### Menambahkan Hasil Prediksi
+
+```python
+test_df['prediction'] = y_pred
+```
+
+Penjelasan:
+
+Kode ini digunakan untuk menambahkan kolom hasil prediksi ke dalam dataframe testing.
+
+Kolom baru bernama:
+
+```text
+prediction
+```
+
+---
+
+### Mengirim Output ke KNIME
+
+```python
+output_table_1 = test_df
+```
+Penjelasan:
+
+Kode ini digunakan untuk mengirim hasil dataframe testing beserta hasil prediksi ke output node KNIME agar dapat digunakan pada node berikutnya seperti Scorer.
+
+---
+## score
+### desicion tree
+![alt text](image-27.png)
+Penjelasan:<br>
+Sebanyak 18 data Iris-setosa berhasil diprediksi dengan benar.<br>
+Sebanyak 10 data Iris-versicolor berhasil diprediksi dengan benar.<br>
+Sebanyak 15 data Iris-virginica berhasil diprediksi dengan benar.<br>
+2 data Iris-virginica diprediksi sebagai Iris-versicolor.
+
+### Random forest
+![alt text](image-28.png)
+Penjelasan:<br>
+Sebanyak 18 data Iris-setosa berhasil diprediksi dengan benar.<br>
+Sebanyak 10 data Iris-versicolor berhasil diprediksi dengan benar. <br>
+Sebanyak 14 data Iris-virginica berhasil diprediksi dengan benar.<br>
+2 data Iris-virginica diprediksi sebagai Iris-versicolor.<br>
+1 data Iris-versicolor diprediksi sebagai Iris-virginica.<br>
+
+## kesimpulan 
+dari dua metode antara desicion tree dan random forest, pada dataset Iris metode Decision Tree justru memberikan hasil yang sedikit lebih tinggi dibandingkan dengan random forest
