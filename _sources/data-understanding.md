@@ -2091,14 +2091,6 @@ for i, x_val in enumerate(X_pred.flatten()):
 
 ---
 
-## 5. HASIL PREDIKSI DATA
-
-Berdasarkan integrasi hasil dari perhitungan rumus persamaan linear:
-
-
-::contentReference[oaicite:1]{index=1}
-
-
 didapatkan hasil prediksi nilai $Y$ sebagai berikut:
 
 | No (Prediksi) | Input Nilai X | Operasi Rumus Model ($Y = 0.4 + 1.05X$) | Hasil Akhir Nilai Y |
@@ -2106,21 +2098,17 @@ didapatkan hasil prediksi nilai $Y$ sebagai berikut:
 | 8 | 0 | $0.4 + (1.05 \times 0)$ | **0.4000** |
 | 9 | 1 | $0.4 + (1.05 \times 1)$ | **1.4500** |
 
----
 
 
 
-## 6. KESIMPULAN
+
+## 5. KESIMPULAN
 
 - **Konsistensi Akurasi:**  
   Metode perhitungan analitik berbasis matriks OLS dan metode komputasi otomatis lewat program Python (`scikit-learn`) terbukti menghasilkan nilai parameter koefisien yang sama persis, yaitu nilai Intersep $\beta_0 = 0.4$ dan Slope $\beta_1 = 1.05$.
 
 - **Interpretasi Model:**  
   Persamaan regresi:
-
-
-::contentReference[oaicite:2]{index=2}
-
 
 bermakna bahwa model memiliki nilai awal sebesar $0.4$ ketika variabel $X$ bernilai nol. Setiap penambahan satu satuan nilai pada variabel independen ($X$), maka nilai variabel dependen ($Y$) diprediksi akan meningkat linear sebesar $1.05$ satuan.
 
