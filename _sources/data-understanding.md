@@ -2049,15 +2049,13 @@ $$
 = 1.05
 $$
 
-### Persamaan Regresi Model Analitik
-
-
-::contentReference[oaicite:0]{index=0}
-
+## 3. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)
+![alt text](image-29.png)
 
 ---
 
-## 3. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)
+
+## 4. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)
 
 Berikut adalah kode pemrograman Python menggunakan pustaka `scikit-learn` untuk mengotomatisasi perhitungan koefisien regresi serta memprediksi data:
 
@@ -2093,7 +2091,7 @@ for i, x_val in enumerate(X_pred.flatten()):
 
 ---
 
-## 4. HASIL PREDIKSI DATA
+## 5. HASIL PREDIKSI DATA
 
 Berdasarkan integrasi hasil dari perhitungan rumus persamaan linear:
 
@@ -2110,45 +2108,7 @@ didapatkan hasil prediksi nilai $Y$ sebagai berikut:
 
 ---
 
-## 5. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)
 
-Untuk memvisualisasikan data ini ke dalam grafik kartesius di GeoGebra, lakukan langkah input objek berikut pada kolom masukan (*input bar*):
-
-- **Input Titik Sampel:**  
-  `A=(2,2)`, `B=(4,3)`, `C=(3,5)`, `D=(3,4)`, `E=(3,3)`, `F=(4,5)`, `G=(5,6)`
-
-- **Input Garis Linear:**  
-  `f(x) = 0.4 + 1.05x`  
-  atau ketik perintah:  
-  `FitLine({A,B,C,D,E,F,G})`
-
-- **Input Titik Prediksi:**  
-  `H=(0,0.4)` dan `I=(1,1.45)`
-
-Berikut adalah struktur posisi penempatan tangkapan layar (*screenshot*) grafik GeoGebra Anda untuk laporan:
-
-### A. Diagram Pencar (Scatter Plot) Data Awal
-
-**[GAMBAR 1: Scatter Plot Titik Data Awal A sampai G di GeoGebra]**
-
-- **Deskripsi:**  
-  Grafik menunjukkan posisi sebaran ketujuh titik data latih berdasarkan sumbu koordinat X dan Y sebelum ditarik garis regresi.
-
-### B. Garis Regresi Terbaik (Line of Best Fit)
-
-**[GAMBAR 2: Plot Garis Regresi $f(x) = 0.4 + 1.05x$ Membelah Titik Data di GeoGebra]**
-
-- **Deskripsi:**  
-  Grafik menampilkan garis lurus linear terbaik yang ditarik membelah sebaran data untuk meminimalkan nilai kesalahan kuadrat (*error*).
-
-### C. Validasi Titik Hasil Prediksi Baru
-
-**[GAMBAR 3: Titik Prediksi H dan I yang Berada Tepat pada Lintasan Garis Regresi]**
-
-- **Deskripsi:**  
-  Grafik membuktikan secara visual bahwa koordinat titik prediksi baru `H(0,0.4)` dan `I(1,1.45)` terletak presisi di atas lintasan garis regresi linear $f(x)$.
-
----
 
 ## 6. KESIMPULAN
 

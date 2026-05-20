@@ -427,17 +427,11 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-slope-kemiringan-beta-1">Menghitung Slope/Kemiringan (<span class="math notranslate nohighlight">\(\beta_1\)</span>)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#persamaan-regresi-model-analitik">Persamaan Regresi Model Analitik</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-menggunakan-program-python">3. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-prediksi-data">4. HASIL PREDIKSI DATA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#panduan-implementasi-gambar-geogebra">5. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagram-pencar-scatter-plot-data-awal">A. Diagram Pencar (Scatter Plot) Data Awal</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-garis-regresi-terbaik-line-of-best-fit">B. Garis Regresi Terbaik (Line of Best Fit)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-validasi-titik-hasil-prediksi-baru">C. Validasi Titik Hasil Prediksi Baru</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#panduan-implementasi-gambar-geogebra">3. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-menggunakan-program-python">4. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-prediksi-data">5. HASIL PREDIKSI DATA</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6. KESIMPULAN</a></li>
 </ul>
 </li>
@@ -2508,14 +2502,14 @@ X^T Y =
 \]</div>
 </section>
 </section>
-<section id="persamaan-regresi-model-analitik">
-<h3>Persamaan Regresi Model Analitik<a class="headerlink" href="#persamaan-regresi-model-analitik" title="Permalink to this heading">#</a></h3>
-<p>::contentReference[oaicite:0]{index=0}</p>
 </section>
+<section id="panduan-implementasi-gambar-geogebra">
+<h2>3. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)<a class="headerlink" href="#panduan-implementasi-gambar-geogebra" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-29.png" /></p>
 </section>
 <hr class="docutils" />
 <section id="perhitungan-menggunakan-program-python">
-<h2>3. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)<a class="headerlink" href="#perhitungan-menggunakan-program-python" title="Permalink to this heading">#</a></h2>
+<h2>4. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)<a class="headerlink" href="#perhitungan-menggunakan-program-python" title="Permalink to this heading">#</a></h2>
 <p>Berikut adalah kode pemrograman Python menggunakan pustaka <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> untuk mengotomatisasi perhitungan koefisien regresi serta memprediksi data:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
@@ -2549,7 +2543,7 @@ X^T Y =
 </section>
 <hr class="docutils" />
 <section id="hasil-prediksi-data">
-<h2>4. HASIL PREDIKSI DATA<a class="headerlink" href="#hasil-prediksi-data" title="Permalink to this heading">#</a></h2>
+<h2>5. HASIL PREDIKSI DATA<a class="headerlink" href="#hasil-prediksi-data" title="Permalink to this heading">#</a></h2>
 <p>Berdasarkan integrasi hasil dari perhitungan rumus persamaan linear:</p>
 <p>::contentReference[oaicite:1]{index=1}</p>
 <p>didapatkan hasil prediksi nilai <span class="math notranslate nohighlight">\(Y\)</span> sebagai berikut:</p>
@@ -2575,46 +2569,6 @@ X^T Y =
 </tbody>
 </table>
 </div>
-</section>
-<hr class="docutils" />
-<section id="panduan-implementasi-gambar-geogebra">
-<h2>5. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)<a class="headerlink" href="#panduan-implementasi-gambar-geogebra" title="Permalink to this heading">#</a></h2>
-<p>Untuk memvisualisasikan data ini ke dalam grafik kartesius di GeoGebra, lakukan langkah input objek berikut pada kolom masukan (<em>input bar</em>):</p>
-<ul class="simple">
-<li><p><strong>Input Titik Sampel:</strong><br />
-<code class="docutils literal notranslate"><span class="pre">A=(2,2)</span></code>, <code class="docutils literal notranslate"><span class="pre">B=(4,3)</span></code>, <code class="docutils literal notranslate"><span class="pre">C=(3,5)</span></code>, <code class="docutils literal notranslate"><span class="pre">D=(3,4)</span></code>, <code class="docutils literal notranslate"><span class="pre">E=(3,3)</span></code>, <code class="docutils literal notranslate"><span class="pre">F=(4,5)</span></code>, <code class="docutils literal notranslate"><span class="pre">G=(5,6)</span></code></p></li>
-<li><p><strong>Input Garis Linear:</strong><br />
-<code class="docutils literal notranslate"><span class="pre">f(x)</span> <span class="pre">=</span> <span class="pre">0.4</span> <span class="pre">+</span> <span class="pre">1.05x</span></code><br />
-atau ketik perintah:<br />
-<code class="docutils literal notranslate"><span class="pre">FitLine({A,B,C,D,E,F,G})</span></code></p></li>
-<li><p><strong>Input Titik Prediksi:</strong><br />
-<code class="docutils literal notranslate"><span class="pre">H=(0,0.4)</span></code> dan <code class="docutils literal notranslate"><span class="pre">I=(1,1.45)</span></code></p></li>
-</ul>
-<p>Berikut adalah struktur posisi penempatan tangkapan layar (<em>screenshot</em>) grafik GeoGebra Anda untuk laporan:</p>
-<section id="a-diagram-pencar-scatter-plot-data-awal">
-<h3>A. Diagram Pencar (Scatter Plot) Data Awal<a class="headerlink" href="#a-diagram-pencar-scatter-plot-data-awal" title="Permalink to this heading">#</a></h3>
-<p><strong>[GAMBAR 1: Scatter Plot Titik Data Awal A sampai G di GeoGebra]</strong></p>
-<ul class="simple">
-<li><p><strong>Deskripsi:</strong><br />
-Grafik menunjukkan posisi sebaran ketujuh titik data latih berdasarkan sumbu koordinat X dan Y sebelum ditarik garis regresi.</p></li>
-</ul>
-</section>
-<section id="b-garis-regresi-terbaik-line-of-best-fit">
-<h3>B. Garis Regresi Terbaik (Line of Best Fit)<a class="headerlink" href="#b-garis-regresi-terbaik-line-of-best-fit" title="Permalink to this heading">#</a></h3>
-<p><strong>[GAMBAR 2: Plot Garis Regresi <span class="math notranslate nohighlight">\(f(x) = 0.4 + 1.05x\)</span> Membelah Titik Data di GeoGebra]</strong></p>
-<ul class="simple">
-<li><p><strong>Deskripsi:</strong><br />
-Grafik menampilkan garis lurus linear terbaik yang ditarik membelah sebaran data untuk meminimalkan nilai kesalahan kuadrat (<em>error</em>).</p></li>
-</ul>
-</section>
-<section id="c-validasi-titik-hasil-prediksi-baru">
-<h3>C. Validasi Titik Hasil Prediksi Baru<a class="headerlink" href="#c-validasi-titik-hasil-prediksi-baru" title="Permalink to this heading">#</a></h3>
-<p><strong>[GAMBAR 3: Titik Prediksi H dan I yang Berada Tepat pada Lintasan Garis Regresi]</strong></p>
-<ul class="simple">
-<li><p><strong>Deskripsi:</strong><br />
-Grafik membuktikan secara visual bahwa koordinat titik prediksi baru <code class="docutils literal notranslate"><span class="pre">H(0,0.4)</span></code> dan <code class="docutils literal notranslate"><span class="pre">I(1,1.45)</span></code> terletak presisi di atas lintasan garis regresi linear <span class="math notranslate nohighlight">\(f(x)\)</span>.</p></li>
-</ul>
-</section>
 </section>
 <hr class="docutils" />
 <section id="id6">
@@ -2787,17 +2741,11 @@ Implementasi grafis menggunakan aplikasi GeoGebra memberikan konfirmasi visual b
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-slope-kemiringan-beta-1">Menghitung Slope/Kemiringan (<span class="math notranslate nohighlight">\(\beta_1\)</span>)</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#persamaan-regresi-model-analitik">Persamaan Regresi Model Analitik</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-menggunakan-program-python">3. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-prediksi-data">4. HASIL PREDIKSI DATA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#panduan-implementasi-gambar-geogebra">5. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagram-pencar-scatter-plot-data-awal">A. Diagram Pencar (Scatter Plot) Data Awal</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-garis-regresi-terbaik-line-of-best-fit">B. Garis Regresi Terbaik (Line of Best Fit)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-validasi-titik-hasil-prediksi-baru">C. Validasi Titik Hasil Prediksi Baru</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#panduan-implementasi-gambar-geogebra">3. PANDUAN IMPLEMENTASI GAMBAR (GEOGEBRA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-menggunakan-program-python">4. PERHITUNGAN MENGGUNAKAN PROGRAM (PYTHON)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-prediksi-data">5. HASIL PREDIKSI DATA</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6. KESIMPULAN</a></li>
 </ul>
 </li>
