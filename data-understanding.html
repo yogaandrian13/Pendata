@@ -2566,17 +2566,29 @@ X^T Y =
 </section>
 <section id="id6">
 <h2>5. KESIMPULAN<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Berdasarkan hasil perhitungan regresi linear sederhana menggunakan metode analitik berbasis matriks <em>Ordinary Least Squares (OLS)</em> dan metode komputasi menggunakan bahasa pemrograman Python (<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>), diperoleh hasil koefisien regresi yang sama, yaitu:</p>
+<div class="math notranslate nohighlight">
+\[
+\beta_0 = 0.4
+\]</div>
+<p>dan</p>
+<div class="math notranslate nohighlight">
+\[
+\beta_1 = 1.05
+\]</div>
+<p>Sehingga terbentuk persamaan regresi linear:</p>
+<div class="math notranslate nohighlight">
+\[
+Y = 0.4 + 1.05X
+\]</div>
+<p>Persamaan tersebut menunjukkan bahwa ketika nilai variabel independen (<span class="math notranslate nohighlight">\(X\)</span>) bernilai 0, maka model memprediksi nilai awal variabel dependen (<span class="math notranslate nohighlight">\(Y\)</span>) sebesar 0.4. Selain itu, setiap kenaikan 1 satuan pada variabel <span class="math notranslate nohighlight">\(X\)</span> akan menyebabkan peningkatan nilai <span class="math notranslate nohighlight">\(Y\)</span> sebesar 1.05 satuan.</p>
+<p>Hasil prediksi menggunakan model regresi menunjukkan bahwa:</p>
 <ul class="simple">
-<li><p><strong>Konsistensi Akurasi:</strong><br />
-Metode perhitungan analitik berbasis matriks OLS dan metode komputasi otomatis lewat program Python (<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>) terbukti menghasilkan nilai parameter koefisien yang sama persis, yaitu nilai Intersep <span class="math notranslate nohighlight">\(\beta_0 = 0.4\)</span> dan Slope <span class="math notranslate nohighlight">\(\beta_1 = 1.05\)</span>.</p></li>
-<li><p><strong>Interpretasi Model:</strong><br />
-Persamaan regresi:</p></li>
+<li><p>Untuk <span class="math notranslate nohighlight">\(X = 0\)</span>, diperoleh prediksi <span class="math notranslate nohighlight">\(Y = 0.4\)</span></p></li>
+<li><p>Untuk <span class="math notranslate nohighlight">\(X = 1\)</span>, diperoleh prediksi <span class="math notranslate nohighlight">\(Y = 1.45\)</span></p></li>
 </ul>
-<p>bermakna bahwa model memiliki nilai awal sebesar <span class="math notranslate nohighlight">\(0.4\)</span> ketika variabel <span class="math notranslate nohighlight">\(X\)</span> bernilai nol. Setiap penambahan satu satuan nilai pada variabel independen (<span class="math notranslate nohighlight">\(X\)</span>), maka nilai variabel dependen (<span class="math notranslate nohighlight">\(Y\)</span>) diprediksi akan meningkat linear sebesar <span class="math notranslate nohighlight">\(1.05\)</span> satuan.</p>
-<ul class="simple">
-<li><p><strong>Validasi Geometris:</strong><br />
-Implementasi grafis menggunakan aplikasi GeoGebra memberikan konfirmasi visual bahwa model regresi linear yang dibangun telah membagi sebaran data secara seimbang, serta memastikan seluruh koordinat hasil prediksi baru berada tepat pada lintasan garis regresi linear model tersebut.</p></li>
-</ul>
+<p>Visualisasi menggunakan GeoGebra juga membuktikan bahwa garis regresi yang terbentuk mampu merepresentasikan pola hubungan antar data dengan baik, serta titik hasil prediksi berada tepat pada lintasan garis regresi linear.</p>
+<p>Dengan demikian, dapat disimpulkan bahwa metode regresi linear sederhana efektif digunakan untuk memodelkan hubungan antara variabel independen dan variabel dependen, baik melalui perhitungan manual berbasis matriks maupun melalui implementasi program Python.</p>
 </section>
 </section>
 

@@ -2104,13 +2104,31 @@ didapatkan hasil prediksi nilai $Y$ sebagai berikut:
 
 ## 5. KESIMPULAN
 
-- **Konsistensi Akurasi:**  
-  Metode perhitungan analitik berbasis matriks OLS dan metode komputasi otomatis lewat program Python (`scikit-learn`) terbukti menghasilkan nilai parameter koefisien yang sama persis, yaitu nilai Intersep $\beta_0 = 0.4$ dan Slope $\beta_1 = 1.05$.
+Berdasarkan hasil perhitungan regresi linear sederhana menggunakan metode analitik berbasis matriks *Ordinary Least Squares (OLS)* dan metode komputasi menggunakan bahasa pemrograman Python (`scikit-learn`), diperoleh hasil koefisien regresi yang sama, yaitu:
 
-- **Interpretasi Model:**  
-  Persamaan regresi:
+$$
+\beta_0 = 0.4
+$$
 
-bermakna bahwa model memiliki nilai awal sebesar $0.4$ ketika variabel $X$ bernilai nol. Setiap penambahan satu satuan nilai pada variabel independen ($X$), maka nilai variabel dependen ($Y$) diprediksi akan meningkat linear sebesar $1.05$ satuan.
+dan
 
-- **Validasi Geometris:**  
-  Implementasi grafis menggunakan aplikasi GeoGebra memberikan konfirmasi visual bahwa model regresi linear yang dibangun telah membagi sebaran data secara seimbang, serta memastikan seluruh koordinat hasil prediksi baru berada tepat pada lintasan garis regresi linear model tersebut.
+$$
+\beta_1 = 1.05
+$$
+
+Sehingga terbentuk persamaan regresi linear:
+
+$$
+Y = 0.4 + 1.05X
+$$
+
+Persamaan tersebut menunjukkan bahwa ketika nilai variabel independen ($X$) bernilai 0, maka model memprediksi nilai awal variabel dependen ($Y$) sebesar 0.4. Selain itu, setiap kenaikan 1 satuan pada variabel $X$ akan menyebabkan peningkatan nilai $Y$ sebesar 1.05 satuan.
+
+Hasil prediksi menggunakan model regresi menunjukkan bahwa:
+
+- Untuk $X = 0$, diperoleh prediksi $Y = 0.4$
+- Untuk $X = 1$, diperoleh prediksi $Y = 1.45$
+
+Visualisasi menggunakan GeoGebra juga membuktikan bahwa garis regresi yang terbentuk mampu merepresentasikan pola hubungan antar data dengan baik, serta titik hasil prediksi berada tepat pada lintasan garis regresi linear.
+
+Dengan demikian, dapat disimpulkan bahwa metode regresi linear sederhana efektif digunakan untuk memodelkan hubungan antara variabel independen dan variabel dependen, baik melalui perhitungan manual berbasis matriks maupun melalui implementasi program Python.
