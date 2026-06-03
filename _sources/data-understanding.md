@@ -2132,3 +2132,843 @@ Hasil prediksi menggunakan model regresi menunjukkan bahwa:
 Visualisasi menggunakan GeoGebra juga membuktikan bahwa garis regresi yang terbentuk mampu merepresentasikan pola hubungan antar data dengan baik, serta titik hasil prediksi berada tepat pada lintasan garis regresi linear.
 
 Dengan demikian, dapat disimpulkan bahwa metode regresi linear sederhana efektif digunakan untuk memodelkan hubungan antara variabel independen dan variabel dependen, baik melalui perhitungan manual berbasis matriks maupun melalui implementasi program Python.
+
+# Peramalan kadar NO2 di daerah Pamekasan Madura
+## 1. Pengumpulan Data
+Kita install terlebih dahulu openoneo:
+``` text
+pip install openeo
+```
+Lalu tuliskan code dibawah:
+``` text
+import openeo
+```
+``` text
+connection = openeo.connect("openeo.dataspace.copernicus.eu").authenticate_oidc()
+```
+``` python
+aoi = {
+    "type": "Polygon",
+    "coordinates": [
+        [
+            [113.09, -6.89],
+            [112.68, -6.89],
+            [112.68, -7.20],
+            [113.09, -7.20],
+            [113.09, -6.89],
+        ]
+    ]
+}
+
+s5post = connection.load_collection(
+    "SENTINEL_5P_L2",
+    temporal_extent=["2023-10-01", "2025-10-01"],
+    spatial_extent={
+        "west": 112.68,
+        "south": -7.20,
+        "east": 113.09,
+        "north": -6.89
+    },
+    bands=["NO2"],
+)
+
+# Now aggregate by day to avoid having multiple data per day
+s5p_no2_daily = s5post.aggregate_temporal_period(reducer="mean", period="day")
+
+# Now create a spatial aggregation to generate mean timeseries data
+s5p_no2_aoi = s5p_no2_daily.aggregate_spatial(reducer="mean", geometries=aoi)
+```
+Code diatas memerlukan titik koordinasi area yang akan diambil data 
+-nya, untuk mengambil titik koordinasi kaian kunjungi webiste https://geojson.io/?map=8.61/-7/113.43 . Didalam website tersebut kalian akan memilih daerah dengan cara memberi shape kotak didaerah yang ingin kalian ambil datanya.
+![alt text](image-30.png)
+Di panel sebelah kanan terdapat data JSON yang berupa koordinat daerah yang kalian pilih, kalian salin terus sesuaikan dengan code diatas di bagian variabel “aoi” dan spatial_extent.<br>
+Lalu kalian tambahkan baris code dibawah untuk memulai pengambilan data:
+``` python
+job = s5post.execute_batch(title="NO2 in Pamekasan", outputfile="NO2Pamekasan.nc")
+```
+Tunggu proses pengambilan data, output proses seperti berikut:
+``` text
+0:00:00 Job 'j-2606030345014573816874721c7f0710': send 'start'
+0:00:12 Job 'j-2606030345014573816874721c7f0710': queued (progress 0%)
+0:00:17 Job 'j-2606030345014573816874721c7f0710': queued (progress 0%)
+0:00:24 Job 'j-2606030345014573816874721c7f0710': queued (progress 0%)
+0:00:32 Job 'j-2606030345014573816874721c7f0710': queued (progress 0%)
+0:00:42 Job 'j-2606030345014573816874721c7f0710': queued (progress 0%)
+0:00:54 Job 'j-2606030345014573816874721c7f0710': queued (progress 0%)
+0:01:10 Job 'j-2606030345014573816874721c7f0710': running (progress N/A)
+0:01:29 Job 'j-2606030345014573816874721c7f0710': running (progress N/A)
+0:01:53 Job 'j-2606030345014573816874721c7f0710': running (progress N/A)
+0:02:24 Job 'j-2606030345014573816874721c7f0710': finished (progress 100%)
+```
+Ketika proses pengambilan data, aktivitas kalian akan terekam di halaman https://editor.openeo.org/?server=https%3A%2F%2Fopeneo.dataspace.copernicus.eu%2Fopeneo%2F1.2 . Disitu terdapat nama dataset dan status pengambilan data.
+![alt text](image-31.png)
+
+## 2. Preproccessing Data
+Setelah kita mengambil data, data bisa diunduh di halaman https://editor.openeo.org/?server=https%3A%2F%2Fopeneo.dataspace.copernicus.eu%2Fopeneo%2F1.2 . File akan berbentuk .nc. Kita cuman perlu kolom date dan NO2 menggunakan code dibawah:
+``` python
+import netCDF4
+
+file_path = "openEO.nc"
+ds = netCDF4.Dataset(file_path)
+
+# Lihat seluruh variabel yang tersedia
+print("📦 Variabel dalam file:")
+print(ds.variables.keys())
+# dict_keys(['t', 'x', 'y', 'crs', 'NO2'])
+
+# Ambil NO2
+no2 = ds.variables["NO2"][:]
+
+# Ambil Time
+time = ds.variables["t"][:]
+
+# Konversi waktu ke format tanggal jika punya atribut 'units'
+try:
+    time_units = ds.variables["t"].units
+    dates = netCDF4.num2date(time, units=time_units)
+except Exception:
+    dates = time  # fallback kalau tidak ada units
+
+# Tampilkan struktur data NO2
+print(type(no2))
+# type <class 'numpy.ma.core.MaskedArray'>
+
+print(len(no2))
+# banyaknya data record NO2 725
+
+print(len(no2[0]))
+# panjang data perbaris 9
+
+print(len(no2[0][0]))
+# panjang perdata 8
+
+print(no2[0][0][0])
+# 3.7701793e-05
+```
+``` text
+📦 Variabel dalam file:
+dict_keys(['t', 'x', 'y', 'crs', 'NO2'])
+<class 'numpy.ma.MaskedArray'>
+61
+9
+5
+--
+```
+Untuk melihat 10 data pertama adalah:
+``` python
+print("Contoh data pertama:")
+for i in range(0, 10):
+    print(no2[i])
+```
+``` text
+Contoh data pertama:
+[[-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- 9.61525415732467e-07 --]
+ [-- 2.1458754417835735e-05 2.1458754417835735e-05 9.61525415732467e-07
+  2.504570147721097e-05]
+ [9.978138223232236e-06 2.1458754417835735e-05 1.4053041013539769e-05
+  2.504570147721097e-05 -1.490594627284736e-06]
+ [9.893085007206537e-06 1.4053041013539769e-05 1.4053041013539769e-05
+  -1.490594627284736e-06 -1.490594627284736e-06]
+ [9.893085007206537e-06 1.3830820535076782e-05 1.3830820535076782e-05
+  -1.490594627284736e-06 7.528892183472635e-06]
+ [1.2178630640846677e-05 1.3830820535076782e-05 1.5055943549668882e-05
+  7.528892183472635e-06 7.528892183472635e-06]
+ [2.115600000252016e-05 1.5055943549668882e-05 1.5055943549668882e-05
+  7.246691438922426e-06 7.246691438922426e-06]]
+[[-- 1.4124046174401883e-05 1.4124046174401883e-05 2.482243326085154e-05
+  1.225495452672476e-05]
+ [-- -- -- 2.9153743525967002e-05 1.204462387249805e-05]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- 9.588666216586716e-06]]
+[[6.847168151580263e-06 2.2603488105232827e-05 1.372965743939858e-05 --
+  --]
+ [2.0322269847383723e-05 2.2603488105232827e-05 1.372965743939858e-05
+  1.3469954865286127e-05 --]
+ [-- -- -- 1.3469954865286127e-05 --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [9.062567869477789e-07 -- -- -- --]
+ [1.4294840184447821e-05 1.1820839063148014e-05 2.168526862078579e-06
+  2.168526862078579e-06 -6.095970547903562e-06]
+ [1.4294840184447821e-05 1.1820839063148014e-05 8.895062819647137e-06
+  1.3951847904536407e-05 1.2480927580327261e-05]
+ [1.1549172086233739e-05 1.1549172086233739e-05 8.895062819647137e-06
+  1.3951847904536407e-05 1.2480927580327261e-05]]
+[[-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- -1.112526547331072e-06]
+ [-- -- -- 1.9345276086824015e-05 -1.112526547331072e-06]
+ [-- -- -- -- 1.5339172023232095e-05]
+ [-- -- -- -- 4.047525180794764e-06]
+ [-- -- 1.6738479189370992e-06 9.896171832224354e-06
+  4.047525180794764e-06]]
+[[2.8803173336200416e-05 -- 1.7342907085549086e-05 1.3539247447624803e-05
+  --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- 3.062319819946424e-07 1.2125381545047276e-05 -- --]
+ [-- -- 2.403447615506593e-05 2.063418094166991e-07
+  3.5624730116978753e-06]
+ [-- 4.8862380026548635e-06 2.403447615506593e-05 2.401791607553605e-05
+  2.157118979084771e-05]
+ [-- 2.7470101485960186e-05 1.9922199498978443e-05 2.401791607553605e-05
+  2.157118979084771e-05]
+ [-9.710182894195896e-06 2.7470101485960186e-05 2.2575102775590494e-05
+  1.8144188288715668e-05 1.1031198482669424e-05]
+ [2.937010140158236e-05 2.563972884672694e-05 2.2575102775590494e-05
+  1.253730488315341e-06 1.65877668223402e-06]]
+[[-- 1.4587973055313341e-05 3.7762252759421244e-05 -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]]
+[[-- 1.5697201888542622e-05 1.5697201888542622e-05 --
+  4.590063326759264e-06]
+ [-- -- -- -- 7.966914381540846e-06]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]]
+[[4.033688128401991e-06 1.7370048226439394e-05 1.3981777556182351e-05
+  1.2897712622361723e-05 1.2897712622361723e-05]
+ [1.3522299923351966e-05 1.7370048226439394e-05 1.3981777556182351e-05
+  1.3981777556182351e-05 1.0595568710414227e-05]
+ [-- -- -- -- 1.0595568710414227e-05]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]]
+[[-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]]
+[[-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]
+ [-- -- -- -- --]]
+```
+### a. Mengatasi Missing Value menggunakan metode Interpolasi Linear
+Sekarang kita akan mengatasi permasalahan missing value pada data NO2.
+``` python
+import numpy as np
+import pandas as pd
+
+# Interpolasi Linear
+no2_filled = np.zeros_like(no2)
+# Untuk jaga-jaga jika terdapat '--' tidak berubah menjadi 0
+no2_filled = no2_filled.filled(0)
+
+# loop tiap grid (y,x)
+for i in range(no2.shape[1]):     # 9 baris
+    for j in range(no2.shape[2]): # 8 kolom
+        series = pd.Series(no2[:, i, j])
+        no2_filled[:, i, j] = series.interpolate(method='linear', limit_direction='both').to_numpy()
+```
+Dengan code diatas, missing value yang terdapat pada data NO2 akan diisi secara otomatis menggunakan metode Interpolasi Linear.
+### b. Rata-rata kan Data dan ubah Datetime
+``` python
+new_dates = []
+new_no2 = []
+for i in range(len(dates)):
+    # ubah format datetime
+    new_date = dates[i].strftime('%Y-%m-%d')
+    new_dates.append(new_date)
+    new_no2.append(np.mean(no2_filled[i]))
+```
+### Simpan data dalam bentuk CSV
+Setelah itu kita akan membentuk data menjadi DataFrame Pandas untuk disimpan menjadi CSV.
+``` python
+df = pd.DataFrame({
+    "date": dates,
+    "NO2": new_no2
+})
+
+# Simpan ke CSV
+df.to_csv("NO2_Pamekasan_timeseries.csv", index=False)
+```
+Untuk mengatasi missing value dan menyimpan data ke CSV sudah berhasil.
+### d. Pengecekan Missing Value data harian pada CSV
+Sekarang setelah data berbentuk CSV, kita cek apakah data Time Series harian lengkap. Cara men-cek apakah data Time Series Harian lengkap gunakan code dibawah:
+``` python
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv("NO2_Pamekasan_timeseries.csv")
+
+# Pastikan kolom 'date' bertipe datetime
+df['date'] = pd.to_datetime(df['date'])
+
+# Buat rentang tanggal lengkap
+start_date = "2026-04-01"
+end_date = "2026-06-01"
+full_range = pd.date_range(start=start_date, end=end_date, freq='D')
+
+# Cek tanggal yang hilang
+missing_dates = full_range.difference(df['date'])
+
+print(f"Jumlah hari missing: {len(missing_dates)}")
+print("Daftar tanggal missing:")
+print(missing_dates)
+```
+``` text
+Jumlah hari missing: 1
+Daftar tanggal missing:
+DatetimeIndex(['2026-06-01'], dtype='datetime64[ns]', freq='D')
+```
+Dalam kasus saya ini, terdapat 1 hari missing value. Kita akan mengatasi lagi missing value menggunakan metode Interpolasi Linear. Cara memperbaikinya gunakan code dibawah:
+``` python
+import pandas as pd
+
+# Pastikan datetime dan sorting
+df['date'] = pd.to_datetime(df['date'])
+df = df.sort_values('date')
+
+# Buat rentang tanggal lengkap
+full_range = pd.date_range(start="2026-04-01", end="2026-06-01", freq='D')
+
+# Reindex agar tanggal yang hilang muncul sebagai NaN
+df = df.set_index('date').reindex(full_range)
+df.index.name = 'date'
+
+# Interpolasi linear berdasarkan indeks waktu
+df['NO2'] = df['NO2'].interpolate(method='time')
+
+# (Opsional) jika masih ada NaN di bagian awal/akhir bisa gunakan forward/backward fill
+df['NO2'] = df['NO2'].fillna(method='bfill').fillna(method='ffill')
+
+# Simpan kembali ke CSV
+df.to_csv("no2_timeseries_interpolated.csv")
+```
+### e. Deteksi Outlier IQR
+Setelah kita mengisi missing value menggunakan metode Interpolasi Linear, selanjutnya kita akan mendeteksi Outlier menggunakan metode IQR.
+``` python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("no2_timeseries_interpolated.csv")
+
+df['date'] = pd.to_datetime(df['date'])
+
+# Hitung IQR
+Q1 = df['NO2'].quantile(0.25)
+Q3 = df['NO2'].quantile(0.75)
+IQR = Q3 - Q1
+
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Filter outlier
+outliers_iqr = df[
+    (df['NO2'] < lower_bound) |
+    (df['NO2'] > upper_bound)
+]
+
+print("Jumlah Outlier (IQR):", len(outliers_iqr))
+print(outliers_iqr[['date', 'NO2']].head())
+```
+``` text
+Jumlah Outlier (IQR): 1
+         date       NO2
+18 2026-04-19  0.000024
+```
+Untuk men-visualisasi outlier:
+``` python
+# === Visualisasi ===
+plt.figure(figsize=(15,5))
+plt.plot(df['date'], df['NO2'], label="NO2", linewidth=1)
+
+# Titik Outlier
+plt.scatter(outliers_iqr['date'], outliers_iqr['NO2'],
+            color='red', marker='o', label="Outliers")
+
+# Garis batas atas & bawah
+plt.axhline(upper_bound, color='orange', linestyle='dashed', label="Upper Bound (IQR)")
+plt.axhline(lower_bound, color='blue', linestyle='dashed', label="Lower Bound (IQR)")
+
+plt.title("Deteksi Outlier Data NO2 (Metode IQR)")
+plt.xlabel("Tanggal")
+plt.ylabel("Kadar NO2")
+plt.legend()
+plt.tight_layout()
+plt.xticks(
+    ticks=[df['date'].iloc[0], df['date'].iloc[-1]],
+    labels=[df['date'].iloc[0].strftime('%Y-%m-%d'),
+            df['date'].iloc[-1].strftime('%Y-%m-%d')]
+)
+plt.show()
+```
+![alt text](image-32.png)
+Setelah itu, kita akan menghapus data outlier. Karena data ini merupakan data Time Series, maka data outlier yang dihapus akan diisi kembali menggunakan Interpolasi Linear.
+``` python
+# Tandai outlier menjadi NaN
+df['NO2_cleaned'] = df['NO2'].mask((df['NO2'] < lower_bound) | (df['NO2'] > upper_bound))
+
+print("Jumlah nilai yang dinyatakan sebagai outlier:", df['NO2_cleaned'].isna().sum())
+
+# Interpolasi linear untuk mengisi kembali nilai outlier
+df['NO2_filled'] = df['NO2_cleaned'].interpolate(method='linear')
+
+# Jika masih tersisa NaN di ujung data, isi dengan forward/backward fill
+df['NO2_filled'] = df['NO2_filled'].bfill().ffill()
+# df['NO2_filled'] = df['NO2_filled'].fillna(method='bfill').fillna(method='ffill')
+
+print("Jumlah missing setelah interpolasi:", df['NO2_filled'].isna().sum())
+```
+``` text
+Jumlah nilai yang dinyatakan sebagai outlier: 1
+Jumlah missing setelah interpolasi: 0
+```
+Visualisasi data setelah menghapus Outlier dan mengisi kembali menggunakan Interpolasi Linear:
+``` python
+plt.figure(figsize=(15,5))
+# Plot data hasil interpolasi
+plt.plot(df['date'], df['NO2_filled'], label="NO2 (Interpolated)", linewidth=1)
+# Tampilkan hanya tanggal awal dan akhir di sumbu X
+plt.xticks(
+    ticks=[df['date'].iloc[0], df['date'].iloc[-1]],
+    labels=[df['date'].iloc[0].strftime('%Y-%m-%d'),
+            df['date'].iloc[-1].strftime('%Y-%m-%d')]
+)
+plt.title("Plot Data NO2 Setelah Outlier Removal & Interpolasi")
+plt.xlabel("Tanggal")
+plt.ylabel("Kadar NO2")
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+![alt text](image-33.png)
+## 3. Modeling menggunakan KNN Regression
+Dengan data Time Series kadar NO2 harian di daerah Pamekasan, kita akan memprediksi kadar NO2 satu hari yang akan datang. Sekarang kita akan ubah data, mencoba mencari korelasi antara 1 hari dengan 4 hari sebelumnya. Kita juga akan membandingkan apakah semakin banyak hari sebelumnya, model akan lebih bagus?
+### a. Uji Korelasi Data
+``` python
+import pandas as pd
+
+def create_supervised(data, n_lag=4):
+    df_supervised = pd.DataFrame()
+    
+    # Membuat fitur t-4 sampai t-1
+    for i in range(n_lag, 0, -1):
+        df_supervised[f'NO2(t-{i})'] = data.shift(i)
+    
+    # Label hari H
+    df_supervised['NO2(t)'] = data
+    
+    # Hapus baris yang masih mengandung NaN akibat shift
+    df_supervised.dropna(inplace=True)
+    
+    return df_supervised
+
+# contoh penggunaan
+supervised_df30 = create_supervised(df['NO2_scaled'], n_lag=30)
+
+# Ambil semua lag dan kolom target
+lag_cols = supervised_df30.drop(columns="NO2(t)").columns
+correlations = supervised_df30[lag_cols].corrwith(supervised_df30['NO2(t)'])
+
+# Tampilkan nilai korelasi
+print(correlations)
+```
+``` text
+NO2(t-30)   -0.049386
+NO2(t-29)   -0.068898
+NO2(t-28)   -0.014762
+NO2(t-27)   -0.019433
+NO2(t-26)   -0.074270
+NO2(t-25)   -0.246123
+NO2(t-24)   -0.337322
+NO2(t-23)   -0.306557
+NO2(t-22)   -0.276465
+NO2(t-21)   -0.218725
+NO2(t-20)   -0.122040
+NO2(t-19)    0.065908
+NO2(t-18)    0.197832
+NO2(t-17)    0.202368
+NO2(t-16)    0.037755
+NO2(t-15)   -0.037251
+NO2(t-14)   -0.117059
+NO2(t-13)   -0.208986
+NO2(t-12)   -0.216090
+NO2(t-11)    0.025698
+NO2(t-10)    0.263926
+NO2(t-9)     0.500742
+NO2(t-8)     0.536009
+NO2(t-7)     0.362440
+NO2(t-6)     0.249679
+NO2(t-5)     0.319660
+NO2(t-4)     0.438739
+NO2(t-3)     0.504871
+NO2(t-2)     0.519151
+NO2(t-1)     0.752811
+dtype: float64
+```
+karena kita menggunakan model KNN Regression, maka perlu normalisasi data menggunakan min-max Scaler.
+``` python
+from sklearn.preprocessing import MinMaxScaler
+import pandas as pd
+
+scaler = MinMaxScaler()
+
+df['NO2_scaled'] = scaler.fit_transform(df[['NO2']])
+print(df[['date', 'NO2', 'NO2_scaled']].head())
+print("\nInformasi DataFrame:")
+df[['date', 'NO2', 'NO2_scaled']].info()
+```
+Maka data akan di-normalisasi 0-1.
+``` text
+        date       NO2  NO2_scaled
+0 2026-04-01  0.000013    0.184350
+1 2026-04-02  0.000012    0.163671
+2 2026-04-03  0.000012    0.121694
+3 2026-04-04  0.000013    0.187165
+4 2026-04-05  0.000015    0.341060
+
+Informasi DataFrame:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 62 entries, 0 to 61
+Data columns (total 3 columns):
+ #   Column      Non-Null Count  Dtype         
+---  ------      --------------  -----         
+ 0   date        62 non-null     datetime64[ns]
+ 1   NO2         62 non-null     float64       
+ 2   NO2_scaled  62 non-null     float64       
+dtypes: datetime64[ns](1), float64(2)
+memory usage: 1.6 KB
+```
+
+### c. Mengubah Data
+Untuk membuat data 4 hari sebelum tinggal tambah code dibawah (ubah parameter n_lag).
+``` python
+supervised_df = create_supervised(df['NO2_scaled'], n_lag=4)
+
+print(supervised_df)
+print(supervised_df.shape)
+```
+``` text
+    NO2(t-4)  NO2(t-3)  NO2(t-2)  NO2(t-1)    NO2(t)
+4   0.184350  0.163671  0.121694  0.187165  0.341060
+5   0.163671  0.121694  0.187165  0.341060  0.358497
+6   0.121694  0.187165  0.341060  0.358497  0.313287
+7   0.187165  0.341060  0.358497  0.313287  0.323432
+8   0.341060  0.358497  0.313287  0.323432  0.335887
+9   0.358497  0.313287  0.323432  0.335887  0.348342
+10  0.313287  0.323432  0.335887  0.348342  0.360798
+11  0.323432  0.335887  0.348342  0.360798  0.143673
+12  0.335887  0.348342  0.360798  0.143673  0.050449
+13  0.348342  0.360798  0.143673  0.050449  0.000000
+14  0.360798  0.143673  0.050449  0.000000  0.465076
+15  0.143673  0.050449  0.000000  0.465076  0.498610
+16  0.050449  0.000000  0.465076  0.498610  0.187134
+17  0.000000  0.465076  0.498610  0.187134  0.317976
+18  0.465076  0.498610  0.187134  0.317976  1.000000
+19  0.498610  0.187134  0.317976  1.000000  0.793888
+20  0.187134  0.317976  1.000000  0.793888  0.545215
+21  0.317976  1.000000  0.793888  0.545215  0.241553
+22  1.000000  0.793888  0.545215  0.241553  0.173841
+23  0.793888  0.545215  0.241553  0.173841  0.205572
+24  0.545215  0.241553  0.173841  0.205572  0.283645
+25  0.241553  0.173841  0.205572  0.283645  0.323617
+26  0.173841  0.205572  0.283645  0.323617  0.261732
+27  0.205572  0.283645  0.323617  0.261732  0.199846
+28  0.283645  0.323617  0.261732  0.199846  0.179595
+29  0.323617  0.261732  0.199846  0.179595  0.159343
+30  0.261732  0.199846  0.179595  0.159343  0.139092
+31  0.199846  0.179595  0.159343  0.139092  0.163308
+32  0.179595  0.159343  0.139092  0.163308  0.268493
+33  0.159343  0.139092  0.163308  0.268493  0.389750
+34  0.139092  0.163308  0.268493  0.389750  0.268283
+35  0.163308  0.268493  0.389750  0.268283  0.404211
+36  0.268493  0.389750  0.268283  0.404211  0.489569
+37  0.389750  0.268283  0.404211  0.489569  0.346207
+38  0.268283  0.404211  0.489569  0.346207  0.251871
+39  0.404211  0.489569  0.346207  0.251871  0.157535
+40  0.489569  0.346207  0.251871  0.157535  0.237304
+41  0.346207  0.251871  0.157535  0.237304  0.420818
+42  0.251871  0.157535  0.237304  0.420818  0.244595
+43  0.157535  0.237304  0.420818  0.244595  0.265462
+44  0.237304  0.420818  0.244595  0.265462  0.408936
+45  0.420818  0.244595  0.265462  0.408936  0.332046
+46  0.244595  0.265462  0.408936  0.332046  0.423722
+47  0.265462  0.408936  0.332046  0.423722  0.312309
+48  0.408936  0.332046  0.423722  0.312309  0.367612
+49  0.332046  0.423722  0.312309  0.367612  0.422915
+50  0.423722  0.312309  0.367612  0.422915  0.478217
+51  0.312309  0.367612  0.422915  0.478217  0.533520
+52  0.367612  0.422915  0.478217  0.533520  0.739695
+53  0.422915  0.478217  0.533520  0.739695  0.812732
+54  0.478217  0.533520  0.739695  0.812732  0.697480
+55  0.533520  0.739695  0.812732  0.697480  0.582227
+56  0.739695  0.812732  0.697480  0.582227  0.548920
+57  0.812732  0.697480  0.582227  0.548920  0.569837
+58  0.697480  0.582227  0.548920  0.569837  0.330779
+59  0.582227  0.548920  0.569837  0.330779  0.339725
+60  0.548920  0.569837  0.330779  0.339725  0.684697
+61  0.569837  0.330779  0.339725  0.684697  0.684697
+(58, 5)
+```
+Untuk membuat data 10 hari sebelum tinggal tambah code dibawah (ubah parameter n_lag).
+``` python
+supervised_df10 = create_supervised(df['NO2_scaled'], n_lag=10)
+
+print(supervised_df10)
+print(supervised_df10.shape)
+```
+``` text
+    NO2(t-10)  NO2(t-9)  NO2(t-8)  NO2(t-7)  NO2(t-6)  NO2(t-5)  NO2(t-4)  \
+10   0.184350  0.163671  0.121694  0.187165  0.341060  0.358497  0.313287   
+11   0.163671  0.121694  0.187165  0.341060  0.358497  0.313287  0.323432   
+12   0.121694  0.187165  0.341060  0.358497  0.313287  0.323432  0.335887   
+13   0.187165  0.341060  0.358497  0.313287  0.323432  0.335887  0.348342   
+14   0.341060  0.358497  0.313287  0.323432  0.335887  0.348342  0.360798   
+15   0.358497  0.313287  0.323432  0.335887  0.348342  0.360798  0.143673   
+16   0.313287  0.323432  0.335887  0.348342  0.360798  0.143673  0.050449   
+17   0.323432  0.335887  0.348342  0.360798  0.143673  0.050449  0.000000   
+18   0.335887  0.348342  0.360798  0.143673  0.050449  0.000000  0.465076   
+19   0.348342  0.360798  0.143673  0.050449  0.000000  0.465076  0.498610   
+20   0.360798  0.143673  0.050449  0.000000  0.465076  0.498610  0.187134   
+21   0.143673  0.050449  0.000000  0.465076  0.498610  0.187134  0.317976   
+22   0.050449  0.000000  0.465076  0.498610  0.187134  0.317976  1.000000   
+23   0.000000  0.465076  0.498610  0.187134  0.317976  1.000000  0.793888   
+24   0.465076  0.498610  0.187134  0.317976  1.000000  0.793888  0.545215   
+25   0.498610  0.187134  0.317976  1.000000  0.793888  0.545215  0.241553   
+26   0.187134  0.317976  1.000000  0.793888  0.545215  0.241553  0.173841   
+27   0.317976  1.000000  0.793888  0.545215  0.241553  0.173841  0.205572   
+28   1.000000  0.793888  0.545215  0.241553  0.173841  0.205572  0.283645   
+29   0.793888  0.545215  0.241553  0.173841  0.205572  0.283645  0.323617   
+30   0.545215  0.241553  0.173841  0.205572  0.283645  0.323617  0.261732   
+31   0.241553  0.173841  0.205572  0.283645  0.323617  0.261732  0.199846   
+32   0.173841  0.205572  0.283645  0.323617  0.261732  0.199846  0.179595   
+33   0.205572  0.283645  0.323617  0.261732  0.199846  0.179595  0.159343   
+34   0.283645  0.323617  0.261732  0.199846  0.179595  0.159343  0.139092   
+35   0.323617  0.261732  0.199846  0.179595  0.159343  0.139092  0.163308   
+36   0.261732  0.199846  0.179595  0.159343  0.139092  0.163308  0.268493   
+37   0.199846  0.179595  0.159343  0.139092  0.163308  0.268493  0.389750   
+38   0.179595  0.159343  0.139092  0.163308  0.268493  0.389750  0.268283   
+39   0.159343  0.139092  0.163308  0.268493  0.389750  0.268283  0.404211   
+40   0.139092  0.163308  0.268493  0.389750  0.268283  0.404211  0.489569   
+41   0.163308  0.268493  0.389750  0.268283  0.404211  0.489569  0.346207   
+42   0.268493  0.389750  0.268283  0.404211  0.489569  0.346207  0.251871   
+43   0.389750  0.268283  0.404211  0.489569  0.346207  0.251871  0.157535   
+44   0.268283  0.404211  0.489569  0.346207  0.251871  0.157535  0.237304   
+45   0.404211  0.489569  0.346207  0.251871  0.157535  0.237304  0.420818   
+46   0.489569  0.346207  0.251871  0.157535  0.237304  0.420818  0.244595   
+47   0.346207  0.251871  0.157535  0.237304  0.420818  0.244595  0.265462   
+48   0.251871  0.157535  0.237304  0.420818  0.244595  0.265462  0.408936   
+49   0.157535  0.237304  0.420818  0.244595  0.265462  0.408936  0.332046   
+50   0.237304  0.420818  0.244595  0.265462  0.408936  0.332046  0.423722   
+51   0.420818  0.244595  0.265462  0.408936  0.332046  0.423722  0.312309   
+52   0.244595  0.265462  0.408936  0.332046  0.423722  0.312309  0.367612   
+53   0.265462  0.408936  0.332046  0.423722  0.312309  0.367612  0.422915   
+54   0.408936  0.332046  0.423722  0.312309  0.367612  0.422915  0.478217   
+55   0.332046  0.423722  0.312309  0.367612  0.422915  0.478217  0.533520   
+56   0.423722  0.312309  0.367612  0.422915  0.478217  0.533520  0.739695   
+57   0.312309  0.367612  0.422915  0.478217  0.533520  0.739695  0.812732   
+58   0.367612  0.422915  0.478217  0.533520  0.739695  0.812732  0.697480   
+59   0.422915  0.478217  0.533520  0.739695  0.812732  0.697480  0.582227   
+60   0.478217  0.533520  0.739695  0.812732  0.697480  0.582227  0.548920   
+61   0.533520  0.739695  0.812732  0.697480  0.582227  0.548920  0.569837   
+
+    NO2(t-3)  NO2(t-2)  NO2(t-1)    NO2(t)  
+10  0.323432  0.335887  0.348342  0.360798  
+11  0.335887  0.348342  0.360798  0.143673  
+12  0.348342  0.360798  0.143673  0.050449  
+13  0.360798  0.143673  0.050449  0.000000  
+14  0.143673  0.050449  0.000000  0.465076  
+15  0.050449  0.000000  0.465076  0.498610  
+16  0.000000  0.465076  0.498610  0.187134  
+17  0.465076  0.498610  0.187134  0.317976  
+18  0.498610  0.187134  0.317976  1.000000  
+19  0.187134  0.317976  1.000000  0.793888  
+20  0.317976  1.000000  0.793888  0.545215  
+21  1.000000  0.793888  0.545215  0.241553  
+22  0.793888  0.545215  0.241553  0.173841  
+23  0.545215  0.241553  0.173841  0.205572  
+24  0.241553  0.173841  0.205572  0.283645  
+25  0.173841  0.205572  0.283645  0.323617  
+26  0.205572  0.283645  0.323617  0.261732  
+27  0.283645  0.323617  0.261732  0.199846  
+28  0.323617  0.261732  0.199846  0.179595  
+29  0.261732  0.199846  0.179595  0.159343  
+30  0.199846  0.179595  0.159343  0.139092  
+31  0.179595  0.159343  0.139092  0.163308  
+32  0.159343  0.139092  0.163308  0.268493  
+33  0.139092  0.163308  0.268493  0.389750  
+34  0.163308  0.268493  0.389750  0.268283  
+35  0.268493  0.389750  0.268283  0.404211  
+36  0.389750  0.268283  0.404211  0.489569  
+37  0.268283  0.404211  0.489569  0.346207  
+38  0.404211  0.489569  0.346207  0.251871  
+39  0.489569  0.346207  0.251871  0.157535  
+40  0.346207  0.251871  0.157535  0.237304  
+41  0.251871  0.157535  0.237304  0.420818  
+42  0.157535  0.237304  0.420818  0.244595  
+43  0.237304  0.420818  0.244595  0.265462  
+44  0.420818  0.244595  0.265462  0.408936  
+45  0.244595  0.265462  0.408936  0.332046  
+46  0.265462  0.408936  0.332046  0.423722  
+47  0.408936  0.332046  0.423722  0.312309  
+48  0.332046  0.423722  0.312309  0.367612  
+49  0.423722  0.312309  0.367612  0.422915  
+50  0.312309  0.367612  0.422915  0.478217  
+51  0.367612  0.422915  0.478217  0.533520  
+52  0.422915  0.478217  0.533520  0.739695  
+53  0.478217  0.533520  0.739695  0.812732  
+54  0.533520  0.739695  0.812732  0.697480  
+55  0.739695  0.812732  0.697480  0.582227  
+56  0.812732  0.697480  0.582227  0.548920  
+57  0.697480  0.582227  0.548920  0.569837  
+58  0.582227  0.548920  0.569837  0.330779  
+59  0.548920  0.569837  0.330779  0.339725  
+60  0.569837  0.330779  0.339725  0.684697  
+61  0.330779  0.339725  0.684697  0.684697  
+(52, 11)
+```
+### d. Modeling dan Evaluation
+Sekarang dari 2 data yang sudah kita rubah, kita train menggunakan model KNN Regression.
+``` python
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
+
+def MAPE(y_true, y_pred):
+    y_true, y_pred = np.array(y_true), np.array(y_pred)
+    # Hindari pembagian dengan nol
+    nonzero = y_true != 0
+    return np.mean(np.abs((y_true[nonzero] - y_pred[nonzero]) / y_true[nonzero])) * 100
+
+def train_knn(df_supervised, model_name=""):
+    # Pisahkan fitur & label
+    X = df_supervised.drop(columns=['NO2(t)']).values
+    y = df_supervised['NO2(t)'].values
+
+    # Split data 80/20
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, shuffle=False
+    )
+
+    # Model KNN
+    knn = KNeighborsRegressor(n_neighbors=5)
+    knn.fit(X_train, y_train)
+
+    # Prediksi
+    y_pred = knn.predict(X_test)
+
+    # Evaluasi
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+    mape = MAPE(y_test, y_pred)
+
+    print(f"\n=== {model_name} ===")
+    print(f"Train Size: {len(X_train)} — Test Size: {len(X_test)}")
+    print(f"RMSE: {rmse:.6f}")
+    print(f"R² Score: {r2:.4f}")
+    print(f"MAPE: {mape:.4f}%")
+
+    return knn, y_test, y_pred
+
+
+# Train model untuk 4 hari sebelumnya
+knn_4, y_test_4, y_pred_4 = train_knn(supervised_df, "KNN - 4 Hari Sebelumnya")
+
+# Train model untuk 10 hari sebelumnya
+knn_10, y_test_10, y_pred_10 = train_knn(supervised_df10, "KNN - 10 Hari Sebelumnya")
+knn_30, y_test_30, y_pred_30 = train_knn(supervised_df30, "KNN - 30 Hari Sebelumnya")
+```
+``` text
+
+=== KNN - 4 Hari Sebelumnya ===
+Train Size: 46 — Test Size: 12
+RMSE: 0.266233
+R² Score: -2.4203
+MAPE: 39.1901%
+
+=== KNN - 10 Hari Sebelumnya ===
+Train Size: 41 — Test Size: 11
+RMSE: 0.289850
+R² Score: -2.9063
+MAPE: 38.6996%
+
+=== KNN - 30 Hari Sebelumnya ===
+Train Size: 25 — Test Size: 7
+RMSE: 0.179532
+R² Score: -0.7587
+MAPE: 34.8624%
+```
+### e. Plotting
+Plotting untuk visualisasi grafik antara label dan prediksi dari kedua data diatas.<br>
+4 hari sebelum:
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.figure()
+plt.plot(np.arange(len(y_test_4)), y_test_4, label="Actual")
+plt.plot(np.arange(len(y_pred_4)), y_pred_4, label="Predicted")
+plt.title("KNN Regression - 4 Hari Sebelumnya")
+plt.xlabel("Sample Index")
+plt.ylabel("NO2 Value")
+plt.legend()
+plt.show()
+```
+![alt text](image-34.png)
+10 hari sebelum:
+``` python
+plt.figure()
+plt.plot(np.arange(len(y_test_10)), y_test_10, label="Actual")
+plt.plot(np.arange(len(y_pred_10)), y_pred_10, label="Predicted")
+plt.title("KNN Regression - 10 Hari Sebelumnya")
+plt.xlabel("Sample Index")
+plt.ylabel("NO2 Value")
+plt.legend()
+plt.show()
+```
+![alt text](image-35.png)
+30 hari sebelum:
+``` python
+plt.figure()
+plt.plot(np.arange(len(y_test_30)), y_test_30, label="Actual")
+plt.plot(np.arange(len(y_pred_30)), y_pred_30, label="Predicted")
+plt.title("KNN Regression - 30 Hari Sebelumnya")
+plt.xlabel("Sample Index")
+plt.ylabel("NO2 Value")
+plt.legend()
+plt.show()
+```
+![alt text](image-36.png)
+Berdasarkan hasil visualisasi KNN Regression dengan variasi lag 4, 10, dan 30 hari sebelumnya, terlihat bahwa model belum mampu mengikuti pola perubahan data NO₂ secara optimal. Pada model dengan 4 hari sebelumnya, kurva prediksi sudah mulai mengikuti arah tren data aktual, meskipun masih terdapat selisih yang cukup besar pada beberapa titik pengamatan. Hal ini menunjukkan bahwa informasi dari 4 hari sebelumnya masih memiliki hubungan yang cukup kuat dengan nilai NO₂ pada hari berikutnya sehingga model mampu menangkap sebagian pola data.
+
+Pada model dengan 10 hari sebelumnya, performa prediksi cenderung menurun. Kurva prediksi terlihat lebih datar dan tidak mampu mengikuti fluktuasi nilai aktual secara baik, terutama ketika terjadi kenaikan atau penurunan yang cukup tajam. Penambahan jumlah lag menyebabkan model kesulitan menemukan tetangga terdekat yang benar-benar merepresentasikan kondisi data sehingga akurasi prediksi menjadi lebih rendah dibandingkan model lag 4.
+
+Sementara itu, pada model dengan 30 hari sebelumnya, performa model mengalami penurunan yang paling signifikan. Kurva prediksi hampir membentuk garis yang relatif konstan dan tidak mampu menangkap variasi data aktual. Kondisi ini menunjukkan bahwa penggunaan terlalu banyak fitur historis menyebabkan informasi yang relevan menjadi tertutupi oleh fitur-fitur yang kurang berpengaruh. Akibatnya, model KNN cenderung menghasilkan prediksi yang mendekati nilai rata-rata data dan kehilangan kemampuan untuk mengikuti pola perubahan aktual.
+
+Secara keseluruhan, hasil pengujian menunjukkan bahwa model KNN lebih efektif ketika menggunakan jumlah lag yang lebih sedikit, yaitu 4 hari sebelumnya. Penambahan lag menjadi 10 dan 30 hari tidak meningkatkan performa model, bahkan menyebabkan prediksi semakin jauh dari nilai aktual. Hal ini mengindikasikan bahwa hubungan temporal pada data NO₂ lebih banyak dipengaruhi oleh kondisi beberapa hari terakhir dibandingkan oleh data historis yang terlalu panjang. Oleh karena itu, untuk kasus prediksi NO₂ pada penelitian ini, penggunaan lag yang lebih pendek lebih sesuai dibandingkan lag yang panjang. Selain itu, diperlukan eksplorasi model lain seperti Random Forest, XGBoost, LSTM, atau GRU serta optimasi parameter KNN dan proses preprocessing agar diperoleh hasil prediksi yang lebih akurat dan mampu mengikuti pola data secara lebih baik.
