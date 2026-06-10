@@ -2972,3 +2972,96 @@ Pada model dengan 10 hari sebelumnya, performa prediksi cenderung menurun. Kurva
 Sementara itu, pada model dengan 30 hari sebelumnya, performa model mengalami penurunan yang paling signifikan. Kurva prediksi hampir membentuk garis yang relatif konstan dan tidak mampu menangkap variasi data aktual. Kondisi ini menunjukkan bahwa penggunaan terlalu banyak fitur historis menyebabkan informasi yang relevan menjadi tertutupi oleh fitur-fitur yang kurang berpengaruh. Akibatnya, model KNN cenderung menghasilkan prediksi yang mendekati nilai rata-rata data dan kehilangan kemampuan untuk mengikuti pola perubahan aktual.
 
 Secara keseluruhan, hasil pengujian menunjukkan bahwa model KNN lebih efektif ketika menggunakan jumlah lag yang lebih sedikit, yaitu 4 hari sebelumnya. Penambahan lag menjadi 10 dan 30 hari tidak meningkatkan performa model, bahkan menyebabkan prediksi semakin jauh dari nilai aktual. Hal ini mengindikasikan bahwa hubungan temporal pada data NO₂ lebih banyak dipengaruhi oleh kondisi beberapa hari terakhir dibandingkan oleh data historis yang terlalu panjang. Oleh karena itu, untuk kasus prediksi NO₂ pada penelitian ini, penggunaan lag yang lebih pendek lebih sesuai dibandingkan lag yang panjang. Selain itu, diperlukan eksplorasi model lain seperti Random Forest, XGBoost, LSTM, atau GRU serta optimasi parameter KNN dan proses preprocessing agar diperoleh hasil prediksi yang lebih akurat dan mampu mengikuti pola data secara lebih baik.
+
+# Penjelasan peramal: Pentingnya fitur, Nilai SHAP, dan Plot Ketergantungan Parsial serta menjawab pertanyaannya
+Penjelasan pembelajaran mesin, juga dikenal sebagai interpretabilitas, mengacu pada kemampuan untuk memahami, menafsirkan, dan menjelaskan keputusan atau prediksi yang dibuat oleh model pembelajaran mesin dengan cara yang dapat dimengerti manusia. Ini bertujuan untuk menjelaskan bagaimana model sampai pada hasil atau keputusan tertentu.
+
+Karena sifat kompleks dari banyak model pembelajaran mesin modern, seperti metode ansambel, mereka sering berfungsi sebagai kotak hitam, sehingga sulit untuk memahami mengapa prediksi tertentu dibuat. Teknik penjelasan bertujuan untuk mengungkap model-model ini, memberikan wawasan tentang cara kerja batin mereka dan membantu membangun kepercayaan, meningkatkan transparansi, dan memenuhi persyaratan peraturan di berbagai domain. Meningkatkan penjelasan model tidak hanya membantu dalam memahami perilaku model tetapi juga membantu mendeteksi bias, meningkatkan kinerja model, dan memungkinkan pemangku kepentingan membuat keputusan yang lebih tepat berdasarkan wawasan pembelajaran mesin.
+
+skforecast kompatibel dengan beberapa metode interpretabilitas yang paling banyak digunakan: Nilai Shap, kepentingan Permutasi, Plot Dependensi Parsial, dan metode khusus Model.
+## Perpustakaan dan data
+``` python
+# Libraries
+# ==============================================================================
+import pandas as pd
+import matplotlib.pyplot as plt
+import shap
+from sklearn.inspection import permutation_importance
+from sklearn.inspection import PartialDependenceDisplay
+from lightgbm import LGBMRegressor
+from skforecast.datasets import fetch_dataset
+from skforecast.recursive import ForecasterRecursive
+```
+Data yang digunakan dalam contoh ini telah diperoleh dari paket R tsibbledata. Himpunan data berisi 5 kolom dan 52.608 catatan lengkap. Informasi di setiap kolom adalah:<br>
+
+Waktu: tanggal dan waktu catatan.<br>
+Tanggal: tanggal catatan.<br>
+Permintaan: permintaan listrik (MW).<br>
+Suhu: suhu di Melbourne, ibu kota Victoria.<br>
+Hari libur: menunjukkan apakah hari tersebut adalah hari libur nasional.<br>
+``` python
+# Download data
+# ==============================================================================
+data = fetch_dataset(name="vic_electricity")
+data.head(3)
+```
+``` text
+╭──────────────────────────── vic_electricity ─────────────────────────────╮
+│ Description:                                                             │
+│ Half-hourly electricity demand for Victoria, Australia                   │
+│                                                                          │
+│ Source:                                                                  │
+│ O'Hara-Wild M, Hyndman R, Wang E, Godahewa R (2022).tsibbledata: Diverse │
+│ Datasets for 'tsibble'. https://tsibbledata.tidyverts.org/,              │
+│ https://github.com/tidyverts/tsibbledata/.                               │
+│ https://tsibbledata.tidyverts.org/reference/vic_elec.html                │
+│                                                                          │
+│ URL:                                                                     │
+│ https://raw.githubusercontent.com/skforecast/skforecast-                 │
+│ datasets/main/data/vic_electricity.csv                                   │
+│                                                                          │
+│ Shape: 52608 rows x 4 columns                                            │
+╰──────────────────────────────────────────────────────────────────────────╯
+Demand	Temperature	Date	Holiday
+Time				
+2011-12-31 13:00:00	4382.825174	21.40	2012-01-01	True
+2011-12-31 13:30:00	4263.365526	21.05	2012-01-01	True
+2011-12-31 14:00:00	4048.966046	20.70	2012-01-01	True
+
+```
+``` python
+# Aggregation to daily frequency
+# ==============================================================================
+data = data.resample('D').agg({'Demand': 'sum', 'Temperature': 'mean'})
+data.head(3)
+```
+
+|Time|Demand|Temperature|
+|---|---|---|
+|2011-12-31 00:00:00|82531\.745918|21\.047727272727272|
+|2012-01-01 00:00:00|227778\.257304|26\.578125|
+|2012-01-02 00:00:00|275490\.988882|31\.751041666666666|
+
+``` python
+# Split train-test
+# ==============================================================================
+data_train = data.loc[: '2014-12-21']
+data_test = data.loc['2014-12-22':]
+```
+## Membuat dan melatih peramal
+Model peramalan dibuat untuk memprediksi permintaan energi menggunakan 7 nilai terakhir (minggu lalu) dan suhu sebagai variabel eksogen.
+``` python
+# Create a recursive multi-step forecaster (ForecasterRecursive)
+# ==============================================================================
+forecaster = ForecasterRecursive(
+    estimator=LGBMRegressor(random_state=123, verbose=-1),
+    lags=7
+)
+
+forecaster.fit(
+    y    = data_train['Demand'],
+    exog = data_train['Temperature']
+)
+forecaster
+```
+<a href="gambar1.ipynb - Colab.html">Buka Hasil Notebook</a>

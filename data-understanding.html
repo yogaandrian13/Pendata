@@ -188,6 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -452,6 +453,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e-plotting">e. Plotting</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-peramal-pentingnya-fitur-nilai-shap-dan-plot-ketergantungan-parsial-serta-menjawab-pertanyaannya">Penjelasan peramal: Pentingnya fitur, Nilai SHAP, dan Plot Ketergantungan Parsial serta menjawab pertanyaannya</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perpustakaan-dan-data">Perpustakaan dan data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dan-melatih-peramal">Membuat dan melatih peramal</a></li>
 </ul>
 </li>
 </ul>
@@ -3470,6 +3476,116 @@ Berdasarkan hasil visualisasi KNN Regression dengan variasi lag 4, 10, dan 30 ha
 </section>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="penjelasan-peramal-pentingnya-fitur-nilai-shap-dan-plot-ketergantungan-parsial-serta-menjawab-pertanyaannya">
+<h1>Penjelasan peramal: Pentingnya fitur, Nilai SHAP, dan Plot Ketergantungan Parsial serta menjawab pertanyaannya<a class="headerlink" href="#penjelasan-peramal-pentingnya-fitur-nilai-shap-dan-plot-ketergantungan-parsial-serta-menjawab-pertanyaannya" title="Permalink to this heading">#</a></h1>
+<p>Penjelasan pembelajaran mesin, juga dikenal sebagai interpretabilitas, mengacu pada kemampuan untuk memahami, menafsirkan, dan menjelaskan keputusan atau prediksi yang dibuat oleh model pembelajaran mesin dengan cara yang dapat dimengerti manusia. Ini bertujuan untuk menjelaskan bagaimana model sampai pada hasil atau keputusan tertentu.</p>
+<p>Karena sifat kompleks dari banyak model pembelajaran mesin modern, seperti metode ansambel, mereka sering berfungsi sebagai kotak hitam, sehingga sulit untuk memahami mengapa prediksi tertentu dibuat. Teknik penjelasan bertujuan untuk mengungkap model-model ini, memberikan wawasan tentang cara kerja batin mereka dan membantu membangun kepercayaan, meningkatkan transparansi, dan memenuhi persyaratan peraturan di berbagai domain. Meningkatkan penjelasan model tidak hanya membantu dalam memahami perilaku model tetapi juga membantu mendeteksi bias, meningkatkan kinerja model, dan memungkinkan pemangku kepentingan membuat keputusan yang lebih tepat berdasarkan wawasan pembelajaran mesin.</p>
+<p>skforecast kompatibel dengan beberapa metode interpretabilitas yang paling banyak digunakan: Nilai Shap, kepentingan Permutasi, Plot Dependensi Parsial, dan metode khusus Model.</p>
+<section id="perpustakaan-dan-data">
+<h2>Perpustakaan dan data<a class="headerlink" href="#perpustakaan-dan-data" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Libraries</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.inspection</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutation_importance</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.inspection</span><span class="w"> </span><span class="kn">import</span> <span class="n">PartialDependenceDisplay</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lightgbm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skforecast.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skforecast.recursive</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForecasterRecursive</span>
+</pre></div>
+</div>
+<p>Data yang digunakan dalam contoh ini telah diperoleh dari paket R tsibbledata. Himpunan data berisi 5 kolom dan 52.608 catatan lengkap. Informasi di setiap kolom adalah:<br></p>
+<p>Waktu: tanggal dan waktu catatan.<br>
+Tanggal: tanggal catatan.<br>
+Permintaan: permintaan listrik (MW).<br>
+Suhu: suhu di Melbourne, ibu kota Victoria.<br>
+Hari libur: menunjukkan apakah hari tersebut adalah hari libur nasional.<br></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download data</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">fetch_dataset</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;vic_electricity&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>╭──────────────────────────── vic_electricity ─────────────────────────────╮
+│ Description:                                                             │
+│ Half-hourly electricity demand for Victoria, Australia                   │
+│                                                                          │
+│ Source:                                                                  │
+│ O&#39;Hara-Wild M, Hyndman R, Wang E, Godahewa R (2022).tsibbledata: Diverse │
+│ Datasets for &#39;tsibble&#39;. https://tsibbledata.tidyverts.org/,              │
+│ https://github.com/tidyverts/tsibbledata/.                               │
+│ https://tsibbledata.tidyverts.org/reference/vic_elec.html                │
+│                                                                          │
+│ URL:                                                                     │
+│ https://raw.githubusercontent.com/skforecast/skforecast-                 │
+│ datasets/main/data/vic_electricity.csv                                   │
+│                                                                          │
+│ Shape: 52608 rows x 4 columns                                            │
+╰──────────────────────────────────────────────────────────────────────────╯
+Demand	Temperature	Date	Holiday
+Time				
+2011-12-31 13:00:00	4382.825174	21.40	2012-01-01	True
+2011-12-31 13:30:00	4263.365526	21.05	2012-01-01	True
+2011-12-31 14:00:00	4048.966046	20.70	2012-01-01	True
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aggregation to daily frequency</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;Demand&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Time</p></th>
+<th class="head"><p>Demand</p></th>
+<th class="head"><p>Temperature</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2011-12-31 00:00:00</p></td>
+<td><p>82531.745918</p></td>
+<td><p>21.047727272727272</p></td>
+</tr>
+<tr class="row-odd"><td><p>2012-01-01 00:00:00</p></td>
+<td><p>227778.257304</p></td>
+<td><p>26.578125</p></td>
+</tr>
+<tr class="row-even"><td><p>2012-01-02 00:00:00</p></td>
+<td><p>275490.988882</p></td>
+<td><p>31.751041666666666</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split train-test</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">data_train</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span> <span class="s1">&#39;2014-12-21&#39;</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;2014-12-22&#39;</span><span class="p">:]</span>
+</pre></div>
+</div>
+</section>
+<section id="membuat-dan-melatih-peramal">
+<h2>Membuat dan melatih peramal<a class="headerlink" href="#membuat-dan-melatih-peramal" title="Permalink to this heading">#</a></h2>
+<p>Model peramalan dibuat untuk memprediksi permintaan energi menggunakan 7 nilai terakhir (minggu lalu) dan suhu sebagai variabel eksogen.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a recursive multi-step forecaster (ForecasterRecursive)</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">forecaster</span> <span class="o">=</span> <span class="n">ForecasterRecursive</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">lags</span><span class="o">=</span><span class="mi">7</span>
+<span class="p">)</span>
+
+<span class="n">forecaster</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">y</span>    <span class="o">=</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;Demand&#39;</span><span class="p">],</span>
+    <span class="n">exog</span> <span class="o">=</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">forecaster</span>
+</pre></div>
+</div>
+<p><a href="gambar1.ipynb - Colab.html">Buka Hasil Notebook</a></p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -3648,6 +3764,11 @@ Berdasarkan hasil visualisasi KNN Regression dengan variasi lag 4, 10, dan 30 ha
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#e-plotting">e. Plotting</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-peramal-pentingnya-fitur-nilai-shap-dan-plot-ketergantungan-parsial-serta-menjawab-pertanyaannya">Penjelasan peramal: Pentingnya fitur, Nilai SHAP, dan Plot Ketergantungan Parsial serta menjawab pertanyaannya</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perpustakaan-dan-data">Perpustakaan dan data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dan-melatih-peramal">Membuat dan melatih peramal</a></li>
 </ul>
 </li>
 </ul>
