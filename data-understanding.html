@@ -458,6 +458,44 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-peramal-pentingnya-fitur-nilai-shap-dan-plot-ketergantungan-parsial-serta-menjawab-pertanyaannya">Penjelasan peramal: Pentingnya fitur, Nilai SHAP, dan Plot Ketergantungan Parsial serta menjawab pertanyaannya</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perpustakaan-dan-data">Perpustakaan dan data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dan-melatih-peramal">Membuat dan melatih peramal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pentingnya-fitur-khusus-model">Pentingnya fitur khusus model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstrak-pentingnya-fitur-dari-peramal-terlatih">Ekstrak pentingnya fitur dari peramal terlatih</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-shap">Nilai Shap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriks-trainig">Matriks Trainig</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-shap">Penjelasan Shap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ringkasan-shap">Plot Ringkasan SHAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jelaskan-pengamatan-individu">Jelaskan pengamatan individu</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memvisualisasikan-satu-prediksi">Memvisualisasikan satu prediksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasikan-banyak-prediksi">Visualisasikan banyak prediksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ketergantungan-shap">Plot Ketergantungan SHAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menjelaskan-nilai-perkiraan">Menjelaskan nilai perkiraan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pentingnya-fitur-permutasi">Pentingnya fitur permutasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ketergantungan-parsial">Plot ketergantungan parsial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pertanyaan">pertanyaan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-prediksi-yang-dilakukan">1. Analisis Prediksi yang Dilakukan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bentuk-data-training">2. Bentuk Data Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-input-x">Variabel Input (X)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-output-y">Variabel Output (Y)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-lag">3. Pengertian Lag</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-analisis-yang-dilakukan">4. Proses Analisis yang Dilakukan</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pengumpulan-dan-persiapan-data">4.1 Pengumpulan dan Persiapan Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data">4.2 Pembagian Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pembangunan-model-forecasting">4.3 Pembangunan Model Forecasting</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pelatihan-model">4.4 Pelatihan Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-interpretabilitas-model">4.5 Analisis Interpretabilitas Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shap-shapley-additive-explanations">a. SHAP (SHapley Additive Explanations)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#b-permutation-importance">b. Permutation Importance</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#c-partial-dependence-plot-pdp">c. Partial Dependence Plot (PDP)</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-prediksi">4.6 Proses Prediksi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-dan-interpretasi-hasil">4.7 Evaluasi dan Interpretasi Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -3583,7 +3621,634 @@ Time
 <span class="n">forecaster</span>
 </pre></div>
 </div>
-<p><a href="gambar1.ipynb - Colab.html">Buka Hasil Notebook</a></p>
+<p><img alt="alt text" src="_images/image-37.png" /></p>
+</section>
+<section id="pentingnya-fitur-khusus-model">
+<h2>Pentingnya fitur khusus model<a class="headerlink" href="#pentingnya-fitur-khusus-model" title="Permalink to this heading">#</a></h2>
+<p>Kepentingan fitur adalah teknik yang digunakan dalam pembelajaran mesin untuk menentukan relevansi atau pentingnya setiap fitur (atau variabel) dalam prediksi model. Dengan kata lain, ini mengukur seberapa banyak setiap fitur berkontribusi pada output model.</p>
+<p>Pentingnya fitur dapat digunakan untuk beberapa tujuan, seperti mengidentifikasi fitur yang paling relevan untuk prediksi tertentu, memahami perilaku model, dan memilih serangkaian fitur terbaik untuk tugas tertentu. Ini juga dapat membantu mengidentifikasi potensi bias atau kesalahan dalam data yang digunakan untuk melatih model. Penting untuk dicatat bahwa pentingnya fitur bukanlah ukuran kausalitas yang pasti. Hanya karena suatu fitur diidentifikasi sebagai penting tidak berarti bahwa itu menyebabkan hasilnya. Faktor lain, seperti variabel yang membingungkan, mungkin juga berperan.</p>
+<p>Metode yang digunakan untuk menghitung kepentingan fitur dapat bervariasi tergantung pada jenis model pembelajaran mesin yang digunakan. Model pembelajaran mesin yang berbeda mungkin memiliki asumsi dan karakteristik berbeda yang memengaruhi perhitungan pentingnya fitur. Misalnya, model berbasis pohon keputusan seperti Random Forest dan Gradient Boosting biasanya menggunakan metode penurunan rata-rata pengotor atau pentingnya fitur permutasi untuk menghitung pentingnya fitur.</p>
+<p>Model regresi linier biasanya menggunakan koefisien atau koefisien standar untuk menentukan pentingnya suatu fitur. Besarnya koefisien mencerminkan kekuatan dan arah hubungan antara fitur dan variabel target.</p>
+<p>Pentingnya prediktor yang termasuk dalam peramal dapat diperoleh dengan menggunakan metode . Metode ini mengakses dan atribut regresor internal.get_feature_importances()coef_feature_importances_</p>
+</section>
+<section id="ekstrak-pentingnya-fitur-dari-peramal-terlatih">
+<h2>Ekstrak pentingnya fitur dari peramal terlatih<a class="headerlink" href="#ekstrak-pentingnya-fitur-dari-peramal-terlatih" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predictors importances</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">forecaster</span><span class="o">.</span><span class="n">get_feature_importances</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>index</p></th>
+<th class="head"><p>feature</p></th>
+<th class="head"><p>importance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>Temperature</p></td>
+<td><p>570</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>lag_1</p></td>
+<td><p>470</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>lag_3</p></td>
+<td><p>387</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>lag_2</p></td>
+<td><p>362</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>lag_7</p></td>
+<td><p>325</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>lag_6</p></td>
+<td><p>313</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>lag_5</p></td>
+<td><p>298</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>lag_4</p></td>
+<td><p>275</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Untuk mengambil kepentingan fitur dengan benar di dan , penting untuk menentukan model dari mana untuk mengekstrak kepentingan fitur akan diekstraksi. Ini karena Peramal Strategi Langsung cocok dengan satu model per langkah, dan setiap model mungkin memiliki fitur penting yang berbeda. Oleh karena itu, pengguna harus secara eksplisit menentukan kepentingan fitur model mana yang ingin diekstrak untuk memastikan bahwa fitur yang benar digunakan.ForecasterDirectForecasterDirectMultiVariate</p>
+</section>
+<section id="nilai-shap">
+<h2>Nilai Shap<a class="headerlink" href="#nilai-shap" title="Permalink to this heading">#</a></h2>
+<p>Nilai SHAP (SHapley Additive exPlanations) adalah pendekatan yang banyak digunakan untuk menafsirkan model pembelajaran mesin, memberikan pemahaman yang jelas tentang bagaimana variabel dan nilainya memengaruhi prediksi, baik secara visual maupun numerik.</p>
+<p>Model Skforecast memungkinkan Anda menghasilkan penjelasan nilai SHAP hanya dengan menggunakan dua komponen utama:</p>
+<p>Regresor internal yang digunakan oleh peramal.</p>
+<p>Matriks input berasal dari deret waktu. Matriks ini dapat berupa yang digunakan untuk memasang peramal atau yang diperlukan selama fase prediksi.</p>
+<p>Dengan elemen-elemen ini, pengguna dapat menghasilkan penjelasan yang bermakna untuk model Skforecast mereka. Wawasan ini membantu memverifikasi keandalan model, menyoroti faktor kunci yang memengaruhi prediksi, dan mengungkap hubungan antara fitur input dan variabel target.</p>
+</section>
+<section id="matriks-trainig">
+<h2>Matriks Trainig<a class="headerlink" href="#matriks-trainig" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training matrices used by the forecaster to fit the internal regressor</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">create_train_X_y</span><span class="p">(</span>
+                       <span class="n">y</span>    <span class="o">=</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;Demand&#39;</span><span class="p">],</span>
+                       <span class="n">exog</span> <span class="o">=</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">]</span>
+                   <span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Time</p></th>
+<th class="head text-right"><p>lag_1</p></th>
+<th class="head text-right"><p>lag_2</p></th>
+<th class="head text-right"><p>lag_3</p></th>
+<th class="head text-right"><p>lag_4</p></th>
+<th class="head text-right"><p>lag_5</p></th>
+<th class="head text-right"><p>lag_6</p></th>
+<th class="head text-right"><p>lag_7</p></th>
+<th class="head text-right"><p>Temperature</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2012-01-07</p></td>
+<td class="text-right"><p>205338.714620</p></td>
+<td class="text-right"><p>211066.426550</p></td>
+<td class="text-right"><p>213792.376946</p></td>
+<td class="text-right"><p>258955.329422</p></td>
+<td class="text-right"><p>275490.988882</p></td>
+<td class="text-right"><p>227778.257304</p></td>
+<td class="text-right"><p>82531.745918</p></td>
+<td class="text-right"><p>24.098958</p></td>
+</tr>
+<tr class="row-odd"><td><p>2012-01-08</p></td>
+<td class="text-right"><p>200693.270298</p></td>
+<td class="text-right"><p>205338.714620</p></td>
+<td class="text-right"><p>211066.426550</p></td>
+<td class="text-right"><p>213792.376946</p></td>
+<td class="text-right"><p>258955.329422</p></td>
+<td class="text-right"><p>275490.988882</p></td>
+<td class="text-right"><p>227778.257304</p></td>
+<td class="text-right"><p>20.223958</p></td>
+</tr>
+<tr class="row-even"><td><p>2012-01-09</p></td>
+<td class="text-right"><p>200061.614738</p></td>
+<td class="text-right"><p>200693.270298</p></td>
+<td class="text-right"><p>205338.714620</p></td>
+<td class="text-right"><p>211066.426550</p></td>
+<td class="text-right"><p>213792.376946</p></td>
+<td class="text-right"><p>258955.329422</p></td>
+<td class="text-right"><p>275490.988882</p></td>
+<td class="text-right"><p>19.161458</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Time</p></th>
+<th class="head text-right"><p>y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2012-01-07</p></td>
+<td class="text-right"><p>200693.270298</p></td>
+</tr>
+<tr class="row-odd"><td><p>2012-01-08</p></td>
+<td class="text-right"><p>200061.614738</p></td>
+</tr>
+<tr class="row-even"><td><p>2012-01-09</p></td>
+<td class="text-right"><p>216201.836844</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>dtype:</strong> <code class="docutils literal notranslate"><span class="pre">float64</span></code></p>
+</section>
+<section id="penjelasan-shap">
+<h2>Penjelasan Shap<a class="headerlink" href="#penjelasan-shap" title="Permalink to this heading">#</a></h2>
+<p>Implementasi python SHAP dibangun di sepanjang penjelasan. Penjelasan ini hanya sesuai untuk jenis atau kelas algoritma tertentu. Misalnya, TreeExplainer digunakan untuk model berbasis pohon.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create SHAP explainer</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">TreeExplainer</span><span class="p">(</span><span class="n">forecaster</span><span class="o">.</span><span class="n">estimator</span><span class="p">)</span>
+<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-ringkasan-shap">
+<h2>Plot Ringkasan SHAP<a class="headerlink" href="#plot-ringkasan-shap" title="Permalink to this heading">#</a></h2>
+<p>Plot ringkasan SHAP biasanya menampilkan kepentingan fitur atau kontribusi setiap fitur terhadap output model di beberapa titik data. Ini menunjukkan seberapa banyak setiap fitur berkontribusi untuk mendorong prediksi model menjauh dari nilai dasar (seringkali prediksi rata-rata model). Dengan memeriksa plot ringkasan SHAP, seseorang dapat memperoleh wawasan tentang fitur mana yang memiliki dampak paling signifikan pada prediksi, apakah mereka secara positif atau negatif mempengaruhi hasilnya, dan bagaimana nilai fitur yang berbeda berkontribusi pada prediksi tertentu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span>
+    <span class="n">shap_values</span><span class="p">,</span>
+    <span class="n">X_train</span><span class="p">,</span>
+    <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-38.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span>
+    <span class="n">shap_values</span><span class="p">,</span>
+    <span class="n">X_train</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-39.png" /></p>
+</section>
+<section id="jelaskan-pengamatan-individu">
+<h2>Jelaskan pengamatan individu<a class="headerlink" href="#jelaskan-pengamatan-individu" title="Permalink to this heading">#</a></h2>
+<p>A adalah jenis visualisasi tertentu yang memberikan tampilan interaktif dan terperinci tentang bagaimana fitur individu berkontribusi pada prediksi tertentu yang dibuat oleh model pembelajaran mesin. Ini adalah alat interpretasi lokal yang membantu memahami mengapa model membuat prediksi spesifik untuk instans tertentu.shap.force_plot</p>
+</section>
+<section id="memvisualisasikan-satu-prediksi">
+<h2>Memvisualisasikan satu prediksi<a class="headerlink" href="#memvisualisasikan-satu-prediksi" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">shap</span>
+
+<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
+
+<span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span>
+    <span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">,</span>
+    <span class="n">shap_values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-40.png" /></p>
+</section>
+<section id="visualisasikan-banyak-prediksi">
+<h2>Visualisasikan banyak prediksi<a class="headerlink" href="#visualisasikan-banyak-prediksi" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Force plot for the first 200 observations in the training set</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span><span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">,</span> <span class="n">shap_values</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="p">:])</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-41.png" /></p>
+</section>
+<section id="plot-ketergantungan-shap">
+<h2>Plot Ketergantungan SHAP<a class="headerlink" href="#plot-ketergantungan-shap" title="Permalink to this heading">#</a></h2>
+<p>Plot ketergantungan SHAP adalah visualisasi yang digunakan untuk memahami hubungan antara fitur dan output model dengan menampilkan bagaimana nilai satu fitur memengaruhi prediksi yang dibuat oleh model sambil mempertimbangkan interaksi dengan fitur lain. Plot ini sangat berguna untuk memeriksa bagaimana fitur tertentu memengaruhi prediksi model di seluruh rentang nilainya sambil mempertimbangkan interaksi dengan variabel lain.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dependence plot for Temperature</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="n">shap_values</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-42.png" /></p>
+</section>
+<section id="menjelaskan-nilai-perkiraan">
+<h2>Menjelaskan nilai perkiraan<a class="headerlink" href="#menjelaskan-nilai-perkiraan" title="Permalink to this heading">#</a></h2>
+<p>Dimungkinkan juga untuk menggunakan nilai SHAP untuk menjelaskan nilai yang diperkirakan. Ini dapat dilakukan dengan menggunakan matriks input yang digunakan oleh metode peramal.predict</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predict</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="n">data_test</span><span class="p">[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">])</span>
+<span class="n">predictions</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tanggal</p></th>
+<th class="head text-right"><p>Prediksi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2014-12-22</p></td>
+<td class="text-right"><p>241514.532543</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-23</p></td>
+<td class="text-right"><p>226165.936559</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-24</p></td>
+<td class="text-right"><p>220506.468700</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-25</p></td>
+<td class="text-right"><p>209260.948991</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-26</p></td>
+<td class="text-right"><p>184885.145832</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-27</p></td>
+<td class="text-right"><p>195623.591810</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-28</p></td>
+<td class="text-right"><p>222766.340659</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-29</p></td>
+<td class="text-right"><p>223112.716406</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-30</p></td>
+<td class="text-right"><p>219103.891733</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-31</p></td>
+<td class="text-right"><p>217948.965404</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>dtype:</strong> <code class="docutils literal notranslate"><span class="pre">float64</span></code></p></td>
+<td class="text-right"><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create input matrix for predict method</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">X_predict</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">create_predict_X</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">exog</span><span class="o">=</span><span class="n">data_test</span><span class="p">[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">])</span>
+<span class="n">X_predict</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>index</p></th>
+<th class="head"><p>lag_1</p></th>
+<th class="head"><p>lag_2</p></th>
+<th class="head"><p>lag_3</p></th>
+<th class="head"><p>lag_4</p></th>
+<th class="head"><p>lag_5</p></th>
+<th class="head"><p>lag_6</p></th>
+<th class="head"><p>lag_7</p></th>
+<th class="head"><p>Temperature</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2014-12-22 00:00:00</p></td>
+<td><p>216483.63169</p></td>
+<td><p>186486.89667000002</p></td>
+<td><p>197129.766534</p></td>
+<td><p>214934.02246</p></td>
+<td><p>215507.677076</p></td>
+<td><p>226093.76767</p></td>
+<td><p>231923.04401800002</p></td>
+<td><p>22.95</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-23 00:00:00</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>216483.63169</p></td>
+<td><p>186486.89667000002</p></td>
+<td><p>197129.766534</p></td>
+<td><p>214934.02246</p></td>
+<td><p>215507.677076</p></td>
+<td><p>226093.76767</p></td>
+<td><p>18.829166666666666</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-24 00:00:00</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>216483.63169</p></td>
+<td><p>186486.89667000002</p></td>
+<td><p>197129.766534</p></td>
+<td><p>214934.02246</p></td>
+<td><p>215507.677076</p></td>
+<td><p>18.3125</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-25 00:00:00</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>216483.63169</p></td>
+<td><p>186486.89667000002</p></td>
+<td><p>197129.766534</p></td>
+<td><p>214934.02246</p></td>
+<td><p>16.933333333333334</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-26 00:00:00</p></td>
+<td><p>209260.94899085502</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>216483.63169</p></td>
+<td><p>186486.89667000002</p></td>
+<td><p>197129.766534</p></td>
+<td><p>16.429166666666667</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-27 00:00:00</p></td>
+<td><p>184885.1458315842</p></td>
+<td><p>209260.94899085502</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>216483.63169</p></td>
+<td><p>186486.89667000002</p></td>
+<td><p>18.189583333333335</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-28 00:00:00</p></td>
+<td><p>195623.5918101613</p></td>
+<td><p>184885.1458315842</p></td>
+<td><p>209260.94899085502</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>216483.63169</p></td>
+<td><p>24.539583333333336</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-29 00:00:00</p></td>
+<td><p>222766.34065901465</p></td>
+<td><p>195623.5918101613</p></td>
+<td><p>184885.1458315842</p></td>
+<td><p>209260.94899085502</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>241514.53254322908</p></td>
+<td><p>17.677083333333332</p></td>
+</tr>
+<tr class="row-even"><td><p>2014-12-30 00:00:00</p></td>
+<td><p>223112.71640584624</p></td>
+<td><p>222766.34065901465</p></td>
+<td><p>195623.5918101613</p></td>
+<td><p>184885.1458315842</p></td>
+<td><p>209260.94899085502</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>226165.93655852877</p></td>
+<td><p>17.391666666666666</p></td>
+</tr>
+<tr class="row-odd"><td><p>2014-12-31 00:00:00</p></td>
+<td><p>219103.89173319165</p></td>
+<td><p>223112.71640584624</p></td>
+<td><p>222766.34065901465</p></td>
+<td><p>195623.5918101613</p></td>
+<td><p>184885.1458315842</p></td>
+<td><p>209260.94899085502</p></td>
+<td><p>220506.46870022157</p></td>
+<td><p>21.034615384615385</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">shap</span>
+
+<span class="n">shap</span><span class="o">.</span><span class="n">initjs</span><span class="p">()</span>
+
+<span class="n">predicted_date</span> <span class="o">=</span> <span class="s1">&#39;2014-12-22&#39;</span>
+<span class="n">iloc_predicted_date</span> <span class="o">=</span> <span class="n">X_predict</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">predicted_date</span><span class="p">)</span>
+
+<span class="n">shap_values</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_predict</span><span class="p">)</span>
+
+<span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span>
+    <span class="n">explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">,</span>
+    <span class="n">shap_values</span><span class="p">[</span><span class="n">iloc_predicted_date</span><span class="p">],</span>
+    <span class="n">X_predict</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">iloc_predicted_date</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-43.png" /></p>
+</section>
+<section id="pentingnya-fitur-permutasi">
+<h2>Pentingnya fitur permutasi<a class="headerlink" href="#pentingnya-fitur-permutasi" title="Permalink to this heading">#</a></h2>
+<p>Pentingnya fitur permutasi adalah teknik inspeksi model yang mengukur kontribusi setiap fitur terhadap kinerja statistik model yang dipasang pada kumpulan data tabel tertentu. Teknik ini sangat berguna untuk estimator non-linier atau buram, dan melibatkan pengocok nilai satu fitur secara acak dan mengamati degradasi skor model yang dihasilkan. Dengan memutus hubungan antara fitur dan variabel target, kami menentukan seberapa banyak model bergantung pada fitur tertentu tersebut.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Training matrices used by the forecaster to fit the internal regressor</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">create_train_X_y</span><span class="p">(</span>
+                       <span class="n">y</span>    <span class="o">=</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;Demand&#39;</span><span class="p">],</span>
+                       <span class="n">exog</span> <span class="o">=</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">]</span>
+                   <span class="p">)</span>
+
+<span class="c1"># Permutation importances</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span>
+        <span class="n">estimator</span>    <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">estimator</span><span class="p">,</span>
+        <span class="n">X</span>            <span class="o">=</span> <span class="n">X_train</span><span class="p">,</span>
+        <span class="n">y</span>            <span class="o">=</span> <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">n_repeats</span>    <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">max_samples</span>  <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">random_state</span> <span class="o">=</span> <span class="mi">123</span>
+    <span class="p">)</span>
+
+<span class="n">importances</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+                  <span class="s1">&#39;feature&#39;</span><span class="p">:</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+                  <span class="s1">&#39;mean_importance&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">importances_mean</span><span class="p">,</span>
+                  <span class="s1">&#39;std_importance&#39;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">importances_std</span>
+              <span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;mean_importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">importances</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>index</p></th>
+<th class="head"><p>feature</p></th>
+<th class="head"><p>mean_importance</p></th>
+<th class="head"><p>std_importance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>lag_1</p></td>
+<td><p>0.6172756382823482</p></td>
+<td><p>0.01458316911689022</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Temperature</p></td>
+<td><p>0.41124011936638016</p></td>
+<td><p>0.014404692833722104</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>lag_7</p></td>
+<td><p>0.19618980833822644</p></td>
+<td><p>0.001865036694815123</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>lag_2</p></td>
+<td><p>0.12239817775418105</p></td>
+<td><p>0.007802974729280967</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>lag_6</p></td>
+<td><p>0.08391152564468433</p></td>
+<td><p>0.003637273307109648</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>lag_3</p></td>
+<td><p>0.04129406517320774</p></td>
+<td><p>0.002018682667644516</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>lag_5</p></td>
+<td><p>0.03078656442950974</p></td>
+<td><p>0.0010793137007947306</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>lag_4</p></td>
+<td><p>0.02481613318693654</p></td>
+<td><p>0.0010205377299262115</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="plot-ketergantungan-parsial">
+<h2>Plot ketergantungan parsial<a class="headerlink" href="#plot-ketergantungan-parsial" title="Permalink to this heading">#</a></h2>
+<p>Plot ketergantungan parsial (PDP) adalah alat yang berguna untuk memahami hubungan antara fitur dan hasil target dalam model pembelajaran mesin. Dalam scikit-learn, Anda dapat membuat plot ketergantungan parsial menggunakan fungsi ini. Fungsi ini memvisualisasikan efek satu atau dua fitur pada hasil yang diprediksi, sambil meminggirkan efek dari semua fitur lainnya.plot_partial_dependence</p>
+<p>Plot yang dihasilkan menunjukkan bagaimana perubahan dalam fitur yang dipilih memengaruhi hasil yang diprediksi sambil mempertahankan fitur lain secara konstan rata-rata. Ingatlah bahwa plot ini harus ditafsirkan dalam konteks model dan data Anda. Mereka memberikan wawasan tentang hubungan antara fitur tertentu dan prediksi model.</p>
+<p>Deskripsi lebih rinci tentang Plot Dependensi Parsial dapat ditemukan di Panduan Pengguna Scikitlearn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scikit-learn partial dependence plots</span>
+<span class="c1"># ==============================================================================</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Decision Tree&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="n">PartialDependenceDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">estimator</span> <span class="o">=</span> <span class="n">forecaster</span><span class="o">.</span><span class="n">estimator</span><span class="p">,</span>
+    <span class="n">X</span>         <span class="o">=</span> <span class="n">X_train</span><span class="p">,</span>
+    <span class="n">features</span>  <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;lag_1&quot;</span><span class="p">],</span>
+    <span class="n">kind</span>      <span class="o">=</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span>
+    <span class="n">ax</span>        <span class="o">=</span> <span class="n">ax</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Partial Dependence Plot&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="_images/image-44.png" /></p>
+</section>
+<section id="pertanyaan">
+<h2>pertanyaan<a class="headerlink" href="#pertanyaan" title="Permalink to this heading">#</a></h2>
+<section id="analisis-prediksi-yang-dilakukan">
+<h3>1. Analisis Prediksi yang Dilakukan<a class="headerlink" href="#analisis-prediksi-yang-dilakukan" title="Permalink to this heading">#</a></h3>
+<p>Analisis yang dilakukan pada studi kasus ini bertujuan untuk memprediksi permintaan listrik harian (<strong>Demand</strong>) di wilayah Victoria, Australia. Prediksi dilakukan dengan memanfaatkan data historis konsumsi listrik serta informasi suhu udara (<strong>Temperature</strong>) sebagai variabel eksternal yang memengaruhi tingkat konsumsi listrik.</p>
+<p>Model yang digunakan adalah <strong>Recursive Forecasting</strong> dengan algoritma <strong>Light Gradient Boosting Machine (LightGBM)</strong>. Pendekatan ini memungkinkan model untuk mempelajari pola historis permintaan listrik dan menghasilkan prediksi untuk periode waktu berikutnya.</p>
+</section>
+<hr class="docutils" />
+<section id="bentuk-data-training">
+<h3>2. Bentuk Data Training<a class="headerlink" href="#bentuk-data-training" title="Permalink to this heading">#</a></h3>
+<p>Sebelum proses pemodelan dilakukan, data dibagi menjadi data pelatihan (<em>training</em>) dan data pengujian (<em>testing</em>). Data pelatihan digunakan untuk membangun model, sedangkan data pengujian digunakan untuk mengevaluasi kemampuan model dalam melakukan prediksi.</p>
+<p>Pada proses pembentukan data training, digunakan beberapa variabel masukan (<em>input</em>) dan satu variabel keluaran (<em>output</em>), yaitu:</p>
+<section id="variabel-input-x">
+<h4>Variabel Input (X)<a class="headerlink" href="#variabel-input-x" title="Permalink to this heading">#</a></h4>
+<p>Variabel input yang digunakan terdiri atas:</p>
+<ul class="simple">
+<li><p><strong>lag_1</strong> : nilai Demand satu hari sebelumnya</p></li>
+<li><p><strong>lag_2</strong> : nilai Demand dua hari sebelumnya</p></li>
+<li><p><strong>lag_3</strong> : nilai Demand tiga hari sebelumnya</p></li>
+<li><p><strong>lag_4</strong> : nilai Demand empat hari sebelumnya</p></li>
+<li><p><strong>lag_5</strong> : nilai Demand lima hari sebelumnya</p></li>
+<li><p><strong>lag_6</strong> : nilai Demand enam hari sebelumnya</p></li>
+<li><p><strong>lag_7</strong> : nilai Demand tujuh hari sebelumnya</p></li>
+<li><p><strong>Temperature</strong> : rata-rata suhu harian</p></li>
+</ul>
+</section>
+<section id="variabel-output-y">
+<h4>Variabel Output (Y)<a class="headerlink" href="#variabel-output-y" title="Permalink to this heading">#</a></h4>
+<p>Variabel output yang diprediksi adalah:</p>
+<ul class="simple">
+<li><p><strong>Demand</strong> : permintaan listrik harian</p></li>
+</ul>
+<p>Dengan demikian, model belajar hubungan antara permintaan listrik masa lalu dan kondisi suhu terhadap permintaan listrik pada hari yang akan diprediksi.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="pengertian-lag">
+<h3>3. Pengertian Lag<a class="headerlink" href="#pengertian-lag" title="Permalink to this heading">#</a></h3>
+<p><em>Lag</em> merupakan nilai historis dari suatu variabel yang digunakan sebagai fitur dalam proses prediksi. Pada penelitian ini digunakan tujuh lag, yaitu <strong>lag_1</strong> hingga <strong>lag_7</strong>.</p>
+<p>Sebagai contoh:</p>
+<ul class="simple">
+<li><p><strong>lag_1</strong> menunjukkan nilai Demand satu hari sebelumnya.</p></li>
+<li><p><strong>lag_2</strong> menunjukkan nilai Demand dua hari sebelumnya.</p></li>
+<li><p><strong>lag_7</strong> menunjukkan nilai Demand tujuh hari sebelumnya.</p></li>
+</ul>
+<p>Penggunaan lag bertujuan untuk menangkap pola temporal pada data deret waktu (<em>time series</em>). Dengan memanfaatkan informasi masa lalu, model dapat mengenali pola perubahan permintaan listrik dari waktu ke waktu sehingga menghasilkan prediksi yang lebih akurat.</p>
+</section>
+<hr class="docutils" />
+<section id="proses-analisis-yang-dilakukan">
+<h3>4. Proses Analisis yang Dilakukan<a class="headerlink" href="#proses-analisis-yang-dilakukan" title="Permalink to this heading">#</a></h3>
+<p>Tahapan analisis pada studi kasus ini dilakukan melalui beberapa langkah sebagai berikut.</p>
+<section id="pengumpulan-dan-persiapan-data">
+<h4>4.1 Pengumpulan dan Persiapan Data<a class="headerlink" href="#pengumpulan-dan-persiapan-data" title="Permalink to this heading">#</a></h4>
+<p>Data yang digunakan berasal dari dataset konsumsi listrik wilayah Victoria, Australia. Dataset awal memiliki frekuensi setengah jam (<em>half-hourly</em>) yang kemudian diubah menjadi data harian.</p>
+<p>Pada tahap agregasi:</p>
+<ul class="simple">
+<li><p>Variabel <strong>Demand</strong> dijumlahkan (<em>sum</em>) untuk memperoleh total permintaan listrik harian.</p></li>
+<li><p>Variabel <strong>Temperature</strong> dirata-ratakan (<em>mean</em>) untuk memperoleh suhu rata-rata harian.</p></li>
+</ul>
+</section>
+<section id="pembagian-data">
+<h4>4.2 Pembagian Data<a class="headerlink" href="#pembagian-data" title="Permalink to this heading">#</a></h4>
+<p>Data dibagi menjadi dua bagian, yaitu:</p>
+<ul class="simple">
+<li><p>Data training digunakan untuk membangun model.</p></li>
+<li><p>Data testing digunakan untuk mengevaluasi hasil prediksi model.</p></li>
+</ul>
+<p>Pembagian ini dilakukan berdasarkan urutan waktu sehingga karakteristik deret waktu tetap terjaga.</p>
+</section>
+<section id="pembangunan-model-forecasting">
+<h4>4.3 Pembangunan Model Forecasting<a class="headerlink" href="#pembangunan-model-forecasting" title="Permalink to this heading">#</a></h4>
+<p>Model forecasting dibangun menggunakan metode <strong>ForecasterRecursive</strong> dengan algoritma <strong>LightGBM</strong> sebagai estimator utama.</p>
+<p>Konfigurasi model yang digunakan adalah:</p>
+<ul class="simple">
+<li><p><strong>Algoritma</strong> : LightGBM Regressor</p></li>
+<li><p><strong>Jumlah lag</strong> : 7</p></li>
+<li><p><strong>Variabel eksogen</strong> : Temperature</p></li>
+</ul>
+<p>Model memanfaatkan tujuh nilai Demand sebelumnya dan suhu harian untuk memprediksi Demand pada periode berikutnya.</p>
+</section>
+<section id="pelatihan-model">
+<h4>4.4 Pelatihan Model<a class="headerlink" href="#pelatihan-model" title="Permalink to this heading">#</a></h4>
+<p>Pada tahap ini model mempelajari hubungan antara variabel input dan output menggunakan data training yang telah disiapkan. Hasil pelatihan menghasilkan model yang mampu mengenali pola permintaan listrik berdasarkan data historis.</p>
+</section>
+<section id="analisis-interpretabilitas-model">
+<h4>4.5 Analisis Interpretabilitas Model<a class="headerlink" href="#analisis-interpretabilitas-model" title="Permalink to this heading">#</a></h4>
+<p>Setelah model berhasil dilatih, dilakukan analisis interpretabilitas untuk mengetahui faktor-faktor yang paling memengaruhi hasil prediksi.</p>
+<p>Metode yang digunakan meliputi:</p>
+<section id="a-shap-shapley-additive-explanations">
+<h5>a. SHAP (SHapley Additive Explanations)<a class="headerlink" href="#a-shap-shapley-additive-explanations" title="Permalink to this heading">#</a></h5>
+<p>SHAP digunakan untuk mengukur kontribusi masing-masing fitur terhadap prediksi model. Melalui SHAP dapat diketahui fitur mana yang memberikan pengaruh terbesar terhadap hasil prediksi.</p>
+</section>
+<section id="b-permutation-importance">
+<h5>b. Permutation Importance<a class="headerlink" href="#b-permutation-importance" title="Permalink to this heading">#</a></h5>
+<p>Metode ini mengukur tingkat kepentingan fitur dengan cara mengacak nilai suatu fitur dan mengamati perubahan kinerja model. Semakin besar penurunan kinerja model setelah suatu fitur diacak, maka semakin penting fitur tersebut.</p>
+</section>
+<section id="c-partial-dependence-plot-pdp">
+<h5>c. Partial Dependence Plot (PDP)<a class="headerlink" href="#c-partial-dependence-plot-pdp" title="Permalink to this heading">#</a></h5>
+<p>PDP digunakan untuk menganalisis hubungan antara suatu fitur dengan hasil prediksi model. Visualisasi ini membantu memahami bagaimana perubahan nilai suatu fitur memengaruhi output prediksi.</p>
+</section>
+</section>
+<section id="proses-prediksi">
+<h4>4.6 Proses Prediksi<a class="headerlink" href="#proses-prediksi" title="Permalink to this heading">#</a></h4>
+<p>Setelah model selesai dilatih, dilakukan proses prediksi pada data testing. Prediksi dilakukan secara <em>recursive</em>, yaitu hasil prediksi pada suatu periode digunakan kembali sebagai input untuk memprediksi periode berikutnya.</p>
+</section>
+<section id="evaluasi-dan-interpretasi-hasil">
+<h4>4.7 Evaluasi dan Interpretasi Hasil<a class="headerlink" href="#evaluasi-dan-interpretasi-hasil" title="Permalink to this heading">#</a></h4>
+<p>Hasil prediksi kemudian dibandingkan dengan data aktual untuk menilai performa model. Selain itu, hasil analisis SHAP, Permutation Importance, dan PDP digunakan untuk menjelaskan faktor-faktor yang paling berpengaruh terhadap permintaan listrik.</p>
+<p>Berdasarkan analisis interpretabilitas, fitur lag historis (khususnya <strong>lag_1</strong>) dan <strong>Temperature</strong> merupakan faktor yang memiliki kontribusi terbesar dalam menentukan hasil prediksi permintaan listrik harian.</p>
+</section>
+</section>
 </section>
 </section>
 
@@ -3769,6 +4434,44 @@ Time
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-peramal-pentingnya-fitur-nilai-shap-dan-plot-ketergantungan-parsial-serta-menjawab-pertanyaannya">Penjelasan peramal: Pentingnya fitur, Nilai SHAP, dan Plot Ketergantungan Parsial serta menjawab pertanyaannya</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perpustakaan-dan-data">Perpustakaan dan data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dan-melatih-peramal">Membuat dan melatih peramal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pentingnya-fitur-khusus-model">Pentingnya fitur khusus model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstrak-pentingnya-fitur-dari-peramal-terlatih">Ekstrak pentingnya fitur dari peramal terlatih</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-shap">Nilai Shap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriks-trainig">Matriks Trainig</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-shap">Penjelasan Shap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ringkasan-shap">Plot Ringkasan SHAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jelaskan-pengamatan-individu">Jelaskan pengamatan individu</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memvisualisasikan-satu-prediksi">Memvisualisasikan satu prediksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasikan-banyak-prediksi">Visualisasikan banyak prediksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ketergantungan-shap">Plot Ketergantungan SHAP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menjelaskan-nilai-perkiraan">Menjelaskan nilai perkiraan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pentingnya-fitur-permutasi">Pentingnya fitur permutasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-ketergantungan-parsial">Plot ketergantungan parsial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pertanyaan">pertanyaan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-prediksi-yang-dilakukan">1. Analisis Prediksi yang Dilakukan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bentuk-data-training">2. Bentuk Data Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-input-x">Variabel Input (X)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-output-y">Variabel Output (Y)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-lag">3. Pengertian Lag</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-analisis-yang-dilakukan">4. Proses Analisis yang Dilakukan</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pengumpulan-dan-persiapan-data">4.1 Pengumpulan dan Persiapan Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data">4.2 Pembagian Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pembangunan-model-forecasting">4.3 Pembangunan Model Forecasting</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pelatihan-model">4.4 Pelatihan Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-interpretabilitas-model">4.5 Analisis Interpretabilitas Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shap-shapley-additive-explanations">a. SHAP (SHapley Additive Explanations)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#b-permutation-importance">b. Permutation Importance</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#c-partial-dependence-plot-pdp">c. Partial Dependence Plot (PDP)</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-prediksi">4.6 Proses Prediksi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-dan-interpretasi-hasil">4.7 Evaluasi dan Interpretasi Hasil</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

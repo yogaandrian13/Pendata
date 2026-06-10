@@ -3064,4 +3064,361 @@ forecaster.fit(
 )
 forecaster
 ```
-<a href="gambar1.ipynb - Colab.html">Buka Hasil Notebook</a>
+![alt text](image-37.png)
+## Pentingnya fitur khusus model
+Kepentingan fitur adalah teknik yang digunakan dalam pembelajaran mesin untuk menentukan relevansi atau pentingnya setiap fitur (atau variabel) dalam prediksi model. Dengan kata lain, ini mengukur seberapa banyak setiap fitur berkontribusi pada output model.
+
+Pentingnya fitur dapat digunakan untuk beberapa tujuan, seperti mengidentifikasi fitur yang paling relevan untuk prediksi tertentu, memahami perilaku model, dan memilih serangkaian fitur terbaik untuk tugas tertentu. Ini juga dapat membantu mengidentifikasi potensi bias atau kesalahan dalam data yang digunakan untuk melatih model. Penting untuk dicatat bahwa pentingnya fitur bukanlah ukuran kausalitas yang pasti. Hanya karena suatu fitur diidentifikasi sebagai penting tidak berarti bahwa itu menyebabkan hasilnya. Faktor lain, seperti variabel yang membingungkan, mungkin juga berperan.
+
+Metode yang digunakan untuk menghitung kepentingan fitur dapat bervariasi tergantung pada jenis model pembelajaran mesin yang digunakan. Model pembelajaran mesin yang berbeda mungkin memiliki asumsi dan karakteristik berbeda yang memengaruhi perhitungan pentingnya fitur. Misalnya, model berbasis pohon keputusan seperti Random Forest dan Gradient Boosting biasanya menggunakan metode penurunan rata-rata pengotor atau pentingnya fitur permutasi untuk menghitung pentingnya fitur.
+
+Model regresi linier biasanya menggunakan koefisien atau koefisien standar untuk menentukan pentingnya suatu fitur. Besarnya koefisien mencerminkan kekuatan dan arah hubungan antara fitur dan variabel target.
+
+Pentingnya prediktor yang termasuk dalam peramal dapat diperoleh dengan menggunakan metode . Metode ini mengakses dan atribut regresor internal.get_feature_importances()coef_feature_importances_
+## Ekstrak pentingnya fitur dari peramal terlatih
+``` python
+# Predictors importances
+# ==============================================================================
+forecaster.get_feature_importances()
+```
+|index|feature|importance|
+|---|---|---|
+|7|Temperature|570|
+|0|lag\_1|470|
+|2|lag\_3|387|
+|1|lag\_2|362|
+|6|lag\_7|325|
+|5|lag\_6|313|
+|4|lag\_5|298|
+|3|lag\_4|275|
+
+Untuk mengambil kepentingan fitur dengan benar di dan , penting untuk menentukan model dari mana untuk mengekstrak kepentingan fitur akan diekstraksi. Ini karena Peramal Strategi Langsung cocok dengan satu model per langkah, dan setiap model mungkin memiliki fitur penting yang berbeda. Oleh karena itu, pengguna harus secara eksplisit menentukan kepentingan fitur model mana yang ingin diekstrak untuk memastikan bahwa fitur yang benar digunakan.ForecasterDirectForecasterDirectMultiVariate
+## Nilai Shap
+Nilai SHAP (SHapley Additive exPlanations) adalah pendekatan yang banyak digunakan untuk menafsirkan model pembelajaran mesin, memberikan pemahaman yang jelas tentang bagaimana variabel dan nilainya memengaruhi prediksi, baik secara visual maupun numerik.
+
+Model Skforecast memungkinkan Anda menghasilkan penjelasan nilai SHAP hanya dengan menggunakan dua komponen utama:
+
+Regresor internal yang digunakan oleh peramal.
+
+Matriks input berasal dari deret waktu. Matriks ini dapat berupa yang digunakan untuk memasang peramal atau yang diperlukan selama fase prediksi.
+
+Dengan elemen-elemen ini, pengguna dapat menghasilkan penjelasan yang bermakna untuk model Skforecast mereka. Wawasan ini membantu memverifikasi keandalan model, menyoroti faktor kunci yang memengaruhi prediksi, dan mengungkap hubungan antara fitur input dan variabel target.
+## Matriks Trainig
+``` python
+# Training matrices used by the forecaster to fit the internal regressor
+# ==============================================================================
+X_train, y_train = forecaster.create_train_X_y(
+                       y    = data_train['Demand'],
+                       exog = data_train['Temperature']
+                   )
+
+display(X_train.head(3))
+display(y_train.head(3))
+```
+
+| Time | lag_1 | lag_2 | lag_3 | lag_4 | lag_5 | lag_6 | lag_7 | Temperature |
+|------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|------------:|
+| 2012-01-07 | 205338.714620 | 211066.426550 | 213792.376946 | 258955.329422 | 275490.988882 | 227778.257304 | 82531.745918 | 24.098958 |
+| 2012-01-08 | 200693.270298 | 205338.714620 | 211066.426550 | 213792.376946 | 258955.329422 | 275490.988882 | 227778.257304 | 20.223958 |
+| 2012-01-09 | 200061.614738 | 200693.270298 | 205338.714620 | 211066.426550 | 213792.376946 | 258955.329422 | 275490.988882 | 19.161458 |
+
+
+| Time | y |
+|------|-------------:|
+| 2012-01-07 | 200693.270298 |
+| 2012-01-08 | 200061.614738 |
+| 2012-01-09 | 216201.836844 |
+
+**dtype:** `float64`
+## Penjelasan Shap
+Implementasi python SHAP dibangun di sepanjang penjelasan. Penjelasan ini hanya sesuai untuk jenis atau kelas algoritma tertentu. Misalnya, TreeExplainer digunakan untuk model berbasis pohon.
+``` python
+# Create SHAP explainer
+# ==============================================================================
+shap.initjs()
+explainer = shap.TreeExplainer(forecaster.estimator)
+shap_values = explainer.shap_values(X_train)
+```
+## Plot Ringkasan SHAP
+Plot ringkasan SHAP biasanya menampilkan kepentingan fitur atau kontribusi setiap fitur terhadap output model di beberapa titik data. Ini menunjukkan seberapa banyak setiap fitur berkontribusi untuk mendorong prediksi model menjauh dari nilai dasar (seringkali prediksi rata-rata model). Dengan memeriksa plot ringkasan SHAP, seseorang dapat memperoleh wawasan tentang fitur mana yang memiliki dampak paling signifikan pada prediksi, apakah mereka secara positif atau negatif mempengaruhi hasilnya, dan bagaimana nilai fitur yang berbeda berkontribusi pada prediksi tertentu.
+``` python
+shap.summary_plot(
+    shap_values,
+    X_train,
+    plot_type="bar"
+)
+```
+![alt text](image-38.png)
+``` python
+shap.summary_plot(
+    shap_values,
+    X_train
+)
+```
+![alt text](image-39.png)
+## Jelaskan pengamatan individu
+A adalah jenis visualisasi tertentu yang memberikan tampilan interaktif dan terperinci tentang bagaimana fitur individu berkontribusi pada prediksi tertentu yang dibuat oleh model pembelajaran mesin. Ini adalah alat interpretasi lokal yang membantu memahami mengapa model membuat prediksi spesifik untuk instans tertentu.shap.force_plot
+## Memvisualisasikan satu prediksi
+``` python
+import shap
+
+shap.initjs()
+
+shap.force_plot(
+    explainer.expected_value,
+    shap_values[0],
+    X_train.iloc[0]
+)
+```
+![alt text](image-40.png)
+## Visualisasikan banyak prediksi
+``` python
+# Force plot for the first 200 observations in the training set
+# ==============================================================================
+shap.force_plot(explainer.expected_value, shap_values[:200, :], X_train.iloc[:200, :])
+```
+![alt text](image-41.png)
+## Plot Ketergantungan SHAP
+Plot ketergantungan SHAP adalah visualisasi yang digunakan untuk memahami hubungan antara fitur dan output model dengan menampilkan bagaimana nilai satu fitur memengaruhi prediksi yang dibuat oleh model sambil mempertimbangkan interaksi dengan fitur lain. Plot ini sangat berguna untuk memeriksa bagaimana fitur tertentu memengaruhi prediksi model di seluruh rentang nilainya sambil mempertimbangkan interaksi dengan variabel lain.
+``` python
+# Dependence plot for Temperature
+# ==============================================================================
+fig, ax = plt.subplots(figsize=(7, 4))
+shap.dependence_plot("Temperature", shap_values, X_train, ax=ax)
+```
+![alt text](image-42.png)
+## Menjelaskan nilai perkiraan
+Dimungkinkan juga untuk menggunakan nilai SHAP untuk menjelaskan nilai yang diperkirakan. Ini dapat dilakukan dengan menggunakan matriks input yang digunakan oleh metode peramal.predict
+``` python
+# Predict
+# ==============================================================================
+predictions = forecaster.predict(steps=10, exog=data_test['Temperature'])
+predictions
+```
+| Tanggal     | Prediksi |
+|------------|---------:|
+| 2014-12-22 | 241514.532543 |
+| 2014-12-23 | 226165.936559 |
+| 2014-12-24 | 220506.468700 |
+| 2014-12-25 | 209260.948991 |
+| 2014-12-26 | 184885.145832 |
+| 2014-12-27 | 195623.591810 |
+| 2014-12-28 | 222766.340659 |
+| 2014-12-29 | 223112.716406 |
+| 2014-12-30 | 219103.891733 |
+| 2014-12-31 | 217948.965404 |
+**dtype:** `float64`
+``` python
+# Create input matrix for predict method
+# ==============================================================================
+X_predict = forecaster.create_predict_X(steps=10, exog=data_test['Temperature'])
+X_predict
+```
+|index|lag\_1|lag\_2|lag\_3|lag\_4|lag\_5|lag\_6|lag\_7|Temperature|
+|---|---|---|---|---|---|---|---|---|
+|2014-12-22 00:00:00|216483\.63169|186486\.89667000002|197129\.766534|214934\.02246|215507\.677076|226093\.76767|231923\.04401800002|22\.95|
+|2014-12-23 00:00:00|241514\.53254322908|216483\.63169|186486\.89667000002|197129\.766534|214934\.02246|215507\.677076|226093\.76767|18\.829166666666666|
+|2014-12-24 00:00:00|226165\.93655852877|241514\.53254322908|216483\.63169|186486\.89667000002|197129\.766534|214934\.02246|215507\.677076|18\.3125|
+|2014-12-25 00:00:00|220506\.46870022157|226165\.93655852877|241514\.53254322908|216483\.63169|186486\.89667000002|197129\.766534|214934\.02246|16\.933333333333334|
+|2014-12-26 00:00:00|209260\.94899085502|220506\.46870022157|226165\.93655852877|241514\.53254322908|216483\.63169|186486\.89667000002|197129\.766534|16\.429166666666667|
+|2014-12-27 00:00:00|184885\.1458315842|209260\.94899085502|220506\.46870022157|226165\.93655852877|241514\.53254322908|216483\.63169|186486\.89667000002|18\.189583333333335|
+|2014-12-28 00:00:00|195623\.5918101613|184885\.1458315842|209260\.94899085502|220506\.46870022157|226165\.93655852877|241514\.53254322908|216483\.63169|24\.539583333333336|
+|2014-12-29 00:00:00|222766\.34065901465|195623\.5918101613|184885\.1458315842|209260\.94899085502|220506\.46870022157|226165\.93655852877|241514\.53254322908|17\.677083333333332|
+|2014-12-30 00:00:00|223112\.71640584624|222766\.34065901465|195623\.5918101613|184885\.1458315842|209260\.94899085502|220506\.46870022157|226165\.93655852877|17\.391666666666666|
+|2014-12-31 00:00:00|219103\.89173319165|223112\.71640584624|222766\.34065901465|195623\.5918101613|184885\.1458315842|209260\.94899085502|220506\.46870022157|21\.034615384615385|
+
+``` python
+import shap
+
+shap.initjs()
+
+predicted_date = '2014-12-22'
+iloc_predicted_date = X_predict.index.get_loc(predicted_date)
+
+shap_values = explainer.shap_values(X_predict)
+
+shap.force_plot(
+    explainer.expected_value,
+    shap_values[iloc_predicted_date],
+    X_predict.iloc[iloc_predicted_date]
+)
+```
+![alt text](image-43.png)
+## Pentingnya fitur permutasi
+Pentingnya fitur permutasi adalah teknik inspeksi model yang mengukur kontribusi setiap fitur terhadap kinerja statistik model yang dipasang pada kumpulan data tabel tertentu. Teknik ini sangat berguna untuk estimator non-linier atau buram, dan melibatkan pengocok nilai satu fitur secara acak dan mengamati degradasi skor model yang dihasilkan. Dengan memutus hubungan antara fitur dan variabel target, kami menentukan seberapa banyak model bergantung pada fitur tertentu tersebut.
+``` python
+# Training matrices used by the forecaster to fit the internal regressor
+# ==============================================================================
+X_train, y_train = forecaster.create_train_X_y(
+                       y    = data_train['Demand'],
+                       exog = data_train['Temperature']
+                   )
+
+# Permutation importances
+# ==============================================================================
+r = permutation_importance(
+        estimator    = forecaster.estimator,
+        X            = X_train,
+        y            = y_train,
+        n_repeats    = 3,
+        max_samples  = 0.5,
+        random_state = 123
+    )
+
+importances = pd.DataFrame({
+                  'feature': X_train.columns,
+                  'mean_importance': r.importances_mean,
+                  'std_importance': r.importances_std
+              }).sort_values('mean_importance', ascending=False)
+importances
+```
+|index|feature|mean\_importance|std\_importance|
+|---|---|---|---|
+|0|lag\_1|0\.6172756382823482|0\.01458316911689022|
+|7|Temperature|0\.41124011936638016|0\.014404692833722104|
+|6|lag\_7|0\.19618980833822644|0\.001865036694815123|
+|1|lag\_2|0\.12239817775418105|0\.007802974729280967|
+|5|lag\_6|0\.08391152564468433|0\.003637273307109648|
+|2|lag\_3|0\.04129406517320774|0\.002018682667644516|
+|4|lag\_5|0\.03078656442950974|0\.0010793137007947306|
+|3|lag\_4|0\.02481613318693654|0\.0010205377299262115|
+## Plot ketergantungan parsial
+Plot ketergantungan parsial (PDP) adalah alat yang berguna untuk memahami hubungan antara fitur dan hasil target dalam model pembelajaran mesin. Dalam scikit-learn, Anda dapat membuat plot ketergantungan parsial menggunakan fungsi ini. Fungsi ini memvisualisasikan efek satu atau dua fitur pada hasil yang diprediksi, sambil meminggirkan efek dari semua fitur lainnya.plot_partial_dependence
+
+Plot yang dihasilkan menunjukkan bagaimana perubahan dalam fitur yang dipilih memengaruhi hasil yang diprediksi sambil mempertahankan fitur lain secara konstan rata-rata. Ingatlah bahwa plot ini harus ditafsirkan dalam konteks model dan data Anda. Mereka memberikan wawasan tentang hubungan antara fitur tertentu dan prediksi model.
+
+Deskripsi lebih rinci tentang Plot Dependensi Parsial dapat ditemukan di Panduan Pengguna Scikitlearn.
+``` python
+# Scikit-learn partial dependence plots
+# ==============================================================================
+fig, ax = plt.subplots(figsize=(9, 4))
+ax.set_title("Decision Tree")
+pd.plots = PartialDependenceDisplay.from_estimator(
+    estimator = forecaster.estimator,
+    X         = X_train,
+    features  = ["Temperature", "lag_1"],
+    kind      = 'both',
+    ax        = ax,
+)
+ax.set_title("Partial Dependence Plot")
+fig.tight_layout();
+```
+![alt text](image-44.png)
+## pertanyaan
+
+### 1. Analisis Prediksi yang Dilakukan
+
+Analisis yang dilakukan pada studi kasus ini bertujuan untuk memprediksi permintaan listrik harian (**Demand**) di wilayah Victoria, Australia. Prediksi dilakukan dengan memanfaatkan data historis konsumsi listrik serta informasi suhu udara (**Temperature**) sebagai variabel eksternal yang memengaruhi tingkat konsumsi listrik.
+
+Model yang digunakan adalah **Recursive Forecasting** dengan algoritma **Light Gradient Boosting Machine (LightGBM)**. Pendekatan ini memungkinkan model untuk mempelajari pola historis permintaan listrik dan menghasilkan prediksi untuk periode waktu berikutnya.
+
+---
+
+### 2. Bentuk Data Training
+
+Sebelum proses pemodelan dilakukan, data dibagi menjadi data pelatihan (*training*) dan data pengujian (*testing*). Data pelatihan digunakan untuk membangun model, sedangkan data pengujian digunakan untuk mengevaluasi kemampuan model dalam melakukan prediksi.
+
+Pada proses pembentukan data training, digunakan beberapa variabel masukan (*input*) dan satu variabel keluaran (*output*), yaitu:
+
+#### Variabel Input (X)
+
+Variabel input yang digunakan terdiri atas:
+
+- **lag_1** : nilai Demand satu hari sebelumnya
+- **lag_2** : nilai Demand dua hari sebelumnya
+- **lag_3** : nilai Demand tiga hari sebelumnya
+- **lag_4** : nilai Demand empat hari sebelumnya
+- **lag_5** : nilai Demand lima hari sebelumnya
+- **lag_6** : nilai Demand enam hari sebelumnya
+- **lag_7** : nilai Demand tujuh hari sebelumnya
+- **Temperature** : rata-rata suhu harian
+
+#### Variabel Output (Y)
+
+Variabel output yang diprediksi adalah:
+
+- **Demand** : permintaan listrik harian
+
+Dengan demikian, model belajar hubungan antara permintaan listrik masa lalu dan kondisi suhu terhadap permintaan listrik pada hari yang akan diprediksi.
+
+---
+
+### 3. Pengertian Lag
+
+*Lag* merupakan nilai historis dari suatu variabel yang digunakan sebagai fitur dalam proses prediksi. Pada penelitian ini digunakan tujuh lag, yaitu **lag_1** hingga **lag_7**.
+
+Sebagai contoh:
+
+- **lag_1** menunjukkan nilai Demand satu hari sebelumnya.
+- **lag_2** menunjukkan nilai Demand dua hari sebelumnya.
+- **lag_7** menunjukkan nilai Demand tujuh hari sebelumnya.
+
+Penggunaan lag bertujuan untuk menangkap pola temporal pada data deret waktu (*time series*). Dengan memanfaatkan informasi masa lalu, model dapat mengenali pola perubahan permintaan listrik dari waktu ke waktu sehingga menghasilkan prediksi yang lebih akurat.
+
+---
+
+### 4. Proses Analisis yang Dilakukan
+
+Tahapan analisis pada studi kasus ini dilakukan melalui beberapa langkah sebagai berikut.
+
+#### 4.1 Pengumpulan dan Persiapan Data
+
+Data yang digunakan berasal dari dataset konsumsi listrik wilayah Victoria, Australia. Dataset awal memiliki frekuensi setengah jam (*half-hourly*) yang kemudian diubah menjadi data harian.
+
+Pada tahap agregasi:
+
+- Variabel **Demand** dijumlahkan (*sum*) untuk memperoleh total permintaan listrik harian.
+- Variabel **Temperature** dirata-ratakan (*mean*) untuk memperoleh suhu rata-rata harian.
+
+#### 4.2 Pembagian Data
+
+Data dibagi menjadi dua bagian, yaitu:
+
+- Data training digunakan untuk membangun model.
+- Data testing digunakan untuk mengevaluasi hasil prediksi model.
+
+Pembagian ini dilakukan berdasarkan urutan waktu sehingga karakteristik deret waktu tetap terjaga.
+
+#### 4.3 Pembangunan Model Forecasting
+
+Model forecasting dibangun menggunakan metode **ForecasterRecursive** dengan algoritma **LightGBM** sebagai estimator utama.
+
+Konfigurasi model yang digunakan adalah:
+
+- **Algoritma** : LightGBM Regressor
+- **Jumlah lag** : 7
+- **Variabel eksogen** : Temperature
+
+Model memanfaatkan tujuh nilai Demand sebelumnya dan suhu harian untuk memprediksi Demand pada periode berikutnya.
+
+#### 4.4 Pelatihan Model
+
+Pada tahap ini model mempelajari hubungan antara variabel input dan output menggunakan data training yang telah disiapkan. Hasil pelatihan menghasilkan model yang mampu mengenali pola permintaan listrik berdasarkan data historis.
+
+#### 4.5 Analisis Interpretabilitas Model
+
+Setelah model berhasil dilatih, dilakukan analisis interpretabilitas untuk mengetahui faktor-faktor yang paling memengaruhi hasil prediksi.
+
+Metode yang digunakan meliputi:
+
+##### a. SHAP (SHapley Additive Explanations)
+
+SHAP digunakan untuk mengukur kontribusi masing-masing fitur terhadap prediksi model. Melalui SHAP dapat diketahui fitur mana yang memberikan pengaruh terbesar terhadap hasil prediksi.
+
+##### b. Permutation Importance
+
+Metode ini mengukur tingkat kepentingan fitur dengan cara mengacak nilai suatu fitur dan mengamati perubahan kinerja model. Semakin besar penurunan kinerja model setelah suatu fitur diacak, maka semakin penting fitur tersebut.
+
+##### c. Partial Dependence Plot (PDP)
+
+PDP digunakan untuk menganalisis hubungan antara suatu fitur dengan hasil prediksi model. Visualisasi ini membantu memahami bagaimana perubahan nilai suatu fitur memengaruhi output prediksi.
+
+#### 4.6 Proses Prediksi
+
+Setelah model selesai dilatih, dilakukan proses prediksi pada data testing. Prediksi dilakukan secara *recursive*, yaitu hasil prediksi pada suatu periode digunakan kembali sebagai input untuk memprediksi periode berikutnya.
+
+#### 4.7 Evaluasi dan Interpretasi Hasil
+
+Hasil prediksi kemudian dibandingkan dengan data aktual untuk menilai performa model. Selain itu, hasil analisis SHAP, Permutation Importance, dan PDP digunakan untuk menjelaskan faktor-faktor yang paling berpengaruh terhadap permintaan listrik.
+
+Berdasarkan analisis interpretabilitas, fitur lag historis (khususnya **lag_1**) dan **Temperature** merupakan faktor yang memiliki kontribusi terbesar dalam menentukan hasil prediksi permintaan listrik harian.
