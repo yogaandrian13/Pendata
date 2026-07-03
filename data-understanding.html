@@ -189,6 +189,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="data-preparation.html">Data Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modelling.html">Modelling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deploymen.html">Deployment</a></li>
@@ -496,6 +497,11 @@ document.write(`
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#uas">UAS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-random-forest">metode random forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">hasil</a></li>
 </ul>
 </li>
 </ul>
@@ -4251,6 +4257,19 @@ Time
 </section>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="uas">
+<h1>UAS<a class="headerlink" href="#uas" title="Permalink to this heading">#</a></h1>
+<p><img alt="alt text" src="_images/image-45.png" /></p>
+<section id="metode-random-forest">
+<h2>metode random forest<a class="headerlink" href="#metode-random-forest" title="Permalink to this heading">#</a></h2>
+<p>Metode Random Forest dipilih pada penelitian ini karena sesuai untuk menyelesaikan permasalahan klasifikasi multikelas, yaitu memprediksi GRADE mahasiswa berdasarkan atribut-atribut yang terdapat pada dataset.  proses dimulai dari pembacaan data menggunakan CSV Reader, kemudian dilakukan seleksi atribut melalui Column Filter dan penanganan data yang kosong menggunakan Missing Value agar kualitas data lebih baik. Selanjutnya, kolom GRADE diubah menjadi tipe kategorikal menggunakan Number to String sehingga dapat digunakan sebagai target klasifikasi. Dataset kemudian dibagi menjadi data latih dan data uji menggunakan Table Partitioner. Pada tahap pelatihan, Random Forest Learner membangun banyak pohon keputusan (Decision Tree) dari data latih, kemudian hasil prediksi dari setiap pohon digabungkan menggunakan mekanisme majority voting untuk menentukan kelas akhir. Pendekatan ini membuat Random Forest lebih stabil dan mampu mengurangi risiko overfitting dibandingkan penggunaan satu pohon keputusan saja. Setelah model terbentuk, proses prediksi dilakukan menggunakan Random Forest Predictor, kemudian hasilnya dievaluasi melalui Scorer untuk mengetahui tingkat akurasi model.</p>
+</section>
+<section id="hasil">
+<h2>hasil<a class="headerlink" href="#hasil" title="Permalink to this heading">#</a></h2>
+<p><img alt="alt text" src="_images/image-46.png" />
+Berdasarkan hasil evaluasi menggunakan Confusion Matrix, model klasifikasi Random Forest berhasil mengklasifikasikan 10 data dengan benar (Correct Classified) dan 19 data salah diklasifikasikan (Wrong Classified) dari total 29 data uji. Hasil tersebut menghasilkan nilai accuracy sebesar 34,483%, yang menunjukkan bahwa sekitar sepertiga dari seluruh data uji berhasil diprediksi sesuai dengan kelas GRADE yang sebenarnya. Sementara itu, error rate sebesar 65,517% menunjukkan bahwa masih terdapat cukup banyak data yang diprediksi ke kelas yang berbeda. Nilai Cohen’s Kappa sebesar 0,203 mengindikasikan bahwa tingkat kesesuaian antara hasil prediksi model dengan data sebenarnya masih tergolong rendah hingga cukup (fair agreement), namun sudah lebih baik dibandingkan prediksi secara acak.</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -4472,6 +4491,11 @@ Time
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#uas">UAS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metode-random-forest">metode random forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil">hasil</a></li>
 </ul>
 </li>
 </ul>
